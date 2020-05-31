@@ -14,6 +14,9 @@ export const postJoin = (req, res) => {
   }
 };
 export const login = (req, res) => res.render("login", { pageTitle: "login" });
+export const postLogin = (req, res) => {
+  res.redirect(routes.home);
+}
 export const logout = (req, res) => res.render("logout", { pageTitle: "logout" });
 export const user = (req, res) => res.render("user", { pageTitle: "user" });
 export const user_detail = (req, res) => res.render("user_detail", { pageTitle: "user_detail" });

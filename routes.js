@@ -1,3 +1,5 @@
+import { videos } from "./data";
+
 const home = "/";
 const join = "/join";
 const login = "/login";
@@ -24,12 +26,25 @@ const routes = {
   logout,
   search,
   user,
-  user_detail,
+  user_detail: (id) => {
+    if (id) {
+      return `${user}/${id}`
+    }
+    else {
+      return user_detail
+    }
+  },
   edit_profile,
   change_password,
   video,
   upload,
-  video_detail,
+  video_detail: (id) => {
+    if (id) {
+      return `${video}/${id}`
+    } else {
+      return video_detail
+    }
+  },
   edit_video,
   delete_video,
 };
