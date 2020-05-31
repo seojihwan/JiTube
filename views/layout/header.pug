@@ -1,9 +1,12 @@
 header.header
     .header__icon
         i.fab.fa-youtube
+    .header__search
+        form(action=routes.search, method ="get")
+            input(type="text", placeholder="영화 제목", name="title")
     .header__client
         ul 
             li
-                a(href = routes.join) 회원가입
-                a(href = routes.login) 로그인
+                a(href=routes.join) 회원가입
+                a(href=routes.login) 로그인
 

@@ -6,8 +6,8 @@ const search = "/search";
 
 
 const user = "/user";
-const user_detail = "/:id";
 const edit_profile = "/edit-profile";
+const user_detail = "/:id";
 const change_password = "/change-password";
 
 

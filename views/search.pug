@@ -1,1 +1,12 @@
 extends layout/main
+include mixins/videoContainer
+
+block content
+    h2 #{title} 의 검색결과
+    .videos
+        each video in videos
+            +videoContainer({
+              videoFile: video.videoFile,
+              title: video.title,
+              views: video.views,
+            })

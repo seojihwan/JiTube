@@ -1,1 +1,11 @@
 extends layout/main
+
+block content
+    .edit_profile_container
+        form(action=`${routes.user}${routes.edit_profile}`,method="post")
+            label(for="avatar") Avatar
+            input(type="file", id="avatar", name="avatar")
+            input(type="text", placeholder="이름", name="name")
+            input(type="email", placeholder="이메일", name="email")
+            input(type="submit", value="수정")
+        a(href=`${routes.user}${routes.change_password}`) 비밀번호 변경
