@@ -13,7 +13,6 @@ const globalRouter = express.Router();
 
 globalRouter.get(routes.home, home);
 globalRouter.get(routes.search, search);
-globalRouter.get(routes.upload, upload);
 
 globalRouter.get(routes.join, join);
 globalRouter.post(routes.join, postJoin);

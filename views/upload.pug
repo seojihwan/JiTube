@@ -2,7 +2,7 @@ extends layout/main
 
 block content
     .upload__container
-        form(action=routes.upload, method="post")
+        form(action=`${routes.video}${routes.upload}`, method="post")
             label(for="file") 파일
             input(type="file", id="file", name="file")
             input(type="text", placeholder="제목", name="title")

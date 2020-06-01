@@ -1,5 +1,6 @@
 mixin videoContainer(video = {})
     .videoContainer
-        video.video__thumbnail(src=video.videoFile, controls=true)
-        h4.video__title=video.title
-        h6.video__views=video.views
+        a(href=routes.video_detail(video.id))
+            video.video__thumbnail(src=video.videoFile, controls=true)
+            h4.video__title=video.title
+            h6.video__views=video.views
