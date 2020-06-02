@@ -5,7 +5,7 @@ block content
     .videos
         each video in videos
             +videoContainer({
-              videoFile: video.videoFile,
+              videoFile: video.url,
               title: video.title,
               views: video.views,
               id: video.id

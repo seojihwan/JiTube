@@ -2,9 +2,9 @@ extends layout/main
 
 block content
     .upload__container
-        form(action=`${routes.video}${routes.upload}`, method="post")
+        form(action=`${routes.video}${routes.upload}`, method="post" ,enctype="multipart/form-data")
             label(for="file") 파일
-            input(type="file", id="file", name="file")
-            input(type="text", placeholder="제목", name="title")
-            textarea(name="description", placeholder="Description")
+            input(type="file", id="file", name="videoFile", required=true, accept="video/*")
+            input(type="text", placeholder="제목", name="title",required=true)
+            textarea(name="description", placeholder="Description",required=true)
             input(type="submit", value="업로드")

@@ -1,9 +1,9 @@
 extends layout/main
 
-blcok content
+block content
     .edit_video_container
-        form(action=`${routes.video}${routes.edit_video}`,method="post")
-            input(type="text", name="title",placeholder="제목")
-            textarea(name="description", placeholder="내용")
+        form(action=`${routes.edit_video(video.id)}`,method="post")
+            input(type="text", name="title",placeholder="제목" value=video.title)
+            textarea(name="description", placeholder="내용" )=video.description
             input(type="submit", value="동영상 수정")
-        a(href=`${routes.video}${routes.deleteVideo}`) 동영상 삭제
+        a(href=`${routes.delete_video(video.id)}`) 동영상 삭제

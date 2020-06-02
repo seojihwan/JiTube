@@ -1,19 +1,15 @@
-import { videos } from "./data";
-
 const home = "/";
 const join = "/join";
 const login = "/login";
 const logout = "/logout";
 const search = "/search";
 
-
 const user = "/user";
 const edit_profile = "/edit-profile";
 const user_detail = "/:id";
 const change_password = "/change-password";
 
-
-const video = "/video";
+const video = "/videos";
 const upload = "/upload";
 const video_detail = "/:id";
 const edit_video = "/:id/edit";
@@ -28,10 +24,9 @@ const routes = {
   user,
   user_detail: (id) => {
     if (id) {
-      return `${user}/${id}`
-    }
-    else {
-      return user_detail
+      return `${user}/${id}`;
+    } else {
+      return user_detail;
     }
   },
   edit_profile,
@@ -40,13 +35,25 @@ const routes = {
   upload,
   video_detail: (id) => {
     if (id) {
-      return `${video}/${id}`
+      return `${video}/${id}`;
     } else {
-      return video_detail
+      return video_detail;
     }
   },
-  edit_video,
-  delete_video,
+  edit_video: (id) => {
+    if (id) {
+      return `/videos/${id}/edit`;
+    } else {
+      return edit_video;
+    }
+  },
+  delete_video: (id) => {
+    if (id) {
+      return `/videos/${id}/delete`;
+    } else {
+      return delete_video;
+    }
+  },
 };
 
 export default routes;
