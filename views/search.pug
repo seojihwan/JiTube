@@ -4,9 +4,13 @@ include mixins/videoContainer
 block content
     h2 #{title} 의 검색결과
     .videos
-        each video in videos
-            +videoContainer({
-              videoFile: video.videoFile,
-              title: video.title,
-              views: video.views,
-            })
+        if videos.length === 0
+            h5 No videos founded.
+        else
+            each video in videos
+                +videoContainer({
+                  videoFile: video.url,
+                  title: video.title,
+                  views: video.views,
+                  id: video.id
+                })

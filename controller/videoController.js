@@ -3,7 +3,7 @@ import videoModel from "../models/Video";
 export const home = async (req, res) => {
   console.log("hello");
   try {
-    const videos = await videoModel.find({});
+    const videos = await videoModel.find({}).sort({ _id: -1 });
     res.render("home", { pageTitle: "home", videos });
   } catch (error) {
     console.log(error);
@@ -12,20 +12,19 @@ export const home = async (req, res) => {
   console.log("hello");
 };
 
-// export const video = async (req, res) => {
-//   try {
-//     const videos = await videoModel.find({});
-//     res.render("video", { pageTitle: "videos" });
-//   } catch (error) {
-//     console.log(error);
-//     res.render("video", { pageTitle: "videos" });
-//   }
-// };
-export const search = (req, res) => {
+export const search = async (req, res) => {
   const {
     query: { title },
   } = req;
-  res.render("search", { pageTitle: "search", title });
+  let videos = [];
+  try {
+    videos = await videoModel.find({
+      title: { $regex: title, $options: "i" },
+    });
+  } catch (error) {
+    console.log(error);
+  }
+  res.render("search", { pageTitle: "search", title, videos });
 };
 
 export const upload = (req, res) =>
@@ -39,7 +38,7 @@ export const postUpload = async (req, res) => {
     const newVideo = await videoModel.create({ url, title, description });
     res.redirect(routes.video_detail(newVideo._id));
   } catch (error) {
-    res.redirect(routes.video_detail(newVideo._id));
+    res.redirect(routes.home);
   }
 };
 export const video_detail = async (req, res) => {
@@ -85,6 +84,8 @@ export const delete_video = async (req, res) => {
   } = req;
   try {
     await videoModel.findOneAndRemove({ _id: id });
-  } catch (error) {}
+  } catch (error) {
+    console.log(error);
+  }
   res.redirect(routes.home);
 };
