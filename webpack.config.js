@@ -2,7 +2,10 @@ const path = require("path");
 const autoprefixer = require("autoprefixer");
 const ExtractCSS = require("extract-text-webpack-plugin");
 const config = {
-  entry: path.resolve(__dirname, "assets", "js", "main.js"),
+  entry: [
+    "@babel/polyfill",
+    path.resolve(__dirname, "assets", "js", "main.js"),
+  ],
   mode: process.env.WEBPACK_ENV,
   module: {
     rules: [
@@ -23,7 +26,7 @@ const config = {
           {
             loader: "postcss-loader",
             options: {
-              plugin() {
+              plugins() {
                 return [autoprefixer({ browser: "cover 99.5%" })];
               },
             },
