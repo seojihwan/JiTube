@@ -12,6 +12,7 @@ const app = express();
 app.use(helmet());
 app.set("view engine", "pug");
 app.use("/videos", express.static("videos"));
+app.use("/static", express.static("static"));
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
