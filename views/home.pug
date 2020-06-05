@@ -2,11 +2,13 @@ extends layout/main
 include mixins/videoContainer
 
 block content
-    .videos
-        each video in videos
-            +videoContainer({
-              videoFile: video.url,
-              title: video.title,
-              views: video.views,
-              id: video.id
-            })
+    .home__wrapper
+        .menu
+        .videos
+            each video in videos
+                +videoContainer({
+                  videoFile: video.url,
+                  title: video.title,
+                  views: video.views,
+                  id: video.id
+                })
