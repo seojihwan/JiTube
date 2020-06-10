@@ -15,6 +15,8 @@ const video_detail = "/:id";
 const edit_video = "/:id/edit";
 const delete_video = "/:id/delete";
 
+const github = "/auth/github";
+const githubCallback = "/auth/github/callback";
 const routes = {
   home,
   join,
@@ -54,6 +56,8 @@ const routes = {
       return delete_video;
     }
   },
+  github,
+  githubCallback,
 };
 
 export default routes;

@@ -10,9 +10,12 @@ import videoRouter from "./Router/videoRouter";
 import { locals } from "./middleWares";
 import passport from "passport";
 import session from "express-session";
+import MongoStore from "connect-mongo";
 import "./passport";
+import mongoose from "mongoose";
 
 const app = express();
+const CookieStore = MongoStore(session);
 app.use(helmet());
 app.set("view engine", "pug");
 app.use("/videos", express.static("videos"));
@@ -27,6 +30,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     resave: true,
     saveUninitialized: false,
+    store: new CookieStore({ mongooseConnection: mongoose.connection }),
   })
 );
 app.use(passport.initialize());
