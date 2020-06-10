@@ -1,29 +1,38 @@
 @import "./config/reset.scss";
-@import "./header.scss";
-@import "./home.scss";
-
+@import "./partials/form.scss";
+@import "./partials/main.scss";
+@import "./partials/header.scss";
+@import "./page/home.scss";
+@import "./page/videoDetail.scss";
+@import "./page/editVideo.scss";
 * {
   box-sizing: border-box;
 }
 a {
   text-decoration: none;
 }
-input[type="text"],
+button {
+  cursor: pointer;
+  border: none;
+  &:focus {
+    border: none;
+    outline: none;
+  }
+}
+input[type="submit"] {
+  cursor: pointer;
+}
+input,
 textarea {
   -webkit-transition: all 0.1s ease-in-out;
   -moz-transition: all 0.1s ease-in-out;
   -ms-transition: all 0.1s ease-in-out;
   -o-transition: all 0.1s ease-in-out;
   outline: none;
-  padding: 3px 0px 3px 3px;
-  margin: 5px 1px 3px 0px;
   border: 1px solid #dddddd;
 }
 
-input[type="text"]:focus,
+input:focus,
 textarea:focus {
-  box-shadow: 0 0 5px rgba(81, 203, 238, 1);
-  padding: 3px 0px 3px 3px;
-  margin: 5px 1px 3px 0px;
   border: 1px solid rgba(81, 203, 238, 1);
 }

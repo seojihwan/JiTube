@@ -8,9 +8,8 @@
   }
 
   .videos {
-    background-color: #f0eeeee7;
     padding: 20px;
-    grid-column: 2 / 13;
+    grid-column: 2 / 11;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     grid-gap: 20px;

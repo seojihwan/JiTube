@@ -1,0 +1,62 @@
+.formWrapper {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  form {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    input {
+      padding: 7px 5px;
+      border-radius: 5px;
+      width: 100%;
+      max-width: 250px;
+      margin: 10px 0;
+      box-shadow: 2px 2px 5px 0px rgba(0, 0, 0, 0.219);
+      &[type="submit"] {
+        color: white;
+        max-width: 250px;
+        border: none;
+        background-color: #3498db;
+        box-shadow: 2px 2px 5px 0px #3498db;
+      }
+    }
+    // &:not(:last-child) {
+    //   margin-bottom: 15px;
+    // }
+  }
+  .social-login {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: center;
+    border: none;
+    :not(:last-child) {
+      margin-bottom: 10px;
+    }
+    .social-login--github {
+      padding: 5px;
+      width: 100%;
+      max-width: 250px;
+      color: white;
+      background-color: black;
+      box-shadow: 2px 2px 5px 0px black;
+
+      border-radius: 3px;
+    }
+    .social-login--facebook {
+      padding: 5px;
+      width: 100%;
+      max-width: 250px;
+      background-color: #4267b2;
+      box-shadow: 2px 2px 5px 0px #4267b2;
+
+      border-radius: 3px;
+    }
+    span {
+      margin-right: 5px;
+    }
+  }
+}

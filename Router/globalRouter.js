@@ -14,7 +14,7 @@ globalRouter.get(routes.home, home);
 globalRouter.get(routes.search, search);
 
 globalRouter.get(routes.join, join);
-globalRouter.post(routes.join, postJoin);
+globalRouter.post(routes.join, postJoin, postLogin);
 globalRouter.get(routes.login, login);
 globalRouter.post(routes.login, postLogin);
 globalRouter.get(routes.logout, logout);

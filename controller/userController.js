@@ -1,22 +1,33 @@
+import passport from "passport";
 import routes from "../routes";
+import User from "../models/User";
+import { Router } from "express";
 
 export const join = (req, res) => res.render("join", { pageTitle: "join" });
-export const postJoin = (req, res) => {
+export const postJoin = async (req, res, next) => {
   const {
-    body: { id, password, password2, name, email },
+    body: { password, password2, name, email },
   } = req;
   console.log(name);
   if (password !== password2) {
     res.status(400);
     res.render("join", { pageTitle: "join" });
   } else {
-    res.redirect(routes.home);
+    try {
+      const user = await User({ name, email });
+      await User.register(user, password);
+      next();
+    } catch (error) {
+      console.log(error);
+      res.redirect(routes.home);
+    }
   }
 };
 export const login = (req, res) => res.render("login", { pageTitle: "login" });
-export const postLogin = (req, res) => {
-  res.redirect(routes.home);
-};
+export const postLogin = passport.authenticate("local", {
+  failureRedirect: routes.login,
+  successRedirect: routes.home,
+});
 export const logout = (req, res) => {
   res.redirect(routes.home);
 };

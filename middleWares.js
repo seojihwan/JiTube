@@ -3,10 +3,8 @@ import multer from "multer";
 export const locals = (req, res, next) => {
   res.locals.routes = routes;
   res.locals.siteName = "JiTube";
-  res.locals.user = {
-    isAuthenticated: true,
-    id: 11212,
-  };
+  console.log(req.user);
+  res.locals.user = req.user || null;
   next();
 };
 

@@ -1,9 +1,10 @@
 extends layout/main
 
 block content
-    .edit_video_container
+    .formWrapper
         form(action=`${routes.edit_video(video.id)}`,method="post")
             input(type="text", name="title",placeholder="제목" value=video.title)
             textarea(name="description", placeholder="내용" )=video.description
-            input(type="submit", value="동영상 수정")
-        a(href=`${routes.delete_video(video.id)}`) 동영상 삭제
+            input(type="submit", value="수정")
+        a.deleteVideo(href=`${routes.delete_video(video.id)}`) 
+            button 삭제
