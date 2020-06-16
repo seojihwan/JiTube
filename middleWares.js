@@ -3,7 +3,7 @@ import multer from "multer";
 export const locals = (req, res, next) => {
   res.locals.routes = routes;
   res.locals.siteName = "JiTube";
-  res.locals.user = req.user || null;
+  res.locals.loggedUser = req.user || null;
   next();
 };
 export const onlyPublic = (req, res, next) => {

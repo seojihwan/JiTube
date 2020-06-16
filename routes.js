@@ -8,6 +8,7 @@ const user = "/user";
 const edit_profile = "/edit-profile";
 const user_detail = "/:id";
 const change_password = "/change-password";
+const me = "/me";
 
 const video = "/videos";
 const upload = "/upload";
@@ -17,6 +18,8 @@ const delete_video = "/:id/delete";
 
 const github = "/auth/github";
 const githubCallback = "/auth/github/callback";
+const facebook = "/auth/facebook";
+const facebookCallback = "/auth/facebook/callback";
 const routes = {
   home,
   join,
@@ -58,6 +61,9 @@ const routes = {
   },
   github,
   githubCallback,
+  facebook,
+  facebookCallback,
+  me,
 };
 
 export default routes;
