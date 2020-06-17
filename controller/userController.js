@@ -2,13 +2,13 @@ import passport from "passport";
 import routes from "../routes";
 import User from "../models/User";
 import { Router } from "express";
+import { mongo } from "mongoose";
 
 export const join = (req, res) => res.render("join", { pageTitle: "join" });
 export const postJoin = async (req, res, next) => {
   const {
     body: { password, password2, name, email },
   } = req;
-  console.log(name);
   if (password !== password2) {
     res.status(400);
     res.render("join", { pageTitle: "join" });
@@ -34,7 +34,6 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
   const {
     _json: { id, avatar_url: avatarUrl, name, email },
   } = profile;
-  console.log(profile);
   try {
     const user = await User.findOne({ email });
     if (user) {
@@ -45,7 +44,7 @@ export const githubLoginCallback = async (_, __, profile, cb) => {
     const newUser = await User.create({
       name,
       email,
-      avatarUrl: avatar_url,
+      avatarUrl,
       githubId: id,
     });
     return cb(null, newUser);
@@ -92,7 +91,42 @@ export const user_detail = async (req, res) => {
     res.redirect(routes.home);
   }
 };
-export const edit_profile = (req, res) =>
+export const editProfile = (req, res) =>
   res.render("edit_profile", { pageTitle: "edit_profile" });
-export const change_password = (req, res) =>
+export const postEditProfile = async (req, res) => {
+  const {
+    body: { name, email },
+    file,
+  } = req;
+  try {
+    console.log(file);
+    await User.findByIdAndUpdate(req.user.id, {
+      name,
+      email,
+      avatarUrl: file ? file.path : req.user.avatarUrl,
+    });
+    res.redirect(routes.me);
+  } catch (error) {
+    res.redirect(routes.edit_profile);
+  }
+};
+export const getChangePassword = async (req, res) => {
   res.render("change_password", { pageTitle: "change_password" });
+};
+
+export const postChangePassword = async (req, res) => {
+  const {
+    body: { password, newPassword, newPassword1 },
+  } = req;
+  try {
+    if (newPassword !== newPassword1) {
+      res.status(400);
+      res.redirect(`${routes.user}${routes.change_password}`);
+    }
+    await req.user.changePassword(password, newPassword);
+    res.redirect(routes.me);
+  } catch (error) {
+    res.status(400);
+    res.redirect(`${routes.user}${routes.change_password}`);
+  }
+};

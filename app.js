@@ -19,6 +19,7 @@ const CookieStore = MongoStore(session);
 app.use(helmet());
 app.set("view engine", "pug");
 app.use("/videos", express.static("videos"));
+app.use("/avatars", express.static("avatars"));
 app.use("/static", express.static("static"));
 app.use(cookieParser());
 app.use(bodyParser.json());

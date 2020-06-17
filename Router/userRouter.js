@@ -3,13 +3,23 @@ import routes from "../routes";
 import {
   user,
   user_detail,
-  edit_profile,
+  editProfile,
   change_password,
+  postEditProfile,
   me,
+  getChangePassword,
+  postChangePassword,
 } from "../controller/userController";
-import { onlyPrivate } from "../middleWares";
+import { onlyPrivate, uploadAvatar } from "../middleWares";
 const userRouter = express.Router();
-userRouter.get(routes.edit_profile, onlyPrivate, edit_profile);
-userRouter.get(routes.change_password, onlyPrivate, change_password);
+userRouter.get(routes.edit_profile, onlyPrivate, editProfile);
+userRouter.post(
+  routes.edit_profile,
+  onlyPrivate,
+  uploadAvatar,
+  postEditProfile
+);
+userRouter.get(routes.change_password, onlyPrivate, getChangePassword);
+userRouter.post(routes.change_password, onlyPrivate, postChangePassword);
 userRouter.get(routes.user_detail(), user_detail);
 export default userRouter;
