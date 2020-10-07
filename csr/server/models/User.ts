@@ -1,13 +1,21 @@
-import mongoose from 'mongoose';
+import mongoose, { Model } from 'mongoose';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+
 const saltRounds = 10;
 export interface IUser {
   name: string;
   email: string;
   password: string;
+  token: string;
+  comparePassword(p: string, c: Function): void;
+  generateToken(c: Function): void;
 }
 export interface UserDocument extends IUser, mongoose.Document {}
-const userSchema = new mongoose.Schema<IUser>({
+export interface UserModel extends Model<UserDocument> {
+  findByToken(token: string, cb: Function): void;
+}
+const userSchema = new mongoose.Schema<UserDocument>({
   name: {
     type: String,
     unique: true,
@@ -20,17 +28,39 @@ const userSchema = new mongoose.Schema<IUser>({
   },
   password: {
     type: String,
-    minlength: 6,
-    maxlength: 16,
     required: true,
+  },
+  token: {
+    type: String,
   },
   imageUrl: String,
 });
 
-const a: IUser = {
-  name: 'string',
-  email: 'string',
-  password: 'string',
+// 비밀번호 비교 methos 정의
+userSchema.methods.comparePassword = function (plainPW: string, cb: Function) {
+  bcrypt.compare(plainPW, this.password, function (err, isEqual) {
+    if (err) return cb(err);
+    cb(null, isEqual);
+  });
+};
+userSchema.methods.generateToken = function (cb: Function) {
+  const user = this;
+  const token = jwt.sign(user._id.toHexString(), process.env.jwtSecret as string);
+  user.token = token;
+  user.save((err, user) => {
+    if (err) return cb(err);
+    cb(null, user);
+  });
+};
+userSchema.statics.findByToken = function (token: string, cb: Function) {
+  const user = this;
+  jwt.verify(token, process.env.jwtSecret as string, (err, decoded) => {
+    if (err) return cb(err);
+    user.findOne({ _id: decoded }, (err: string | undefined, user: UserDocument) => {
+      if (err) return cb(err);
+      cb(null, user);
+    });
+  });
 };
 //User.save() 이전에 실행됨
 userSchema.pre<UserDocument>('save', function (next) {
@@ -47,4 +77,4 @@ userSchema.pre<UserDocument>('save', function (next) {
     });
   } else next();
 });
-export const User = mongoose.model('User', userSchema);
+export const User = mongoose.model<UserDocument, UserModel>('User', userSchema);
