@@ -4,7 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import { IUser, User, UserDocument } from './models';
-import { auth } from './auth';
+import { auth, removeToken } from './auth';
 const app = express();
 const port = process.env.port || 4000;
 
@@ -21,9 +21,9 @@ dotenv.config();
 mongoose
   .connect(process.env.mongoURI as string, {
     useNewUrlParser: true,
-    useUnifiedTopology: true,
+    useFindAndModify: false,
     useCreateIndex: true,
-    useFindAndModify: true,
+    useUnifiedTopology: true,
   })
   .then(() => console.log('connected to mongoDB'))
   .catch((error) => console.log(error));
@@ -58,4 +58,9 @@ app.post('/login', (req: Request, res: Response) => {
 
 app.get('/auth', auth, (req: Request, res: Response) => {
   res.status(200).json({ auth: true });
+});
+
+app.get('/logout', removeToken, (req: Request, res: Response) => {
+  res.clearCookie('xAuth');
+  res.status(200).json({ cookie: false });
 });
