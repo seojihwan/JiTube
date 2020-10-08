@@ -16,7 +16,8 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "isolatedModules": true
+    "isolatedModules": true,
+    "typeRoots": ["node_modules/@types"]
   },
   "ts-node": {
     "compilerOptions": {
