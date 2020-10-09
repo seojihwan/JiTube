@@ -30,7 +30,7 @@ mongoose
   .then(() => console.log('connected to mongoDB'))
   .catch((error) => console.log(error));
 
-app.post('/register', (req: Request, res: Response) => {
+app.post('/signup', (req: Request, res: Response) => {
   const user = new User(req.body);
   user.save((err, user) => {
     if (err) return res.status(400).json({ register: false, err });

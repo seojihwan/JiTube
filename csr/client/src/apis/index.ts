@@ -9,3 +9,11 @@ export const requsetLogin = (email: string, password: string) =>
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
+export const requsetSignUp = (email: string, password: string, name: string) =>
+  new Promise((resolve, reject) => {
+    console.log({ email, password, name });
+    axios
+      .post(endpoint + '/signup', { email, password, name })
+      .then((response: AxiosResponse) => resolve(response))
+      .catch((error: AxiosError) => reject(error));
+  });

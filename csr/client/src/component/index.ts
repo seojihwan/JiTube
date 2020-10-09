@@ -1,1 +1,2 @@
-export * from './login';
+export * from './Login';
+export * from './SignUp';
