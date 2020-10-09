@@ -2,7 +2,7 @@ import { IStoreState } from '../store';
 import * as Actions from '../actions';
 import { ActionType, getType } from 'typesafe-actions';
 export const initializeState: IStoreState = {
-  authentication: null,
+  authentication: false,
 };
 
 export default (
@@ -14,7 +14,12 @@ export default (
     case getType(Actions.successLogin):
       return {
         ...state,
-        authentication: action.payload,
+        authentication: true,
+      };
+    case getType(Actions.successLogout):
+      return {
+        ...state,
+        authentication: false,
       };
     default:
       return { ...state };

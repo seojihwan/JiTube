@@ -5,7 +5,7 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { IUser, User, UserDocument } from './models';
-import { auth, removeToken } from './auth';
+import { checkAuth, removeToken } from './auth';
 const app = express();
 const port = process.env.port || 4000;
 
@@ -15,7 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 app.use(morgan('dev'));
-app.use(cors({ origin: 'http://localhost:3000' }));
+app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.listen(port, () => console.log('listening on port', port));
 app.get('/', (req: Request, res: Response) => res.send('hello express'));
 
@@ -66,7 +66,7 @@ app.post('/login', (req: Request, res: Response) => {
   );
 });
 
-app.get('/auth', auth, (req: Request, res: Response) => {
+app.get('/auth', checkAuth, (req: Request, res: Response) => {
   res.status(200).json({ auth: true });
 });
 

@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export interface ISignUpComponent {
-  authentication: string | null;
+  authentication: boolean;
   requestSignUp(email: string, password: string, id: string): void;
 }
 
 export const SignUpComponent: React.FC<ISignUpComponent> = (props) => {
+  const history = useHistory();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
@@ -30,6 +32,9 @@ export const SignUpComponent: React.FC<ISignUpComponent> = (props) => {
     }
     props.requestSignUp(email, password, name);
   };
+  if (props.authentication) {
+    history.push('/');
+  }
   return (
     <div>
       <form onSubmit={onSubmit}>

@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 export interface ILoginComponentProps {
-  authentication: string | null;
+  authentication: boolean;
   requestLogin(email: string, password: string): void;
 }
 
 export const LoginComponent: React.FC<ILoginComponentProps> = (props) => {
+  const history = useHistory();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
-
   const changeEmail = (e: React.FormEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
   };
@@ -19,6 +20,9 @@ export const LoginComponent: React.FC<ILoginComponentProps> = (props) => {
     e.preventDefault();
     props.requestLogin(email, password);
   };
+  if (props.authentication) {
+    history.push('/');
+  }
   return (
     <div>
       <form onSubmit={onSubmit}>

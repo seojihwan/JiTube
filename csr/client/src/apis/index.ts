@@ -5,7 +5,7 @@ export const requsetLogin = (email: string, password: string) =>
   new Promise((resolve, reject) => {
     console.log({ email, password });
     axios
-      .post(endpoint + '/login', { email, password })
+      .post(endpoint + '/login', { email, password }, { withCredentials: true })
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
