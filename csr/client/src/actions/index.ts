@@ -11,8 +11,9 @@ export const requestLogin = createAction('@command/login')<
   IrequsetLoginPayload
 >();
 export const successLogin = createAction('@command/successLogin')<string>();
-export const requestLogout = createAction('@command/requestlogout')();
+export const requestLogout = createAction('@command/requestLogout')();
 export const successLogout = createAction('@command/successLogout')();
+
 export const requestSignUp = createAction('@command/requsetSignUp')<
   IrequsetSignUpPayload
 >();
