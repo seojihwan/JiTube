@@ -1,18 +1,18 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { requestLogout } from '../actions';
-import { LogoutButton, ILogoutProps } from '../component';
+import { LogoutButton } from '../component';
 import { IStoreState } from '../store';
 
-const Header: React.FC<ILogoutProps> = (props) => {
-  return <LogoutButton {...props} />;
+export const Header: React.FC = () => {
+  const dispatch = useDispatch();
+  const authentication = useSelector(
+    (store: IStoreState) => store.authentication
+  );
+  return (
+    <LogoutButton
+      authentication={authentication}
+      requestLogout={() => dispatch(requestLogout())}
+    />
+  );
 };
-
-export default connect(
-  (state: IStoreState) => ({
-    authentication: state.authentication,
-  }),
-  (dispatch) => ({
-    requestLogout: () => dispatch(requestLogout()),
-  })
-)(Header);

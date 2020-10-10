@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { IStoreState } from '../store';
+import { useDispatch } from 'react-redux';
 import { requestLogin } from '../actions';
 import { useHistory } from 'react-router-dom';
+import { useAuthCheck } from '../hook';
 
-export interface ILoginComponentProps {
-  authentication: boolean;
-  requestLogin(email: string, password: string): void;
-}
-const Login: React.FC<ILoginComponentProps> = (props) => {
+export const Login: React.FC = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const changeEmail = (e: React.FormEvent<HTMLInputElement>) => {
@@ -20,9 +17,9 @@ const Login: React.FC<ILoginComponentProps> = (props) => {
   };
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    props.requestLogin(email, password);
+    dispatch(requestLogin({ email, password }));
   };
-  if (props.authentication) {
+  if (useAuthCheck()) {
     history.push('/');
   }
   return (
@@ -48,13 +45,3 @@ const Login: React.FC<ILoginComponentProps> = (props) => {
     </div>
   );
 };
-
-export default connect(
-  (state: IStoreState) => ({
-    authentication: state.authentication,
-  }),
-  (dispatch) => ({
-    requestLogin: (email: string, password: string) =>
-      dispatch(requestLogin({ email, password })),
-  })
-)(Login);

@@ -1,15 +1,12 @@
 import React, { useState } from 'react';
-import { connect } from 'react-redux';
-import { IStoreState } from '../store';
+import { useDispatch } from 'react-redux';
 import { requestSignUp } from '../actions';
 import { useHistory } from 'react-router-dom';
+import { useAuthCheck } from '../hook';
 
-export interface ISignUpComponent {
-  authentication: boolean;
-  requestSignUp(email: string, password: string, id: string): void;
-}
-export const SignUp: React.FC<ISignUpComponent> = (props) => {
+export const SignUp: React.FC = () => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
@@ -32,9 +29,9 @@ export const SignUp: React.FC<ISignUpComponent> = (props) => {
     if (password !== password2) {
       return alert('비밀번호 확인이 올바르지 않습니다.');
     }
-    props.requestSignUp(email, password, name);
+    dispatch(requestSignUp({ email, password, name }));
   };
-  if (props.authentication) {
+  if (useAuthCheck()) {
     history.push('/');
   }
   return (
@@ -75,13 +72,3 @@ export const SignUp: React.FC<ISignUpComponent> = (props) => {
     </div>
   );
 };
-
-export default connect(
-  (state: IStoreState) => ({
-    authentication: state.authentication,
-  }),
-  (dispatch) => ({
-    requestSignUp: (email: string, password: string, name: string) =>
-      dispatch(requestSignUp({ email, password, name })),
-  })
-)(SignUp);
