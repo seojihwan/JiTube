@@ -1,11 +1,11 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
 
-export interface ILogoutComponent {
+export interface ILogoutProps {
   authentication: boolean;
   requestLogout(): void;
 }
-export const LogoutComponent: React.FC<ILogoutComponent> = (props) => {
+export const LogoutButton: React.FC<ILogoutProps> = (props) => {
   const history = useHistory();
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     props.requestLogout();

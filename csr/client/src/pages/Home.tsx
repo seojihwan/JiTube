@@ -1,8 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { LogoutComponent } from '../component/';
 import { Header } from '../containers/';
-import { IStoreState } from '../store';
 
 export const Home: React.FC = (props) => {
   return (
