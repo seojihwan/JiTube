@@ -7,7 +7,6 @@ export interface ILogoutProps {
 }
 export const LogoutButton: React.FC<ILogoutProps> = (props) => {
   const history = useHistory();
-  console.log(props);
   const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     props.requestLogout();
     document.cookie = 'xAuth=; expires=Thu, 01 Jan 1970 00:00:00';

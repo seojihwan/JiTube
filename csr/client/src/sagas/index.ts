@@ -33,17 +33,26 @@ function* authenticationWorkflow() {
         const { data } = yield call(Api.requsetLogin, email, password);
 
         yield put(Actions.successLogin(data));
-
         auth = true;
       } catch (error) {
         console.log(error);
+        break;
       }
-      yield take(Actions.requestLogout);
-      yield put(Actions.successLogout());
     }
+    yield take(Actions.requestLogout);
+    yield put(Actions.successLogout());
   }
 }
 
+function* videoUpload() {
+  while (true) {
+    const { payload: formData } = yield take(
+      getType(Actions.requestVideoUpload)
+    );
+    console.log(formData);
+  }
+}
 export default function* () {
   yield fork(authenticationWorkflow);
+  yield fork(videoUpload);
 }

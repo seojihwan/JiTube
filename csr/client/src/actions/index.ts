@@ -7,13 +7,17 @@ export interface IrequsetLoginPayload {
 export interface IrequsetSignUpPayload extends IrequsetLoginPayload {
   name: string;
 }
-export const requestLogin = createAction('@command/login')<
+export const requestLogin = createAction('@command/user/login')<
   IrequsetLoginPayload
 >();
-export const successLogin = createAction('@command/successLogin')<string>();
-export const requestLogout = createAction('@command/requestLogout')();
-export const successLogout = createAction('@command/successLogout')();
-
-export const requestSignUp = createAction('@command/requsetSignUp')<
+export const successLogin = createAction('@command/user/successLogin')<
+  string
+>();
+export const requestLogout = createAction('@command/user/requestLogout')();
+export const successLogout = createAction('@command/user/successLogout')();
+export const requestSignUp = createAction('@command/user/requsetSignUp')<
   IrequsetSignUpPayload
+>();
+export const requestVideoUpload = createAction('@command/video/upload')<
+  FormData
 >();

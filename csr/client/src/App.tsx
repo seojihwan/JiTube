@@ -1,16 +1,21 @@
 import React from 'react';
 import { Route, Switch, BrowserRouter } from 'react-router-dom';
-import { Home, Login, SignUp } from './pages';
+import { NavBar } from './containers';
+import { Home, Login, SignUp, Upload } from './pages';
 
 const App = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/signup" component={SignUp} />
-      </Switch>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <NavBar />
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/signup" component={SignUp} />
+          <Route exact path="/video/upload" component={Upload} />
+        </Switch>
+      </BrowserRouter>
+    </>
   );
 };
 

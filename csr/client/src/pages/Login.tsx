@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { requestLogin } from '../actions';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useAuthCheck } from '../hook';
 
 export const Login: React.FC = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
+  const isAuth = useAuthCheck();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const changeEmail = (e: React.FormEvent<HTMLInputElement>) => {
@@ -19,10 +19,10 @@ export const Login: React.FC = () => {
     e.preventDefault();
     dispatch(requestLogin({ email, password }));
   };
-  if (useAuthCheck()) {
-    history.push('/');
-  }
-  return (
+
+  return isAuth ? (
+    <Redirect to="/" />
+  ) : (
     <div>
       <form onSubmit={onSubmit}>
         <label>이메일</label>

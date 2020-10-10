@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { requestSignUp } from '../actions';
-import { useHistory } from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 import { useAuthCheck } from '../hook';
 
 export const SignUp: React.FC = () => {
-  const history = useHistory();
   const dispatch = useDispatch();
+  const isAuth = useAuthCheck();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
@@ -31,10 +31,10 @@ export const SignUp: React.FC = () => {
     }
     dispatch(requestSignUp({ email, password, name }));
   };
-  if (useAuthCheck()) {
-    history.push('/');
-  }
-  return (
+
+  return isAuth ? (
+    <Redirect to="/" />
+  ) : (
     <div>
       <form onSubmit={onSubmit}>
         <label>이메일</label>
