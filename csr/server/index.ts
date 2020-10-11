@@ -4,8 +4,7 @@ import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
-import { IUser, User, UserDocument } from './models';
-import { checkAuth, removeToken } from './auth';
+import { userRouter, videoRouter } from './router/';
 const app = express();
 const port = process.env.port || 4000;
 
@@ -30,51 +29,5 @@ mongoose
   .then(() => console.log('connected to mongoDB'))
   .catch((error) => console.log(error));
 
-app.post('/signup', (req: Request, res: Response) => {
-  const user = new User(req.body);
-  user.save((err, user) => {
-    if (err) return res.status(400).json({ register: false, err });
-    return res.status(200).json({ register: true, user });
-  });
-});
-
-app.post('/login', (req: Request, res: Response) => {
-  User.findOne(
-    { email: req.body.email },
-    (err: string | undefined, user: UserDocument | undefined) => {
-      if (!user) {
-        return res.status(400).json({
-          login: false,
-          message: '등록되지 않은 이메일입니다.',
-        });
-      }
-      user.comparePassword(
-        req.body.password,
-        (err: string | undefined, isEqual: boolean) => {
-          if (!isEqual)
-            return res
-              .status(400)
-              .json({ login: false, message: '비밀번호가 틀렸습니다' });
-
-          user.generateToken((err: string | undefined, user: UserDocument) => {
-            if (err) return res.status(400).send(err);
-            res.cookie('xAuth', user.token).status(200).json(user._id);
-          });
-        }
-      );
-    }
-  );
-});
-
-app.get('/auth', checkAuth, (req: Request, res: Response) => {
-  res.status(200).json({ auth: true });
-});
-
-app.get('/logout', removeToken, (req: Request, res: Response) => {
-  res.clearCookie('xAuth');
-  res.status(200).json({ cookie: false });
-});
-
-app.get('/hello', (req: Request, res: Response) => {
-  res.send('hello react');
-});
+app.use('/user', userRouter);
+app.use('/video', videoRouter);

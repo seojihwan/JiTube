@@ -2,11 +2,13 @@ import React, { useCallback, useState } from 'react';
 import { Redirect } from 'react-router-dom';
 import { useAuthCheck } from '../hook';
 import { useDropzone } from 'react-dropzone';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { requestVideoUpload } from '../actions';
+import { IStoreState } from '../store';
 
 export const Upload: React.FC = () => {
   const isAuth = useAuthCheck();
+  const user_id = useSelector((state:IStoreState) => state.authentication?.user_id) 
   const dispatch = useDispatch();
   const [file, setFile] = useState<File>();
   const [title, setTitle] = useState<string>('');
@@ -23,6 +25,7 @@ export const Upload: React.FC = () => {
     formData.append('video', file as File);
     formData.append('title', title);
     formData.append('description', description);
+    formData.append('user_id', user_id as string);
     dispatch(requestVideoUpload(formData));
   };
 

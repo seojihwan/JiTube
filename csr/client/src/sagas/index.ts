@@ -1,10 +1,15 @@
-import { sign } from 'jsonwebtoken';
 import { call, fork, put, take, race, select } from 'redux-saga/effects';
 import { getType } from 'typesafe-actions';
 import * as Actions from '../actions';
 import * as Api from '../apis';
 import { IStoreState } from '../store';
 function* authenticationWorkflow() {
+  if (document.cookie) {
+    const {
+      data: { user_id, email, token },
+    } = yield call(Api.requestAuth);
+    yield put(Actions.successAuth({ user_id, email, token }));
+  }
   while (true) {
     let auth = yield select((state: IStoreState) => state.authentication);
     while (!auth) {
@@ -13,8 +18,8 @@ function* authenticationWorkflow() {
           login,
           signup,
         }: {
-          login: { payload: Actions.IrequsetLoginPayload };
-          signup: { payload: Actions.IrequsetSignUpPayload };
+          login: { payload: Actions.IRequsetLoginPayload };
+          signup: { payload: Actions.IRequsetSignUpPayload };
         } = yield race({
           login: take(getType(Actions.requestLogin)),
           signup: take(getType(Actions.requestSignUp)),
@@ -28,9 +33,9 @@ function* authenticationWorkflow() {
           const {
             payload: { name },
           } = signup;
-          yield call(Api.requsetSignUp, email, password, name);
+          yield call(Api.requestSignUp, email, password, name);
         }
-        const { data } = yield call(Api.requsetLogin, email, password);
+        const { data } = yield call(Api.requestLogin, email, password);
 
         yield put(Actions.successLogin(data));
         auth = true;
@@ -49,7 +54,7 @@ function* videoUpload() {
     const { payload: formData } = yield take(
       getType(Actions.requestVideoUpload)
     );
-    console.log(formData);
+    yield call(Api.requestVideoUpload, formData);
   }
 }
 export default function* () {

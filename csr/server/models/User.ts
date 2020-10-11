@@ -45,9 +45,12 @@ userSchema.methods.comparePassword = function (plainPW: string, cb: Function) {
 };
 userSchema.methods.generateToken = function (cb: Function) {
   const user = this;
-  const token = jwt.sign(user._id.toHexString(), process.env.jwtSecret as string);
+  const token = jwt.sign(
+    user._id.toHexString(),
+    process.env.jwtSecret as string
+  );
   user.token = token;
-  user.save((err, user) => {
+  user.save((err: string | undefined, user: UserDocument) => {
     if (err) return cb(err);
     cb(null, user);
   });
@@ -56,10 +59,13 @@ userSchema.statics.findByToken = function (token: string, cb: Function) {
   const user = this;
   jwt.verify(token, process.env.jwtSecret as string, (err, decoded) => {
     if (err) return cb(err);
-    user.findOne({ _id: decoded }, (err: string | undefined, user: UserDocument) => {
-      if (err) return cb(err);
-      cb(null, user);
-    });
+    user.findOne(
+      { _id: decoded },
+      (err: string | undefined, user: UserDocument) => {
+        if (err) return cb(err);
+        cb(null, user);
+      }
+    );
   });
 };
 //User.save() 이전에 실행됨

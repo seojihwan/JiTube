@@ -1,22 +1,36 @@
 import { createAction } from 'typesafe-actions';
 
-export interface IrequsetLoginPayload {
+export interface IRequsetLoginPayload {
   email: string;
   password: string;
 }
-export interface IrequsetSignUpPayload extends IrequsetLoginPayload {
+export interface IRequsetSignUpPayload extends IRequsetLoginPayload {
   name: string;
 }
+export interface IVideoUploadPayload {
+  formData: FormData;
+  title: string;
+  description: string;
+}
+export interface ISuccessLogin {
+  user_id: string;
+  email: string;
+  token: string;
+}
+
+export const successAuth = createAction('@command/user/successAuth')<
+  ISuccessLogin
+>();
 export const requestLogin = createAction('@command/user/login')<
-  IrequsetLoginPayload
+  IRequsetLoginPayload
 >();
 export const successLogin = createAction('@command/user/successLogin')<
-  string
+  ISuccessLogin
 >();
 export const requestLogout = createAction('@command/user/requestLogout')();
 export const successLogout = createAction('@command/user/successLogout')();
 export const requestSignUp = createAction('@command/user/requsetSignUp')<
-  IrequsetSignUpPayload
+  IRequsetSignUpPayload
 >();
 export const requestVideoUpload = createAction('@command/video/upload')<
   FormData

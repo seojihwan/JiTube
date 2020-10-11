@@ -11,9 +11,6 @@ import rootSaga from './sagas';
 const sagaMiddleware = createSagaMiddleware();
 const store = createStore(
   reducer,
-  document.cookie
-    ? { ...initializeState, authentication: true }
-    : { ...initializeState },
   composeWithDevTools(applyMiddleware(sagaMiddleware))
 );
 
