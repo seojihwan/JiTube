@@ -20,6 +20,13 @@ export const LoginButton = () => {
     </Link>
   );
 };
+export const SigninButton = () => {
+  return (
+    <Link to="/signup">
+      <button>회원가입</button>
+    </Link>
+  );
+};
 export const NavBar: React.FC = () => {
   const dispatch = useDispatch();
   const isAuth = useAuthCheck();
@@ -35,7 +42,10 @@ export const NavBar: React.FC = () => {
           requestLogout={() => dispatch(requestLogout())}
         />
       ) : (
-        <LoginButton />
+        <>
+          <LoginButton />
+          <SigninButton />
+        </>
       )}
     </>
   );

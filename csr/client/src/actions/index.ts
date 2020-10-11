@@ -1,6 +1,6 @@
 import { createAction } from 'typesafe-actions';
 import { UserDocument } from '../../../server/models';
-import { IVideo } from '../store';
+import { IVideoData } from '../store';
 
 export interface IRequsetLoginPayload {
   email: string;
@@ -18,6 +18,11 @@ export interface ISuccessLogin {
   user_id: string;
   email: string;
   token: string;
+}
+export interface IRequestLikePayload {
+  user_id: string;
+  video_id: string;
+  like: boolean;
 }
 
 export const successAuth = createAction('@command/user/successAuth')<
@@ -38,5 +43,9 @@ export const requestVideoUpload = createAction('@command/video/upload')<
   FormData
 >();
 export const successGetAllVideos = createAction('@command/video/getall')<
-  Array<IVideo>
+  Array<IVideoData>
+>();
+
+export const requestLikeVideo = createAction('@command/video/like')<
+  IRequestLikePayload
 >();

@@ -6,6 +6,7 @@ export interface IVideo {
   description: string;
   filePath: string;
   thumbnailPath: string;
+  likePeople: Array<string>;
 }
 export interface VideoDocument extends IVideo, Document {}
 export interface VideoModel extends Model<VideoDocument> {}
@@ -15,6 +16,7 @@ const videoSchema = new Schema<VideoDocument>({
   description: { type: String },
   filePath: { type: String, required: true },
   thumbnailPath: { type: String, required: true },
+  likePeople: [{ type: String }],
 });
 
 export const Video = model<VideoDocument, VideoModel>('Video', videoSchema);

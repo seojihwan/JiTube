@@ -16,6 +16,9 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 app.listen(port, () => console.log('listening on port', port));
+
+app.use(express.static('server/uploads'));
+
 app.get('/', (req: Request, res: Response) => res.send('hello express'));
 
 dotenv.config();

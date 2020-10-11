@@ -3,11 +3,23 @@ import { action, getType } from 'typesafe-actions';
 import * as Actions from '../actions';
 import * as Api from '../apis';
 import { IStoreState } from '../store';
+const getCookie = (name: string) => {
+  function escape(s: string) {
+    return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, '\\$1');
+  }
+  var match = document.cookie.match(
+    RegExp('(?:^|;\\s*)' + escape(name) + '=([^;]*)')
+  );
+  return match ? match[1] : '';
+};
+
 function* authenticationWorkflow() {
   if (document.cookie) {
-    const {
-      data: { user_id, email, token },
-    } = yield call(Api.requestAuth);
+    const [user_id, email, token] = [
+      getCookie('user_id'),
+      getCookie('email'),
+      getCookie('token'),
+    ];
     yield put(Actions.successAuth({ user_id, email, token }));
   }
   while (true) {
@@ -58,16 +70,23 @@ function* videoUpload() {
   }
 }
 function* getVideos() {
-  let isRequestGetVideos = true;
-  while (isRequestGetVideos) {
-    const { data: videos } = yield call(Api.requestGetAllVideos);
-    console.log('allvideos', videos);
-    yield put(Actions.successGetAllVideos(videos));
-    isRequestGetVideos = false;
+  const {
+    data: { videos },
+  } = yield call(Api.requestGetAllVideos);
+  console.log('allvideos', videos);
+  yield put(Actions.successGetAllVideos(videos));
+}
+function* likeVideos() {
+  while (true) {
+    const {
+      payload: { user_id, video_id, like },
+    } = yield take(getType(Actions.requestLikeVideo));
+    yield call(Api.requestLikeVideo, { user_id, video_id, like });
   }
 }
 export default function* () {
   yield fork(authenticationWorkflow);
   yield fork(videoUpload);
   yield fork(getVideos);
+  yield fork(likeVideos);
 }

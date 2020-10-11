@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
-import { Video } from '../models';
+import { User, Video } from '../models';
 import ffmpeg from 'fluent-ffmpeg';
 export const videoRouter = express.Router();
 
@@ -14,20 +14,22 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + '-' + file.originalname);
   },
 });
+
 const fileFilter = (req: Request, file: Express.Multer.File, cb: Function) => {
   const extName = path.extname(file.originalname);
-  const videoExtName = ['.mp4', '.avi', '.wmv'];
+  const videoExtName = ['.mp4', '.wmv'];
   if (!videoExtName.includes(extName)) {
     cb(null, false);
   } else {
     cb(null, true);
   }
 };
+
 const upload = multer({ storage, fileFilter });
 videoRouter.post(
   '/upload',
   upload.single('video'),
-  (req: Request, res: Response) => {
+  async (req: Request, res: Response) => {
     const token = req.cookies.xAuth;
     console.log(req.body);
     console.log(req.file);
@@ -49,36 +51,59 @@ videoRouter.post(
     const video = new Video({
       ...req.body,
       admin: req.body.user_id,
-      filePath: req.file.path,
-      thumbnailPath: 'server/uploads/thumbnails/' + thumbnailPath + '.png',
+      filePath: '/' + req.file.filename,
+      thumbnailPath: '/thumbnails/' + thumbnailPath + '.png',
     });
-    console.log(video);
-    video.save();
-    res.status(200).json({ upload: 'true', '비디오 이름': req.file.filename });
-  }
-);
-videoRouter.post(
-  '/thumbnail',
-  upload.single('video'),
-  (req: Request, res: Response) => {
-    const token = req.cookies.xAuth;
-    console.log(req.body);
-    console.log(req.file);
-    if (!req.file) {
-      res.status(400).json({
-        upload: 'false',
-        message: '비디오 업로드 실패',
-      });
+
+    try {
+      await video.save();
+      res.status(200).json({ requestUpload: true });
+    } catch (error) {
+      console.log(error);
+      res.status(400).json({ requestUpload: false });
     }
-    res.status(200).json({ upload: 'true', '비디오 이름': req.file.filename });
   }
 );
 
-videoRouter.get('/getall', (req: Request, res: Response) => {
-  Video.find()
-    .populate('admin')
-    .exec((err, videos) => {
-      if (err) return res.status(400).json(err);
-      res.status(200).json(videos);
-    });
+videoRouter.get('/getall', async (req: Request, res: Response) => {
+  try {
+    const videos = await Video.find().populate('admin').exec();
+    res.status(200).json({ videos });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ requestGetAll: false });
+  }
+});
+
+videoRouter.post('/like', async (req: Request, res: Response) => {
+  console.log(req.body);
+  try {
+    if (req.body.like) {
+      await Video.findByIdAndUpdate(
+        req.body.video_id,
+        { $push: { likePeople: req.body.user_id } },
+        { new: true }
+      );
+      await User.findByIdAndUpdate(
+        req.body.user_id,
+        { $push: { likeVideos: req.body.video_id } },
+        { new: true }
+      );
+    } else {
+      await Video.findByIdAndUpdate(
+        req.body.video_id,
+        { $pull: { likePeople: req.body.user_id } },
+        { new: true }
+      );
+      await User.findByIdAndUpdate(
+        req.body.user_id,
+        { $pull: { likeVideos: req.body.video_id } },
+        { new: true }
+      );
+    }
+    res.status(200).json({ requestLike: true });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ requestLike: false });
+  }
 });

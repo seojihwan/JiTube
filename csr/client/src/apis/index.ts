@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
+import { IRequestLikePayload } from '../actions';
 const endpoint = 'http://localhost:4000';
 
 export const requestAuth = () =>
@@ -39,10 +40,19 @@ export const requestVideoUpload = (formData: FormData) =>
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
+
 export const requestGetAllVideos = () =>
   new Promise((resolve, reject) => {
     axios
       .get(endpoint + '/video/getall')
+      .then((response: AxiosResponse) => resolve(response))
+      .catch((error: AxiosError) => reject(error));
+  });
+
+export const requestLikeVideo = (data: IRequestLikePayload) =>
+  new Promise((resolve, reject) => {
+    axios
+      .post(endpoint + '/video/like', data)
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
