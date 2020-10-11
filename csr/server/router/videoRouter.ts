@@ -37,17 +37,23 @@ videoRouter.post(
         message: '비디오 업로드 실패',
       });
     }
-    const video = new Video({ ...req.body, admin: req.body.user_id });
-    video.save();
-    console.log(video);
+    const thumbnailPath = path.basename(
+      req.file.filename,
+      path.extname(req.file.filename)
+    );
     ffmpeg(req.file.path).screenshot({
       count: 1,
       folder: 'server/uploads/thumbnails',
-      filename: path.basename(
-        req.file.filename,
-        path.extname(req.file.filename)
-      ),
+      filename: thumbnailPath,
     });
+    const video = new Video({
+      ...req.body,
+      admin: req.body.user_id,
+      filePath: req.file.path,
+      thumbnailPath: 'server/uploads/thumbnails/' + thumbnailPath + '.png',
+    });
+    console.log(video);
+    video.save();
     res.status(200).json({ upload: 'true', '비디오 이름': req.file.filename });
   }
 );
@@ -67,3 +73,12 @@ videoRouter.post(
     res.status(200).json({ upload: 'true', '비디오 이름': req.file.filename });
   }
 );
+
+videoRouter.get('/getall', (req: Request, res: Response) => {
+  Video.find()
+    .populate('admin')
+    .exec((err, videos) => {
+      if (err) return res.status(400).json(err);
+      res.status(200).json(videos);
+    });
+});

@@ -1,4 +1,6 @@
 import { createAction } from 'typesafe-actions';
+import { UserDocument } from '../../../server/models';
+import { IVideo } from '../store';
 
 export interface IRequsetLoginPayload {
   email: string;
@@ -34,4 +36,7 @@ export const requestSignUp = createAction('@command/user/requsetSignUp')<
 >();
 export const requestVideoUpload = createAction('@command/video/upload')<
   FormData
+>();
+export const successGetAllVideos = createAction('@command/video/getall')<
+  Array<IVideo>
 >();

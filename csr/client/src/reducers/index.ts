@@ -3,6 +3,7 @@ import * as Actions from '../actions';
 import { ActionType, getType } from 'typesafe-actions';
 export const initializeState: IStoreState = {
   authentication: null,
+  videos: null,
 };
 
 export default (
@@ -25,6 +26,11 @@ export default (
       return {
         ...state,
         authentication: null,
+      };
+    case getType(Actions.successGetAllVideos):
+      return {
+        ...state,
+        videos: action.payload,
       };
     default:
       return { ...state };

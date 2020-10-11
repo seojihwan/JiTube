@@ -39,3 +39,10 @@ export const requestVideoUpload = (formData: FormData) =>
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
+export const requestGetAllVideos = () =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(endpoint + '/video/getall')
+      .then((response: AxiosResponse) => resolve(response))
+      .catch((error: AxiosError) => reject(error));
+  });

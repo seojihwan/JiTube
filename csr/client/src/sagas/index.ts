@@ -1,5 +1,5 @@
 import { call, fork, put, take, race, select } from 'redux-saga/effects';
-import { getType } from 'typesafe-actions';
+import { action, getType } from 'typesafe-actions';
 import * as Actions from '../actions';
 import * as Api from '../apis';
 import { IStoreState } from '../store';
@@ -57,7 +57,17 @@ function* videoUpload() {
     yield call(Api.requestVideoUpload, formData);
   }
 }
+function* getVideos() {
+  let isRequestGetVideos = true;
+  while (isRequestGetVideos) {
+    const { data: videos } = yield call(Api.requestGetAllVideos);
+    console.log('allvideos', videos);
+    yield put(Actions.successGetAllVideos(videos));
+    isRequestGetVideos = false;
+  }
+}
 export default function* () {
   yield fork(authenticationWorkflow);
   yield fork(videoUpload);
+  yield fork(getVideos);
 }
