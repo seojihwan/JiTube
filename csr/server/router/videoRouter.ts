@@ -1,7 +1,7 @@
 import express, { Request, Response } from 'express';
 import multer from 'multer';
 import path from 'path';
-import { User, Video } from '../models';
+import { User, Video, Comment } from '../models';
 import ffmpeg from 'fluent-ffmpeg';
 export const videoRouter = express.Router();
 
@@ -67,11 +67,24 @@ videoRouter.post(
 
 videoRouter.get('/getall', async (req: Request, res: Response) => {
   try {
-    const videos = await Video.find().populate('admin').exec();
+    const videos = await Video.find().populate('admin comments').exec();
     res.status(200).json({ videos });
   } catch (error) {
     console.log(error);
     res.status(400).json({ requestGetAll: false });
+  }
+});
+
+videoRouter.post('/getone', async (req: Request, res: Response) => {
+  console.log(req.body);
+  try {
+    const video = await Video.findById(req.body.video_id)
+      .populate('admin comments')
+      .exec();
+    res.status(200).json({ video });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ requestGetOne: false });
   }
 });
 
@@ -105,5 +118,43 @@ videoRouter.post('/like', async (req: Request, res: Response) => {
   } catch (error) {
     console.log(error);
     res.status(400).json({ requestLike: false });
+  }
+});
+
+videoRouter.post('/comment', async (req: Request, res: Response) => {
+  console.log(req.body);
+  const { username, contents, video_id, comment_id } = req.body;
+  const comment = new Comment({ username, contents });
+  try {
+    await comment.save();
+    console.log(comment, 'comment');
+    if (!comment_id) {
+      await Video.findByIdAndUpdate(
+        video_id,
+        { $push: { comments: comment } },
+        { new: true }
+      );
+    } else {
+      await Comment.findByIdAndUpdate(
+        comment_id,
+        {
+          $push: { replyComments: comment },
+        },
+        { new: true }
+      );
+    }
+    res.status(200).json({ comment: true });
+  } catch (error) {
+    res.status(400).json({ message: '코멘트 등록 실패' });
+  }
+});
+
+videoRouter.post('/deletecomment', async (req: Request, res: Response) => {
+  const { comment_id } = req.body;
+  try {
+    await Comment.findByIdAndDelete(comment_id).exec();
+    res.status(200).json({ deletecomment: true });
+  } catch (error) {
+    res.status(400).json({ message: '코멘트 삭제 실패' });
   }
 });

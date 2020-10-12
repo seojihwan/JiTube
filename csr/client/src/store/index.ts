@@ -5,6 +5,7 @@ export interface IAuthentication {
   email: string;
   user_id: string;
   token: string;
+  name: string;
 }
 
 export interface IVideoData extends IVideo {
@@ -13,4 +14,5 @@ export interface IVideoData extends IVideo {
 export interface IStoreState {
   authentication: IAuthentication | null;
   videos: Array<IVideoData> | null;
+  currentPageVideo: IVideoData | null;
 }

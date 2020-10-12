@@ -1,4 +1,3 @@
-import { query } from 'express';
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IVideoData } from '../store';

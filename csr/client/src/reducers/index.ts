@@ -4,6 +4,7 @@ import { ActionType, getType } from 'typesafe-actions';
 export const initializeState: IStoreState = {
   authentication: null,
   videos: null,
+  currentPageVideo: null,
 };
 
 export default (
@@ -31,6 +32,11 @@ export default (
       return {
         ...state,
         videos: action.payload,
+      };
+    case getType(Actions.successGetOneVideo):
+      return {
+        ...state,
+        currentPageVideo: action.payload,
       };
     default:
       return { ...state };

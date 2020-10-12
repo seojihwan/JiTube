@@ -8,7 +8,7 @@ import { IStoreState } from '../store';
 
 export const Upload: React.FC = () => {
   const isAuth = useAuthCheck();
-  const user_id = useSelector((state:IStoreState) => state.authentication?.user_id) 
+  const auth = useSelector((state: IStoreState) => state.authentication);
   const dispatch = useDispatch();
   const [file, setFile] = useState<File>();
   const [title, setTitle] = useState<string>('');
@@ -21,12 +21,14 @@ export const Upload: React.FC = () => {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append('video', file as File);
-    formData.append('title', title);
-    formData.append('description', description);
-    formData.append('user_id', user_id as string);
-    dispatch(requestVideoUpload(formData));
+    if (auth) {
+      const formData = new FormData();
+      formData.append('video', file as File);
+      formData.append('title', title);
+      formData.append('description', description);
+      formData.append('user_id', auth.user_id);
+      dispatch(requestVideoUpload(formData));
+    }
   };
 
   const titleChange = (e: React.ChangeEvent<HTMLInputElement>) => {

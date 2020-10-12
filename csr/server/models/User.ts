@@ -1,4 +1,4 @@
-import mongoose, { Model, Schema, Document } from 'mongoose';
+import { model, Model, Schema, Document } from 'mongoose';
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 
@@ -83,4 +83,4 @@ userSchema.pre<UserDocument>('save', function (next) {
     });
   } else next();
 });
-export const User = mongoose.model<UserDocument, UserModel>('User', userSchema);
+export const User = model<UserDocument, UserModel>('User', userSchema);

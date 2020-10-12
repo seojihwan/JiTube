@@ -15,12 +15,13 @@ const getCookie = (name: string) => {
 
 function* authenticationWorkflow() {
   if (document.cookie) {
-    const [user_id, email, token] = [
+    const [user_id, email, token, name] = [
       getCookie('user_id'),
       getCookie('email'),
       getCookie('token'),
+      getCookie('name'),
     ];
-    yield put(Actions.successAuth({ user_id, email, token }));
+    yield put(Actions.successAuth({ user_id, email, token, name }));
   }
   while (true) {
     let auth = yield select((state: IStoreState) => state.authentication);
@@ -69,13 +70,20 @@ function* videoUpload() {
     yield call(Api.requestVideoUpload, formData);
   }
 }
-function* getVideos() {
+
+function* getAllVideos() {
   const {
     data: { videos },
   } = yield call(Api.requestGetAllVideos);
-  console.log('allvideos', videos);
   yield put(Actions.successGetAllVideos(videos));
 }
+
+function* getOneVideos() {
+  const {
+    data: { video },
+  } = yield take(getType(Actions.requestGetOneVideo));
+}
+
 function* likeVideos() {
   while (true) {
     const {
@@ -84,9 +92,39 @@ function* likeVideos() {
     yield call(Api.requestLikeVideo, { user_id, video_id, like });
   }
 }
+
+function* comment() {
+  while (true) {
+    const {
+      payload: { username, contents, video_id, comment_id },
+    } = yield take(getType(Actions.requestComment));
+    yield call(Api.requestComment, {
+      username,
+      contents,
+      video_id,
+      comment_id,
+    });
+
+    const {
+      data: { video },
+    } = yield call(Api.requestGetOneVideo, video_id);
+    yield put(Actions.successGetOneVideo(video));
+  }
+}
+
+function* deletecomment() {
+  while (true) {
+    const {
+      payload: { comment_id },
+    } = yield take(getType(Actions.requestDeleteComment));
+    yield call(Api.requestDeleteComment, comment_id);
+  }
+}
 export default function* () {
   yield fork(authenticationWorkflow);
   yield fork(videoUpload);
-  yield fork(getVideos);
+  yield fork(getAllVideos);
   yield fork(likeVideos);
+  yield fork(comment);
+  yield fork(deletecomment);
 }

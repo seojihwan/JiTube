@@ -24,6 +24,7 @@ userRouter.post('/login', async (req: Request, res: Response) => {
             res.cookie('user_id', user._id);
             res.cookie('email', user.email);
             res.cookie('token', user.token);
+            res.cookie('name', user.name);
             res.status(200).json({
               user_id: user._id,
               email: user.email,

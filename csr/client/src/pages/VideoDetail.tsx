@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { LikeButton } from '../component';
+import { CommentList } from '../containers';
 const endpoint = 'http://localhost:4000';
 import { IStoreState, IVideoData } from '../store';
 
@@ -15,6 +16,7 @@ export const VideoDetail: React.FC<RouteComponentProps<{}, any, IVideoData>> = (
       <video controls src={endpoint + videoData.filePath} />
       {/* <SideVideoList {...props}/> */}
       <LikeButton videoData={videoData} />
+      <CommentList videoData={videoData} />
     </div>
   );
 };

@@ -1,4 +1,5 @@
-import mongoose, { Model, Schema, model, Document } from 'mongoose';
+import { Model, Schema, model, Document } from 'mongoose';
+import { CommentDocument } from './Comment';
 
 export interface IVideo {
   admin: Schema.Types.ObjectId;
@@ -7,6 +8,7 @@ export interface IVideo {
   filePath: string;
   thumbnailPath: string;
   likePeople: Array<string>;
+  comments: Array<CommentDocument>;
 }
 export interface VideoDocument extends IVideo, Document {}
 export interface VideoModel extends Model<VideoDocument> {}
@@ -17,6 +19,7 @@ const videoSchema = new Schema<VideoDocument>({
   filePath: { type: String, required: true },
   thumbnailPath: { type: String, required: true },
   likePeople: [{ type: String }],
+  comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
 });
 
 export const Video = model<VideoDocument, VideoModel>('Video', videoSchema);

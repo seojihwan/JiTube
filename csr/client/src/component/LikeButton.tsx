@@ -15,8 +15,6 @@ export const LikeButton: React.FC<ILikeButtonProps> = (props) => {
   const auth = useSelector((store: IStoreState) => store.authentication);
 
   useEffect(() => {
-    console.log('useEffect');
-    console.log(auth);
     if (!auth) {
       setDisabled(true);
       setLike(true);

@@ -1,5 +1,4 @@
 import { createAction } from 'typesafe-actions';
-import { UserDocument } from '../../../server/models';
 import { IVideoData } from '../store';
 
 export interface IRequsetLoginPayload {
@@ -18,11 +17,19 @@ export interface ISuccessLogin {
   user_id: string;
   email: string;
   token: string;
+  name: string;
 }
 export interface IRequestLikePayload {
   user_id: string;
   video_id: string;
   like: boolean;
+}
+
+export interface IRequestCommentPayload {
+  username: string;
+  contents: string;
+  video_id: string;
+  comment_id: string;
 }
 
 export const successAuth = createAction('@command/user/successAuth')<
@@ -42,10 +49,24 @@ export const requestSignUp = createAction('@command/user/requsetSignUp')<
 export const requestVideoUpload = createAction('@command/video/upload')<
   FormData
 >();
-export const successGetAllVideos = createAction('@command/video/getall')<
-  Array<IVideoData>
+export const successGetAllVideos = createAction(
+  '@command/video/successgetallVideos'
+)<Array<IVideoData>>();
+
+export const requestGetOneVideo = createAction(
+  '@command/video/requestGetOneVideo'
+)<string>();
+export const successGetOneVideo = createAction(
+  '@command/video/successGetOneVideo'
+)<IVideoData>();
+
+export const requestLikeVideo = createAction('@command/video/requestlike')<
+  IRequestLikePayload
 >();
 
-export const requestLikeVideo = createAction('@command/video/like')<
-  IRequestLikePayload
+export const requestComment = createAction('@command/video/requestcomment')<
+  IRequestCommentPayload
+>();
+export const requestDeleteComment = createAction('@command/video/requestlike')<
+  string
 >();

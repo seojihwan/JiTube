@@ -1,4 +1,4 @@
 export * from './Logout';
-export * from './Video';
+export * from './Thumbnail';
 export * from './SideVideoList';
 export * from './LikeButton';
