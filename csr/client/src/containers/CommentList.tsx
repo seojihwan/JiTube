@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestComment } from '../actions';
+import { requestComment, requestGetOneVideo } from '../actions';
 import { IStoreState, IVideoData } from '../store';
-
+import { Comment } from '../component';
 interface ICommentListProps {
   videoData: IVideoData;
 }
@@ -38,7 +38,7 @@ export const CommentList: React.FC<ICommentListProps> = ({ videoData }) => {
     }
   };
   useEffect(() => {
-    console.log(videoData, 'video');
+    dispatch(requestGetOneVideo(videoData._id));
   }, []);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContents(e.currentTarget.value);
@@ -62,27 +62,8 @@ export const CommentList: React.FC<ICommentListProps> = ({ videoData }) => {
           <button>등록</button>
         </div>
       </form>
-      {videoData.comments.map((comment, idx) => (
-        <div key={idx}>
-          <h1>{comment.username}</h1>
-          <h3>{comment.contents}</h3>
-          <button data-idx={idx} onClick={onClick}>
-            대댓글 달기
-          </button>
-          <form onSubmit={onSubmit} data-comments_id={comment._id as string}>
-            <div>
-              <h1>댓글</h1>
-              <label htmlFor="contents"></label>
-              <input
-                value={contents}
-                onChange={onChange}
-                name="contents"
-                type="textarea"
-              />
-              <button>등록</button>
-            </div>
-          </form>
-        </div>
+      {video?.comments.reverse().map((comment, idx) => (
+        <Comment key={idx} {...comment} />
       ))}
     </>
   );

@@ -21,14 +21,12 @@ userRouter.post('/login', async (req: Request, res: Response) => {
       if (isSame) {
         await user.generateToken(
           (err: string | undefined, user: UserDocument) => {
-            res.cookie('user_id', user._id);
-            res.cookie('email', user.email);
-            res.cookie('token', user.token);
-            res.cookie('name', user.name);
+            res.cookie('token', user.token, { httpOnly: true });
             res.status(200).json({
               user_id: user._id,
               email: user.email,
               token: user.token,
+              name: user.name,
             });
           }
         );
@@ -40,14 +38,21 @@ userRouter.post('/login', async (req: Request, res: Response) => {
   }
 });
 
-userRouter.get('/auth', (req: Request, res: Response) => {
+userRouter.get('/auth', async (req: Request, res: Response) => {
   const token = req.cookies.token;
-  User.findByToken(token, (err: string, user: UserDocument) => {
-    if (err) throw err;
-    if (!user)
-      return res.status(400).json({ auth: false, message: '인증 실패' });
-    res.status(200).json({ user_id: user._id, email: user.email, token });
-  });
+  try {
+    User.findByToken(token, async (err: string, user: UserDocument) => {
+      if (err) throw err;
+      if (!user)
+        return res.status(400).json({ auth: false, message: '인증 실패' });
+      console.log(user);
+      res
+        .status(200)
+        .json({ user_id: user._id, email: user.email, token, name: user.name });
+    });
+  } catch (error) {
+    return res.status(400).json({ auth: false, message: '인증 실패' });
+  }
 });
 
 userRouter.get('/logout', removeToken, (req: Request, res: Response) => {

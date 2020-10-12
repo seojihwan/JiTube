@@ -3,26 +3,16 @@ import { action, getType } from 'typesafe-actions';
 import * as Actions from '../actions';
 import * as Api from '../apis';
 import { IStoreState } from '../store';
-const getCookie = (name: string) => {
-  function escape(s: string) {
-    return s.replace(/([.*+?\^$(){}|\[\]\/\\])/g, '\\$1');
-  }
-  var match = document.cookie.match(
-    RegExp('(?:^|;\\s*)' + escape(name) + '=([^;]*)')
-  );
-  return match ? match[1] : '';
-};
 
 function* authenticationWorkflow() {
-  if (document.cookie) {
-    const [user_id, email, token, name] = [
-      getCookie('user_id'),
-      getCookie('email'),
-      getCookie('token'),
-      getCookie('name'),
-    ];
-    yield put(Actions.successAuth({ user_id, email, token, name }));
-  }
+  try {
+    const {
+      data: { user_id, email, token, name },
+    } = yield call(Api.requestAuth);
+    if (token) {
+      yield put(Actions.successAuth({ user_id, email, token, name }));
+    }
+  } catch (error) {}
   while (true) {
     let auth = yield select((state: IStoreState) => state.authentication);
     while (!auth) {
@@ -79,9 +69,11 @@ function* getAllVideos() {
 }
 
 function* getOneVideos() {
+  const { payload } = yield take(getType(Actions.requestGetOneVideo));
   const {
     data: { video },
-  } = yield take(getType(Actions.requestGetOneVideo));
+  } = yield call(Api.requestGetOneVideo, payload);
+  yield put(Actions.successGetOneVideo(video));
 }
 
 function* likeVideos() {
@@ -126,5 +118,7 @@ export default function* () {
   yield fork(getAllVideos);
   yield fork(likeVideos);
   yield fork(comment);
-  yield fork(deletecomment);
+  yield fork(getOneVideos);
+
+  // yield fork(deletecomment);
 }

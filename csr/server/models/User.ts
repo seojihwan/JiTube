@@ -56,17 +56,14 @@ userSchema.methods.generateToken = async function (cb: Function) {
     return cb(error);
   }
 };
-userSchema.statics.findByToken = async function (token: string, cb: Function) {
-  const user = this;
-  jwt.verify(token, process.env.jwtSecret as string, async (err, decoded) => {
-    if (err) return cb(err);
-    try {
-      await user.findOne({ _id: decoded });
-      cb(null, user);
-    } catch (error) {
-      cb(error);
-    }
-  });
+userSchema.statics.findByToken = async (token: string, cb: Function) => {
+  try {
+    const decoded = await jwt.verify(token, process.env.jwtSecret as string);
+    const user = await User.findOne({ _id: decoded });
+    cb(null, user);
+  } catch (error) {
+    cb(error);
+  }
 };
 //User.save() 이전에 실행됨
 userSchema.pre<UserDocument>('save', function (next) {

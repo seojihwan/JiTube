@@ -3,6 +3,7 @@ import multer from 'multer';
 import path from 'path';
 import { User, Video, Comment } from '../models';
 import ffmpeg from 'fluent-ffmpeg';
+import { Types } from 'mongoose';
 export const videoRouter = express.Router();
 
 const storage = multer.diskStorage({
@@ -90,6 +91,7 @@ videoRouter.post('/getone', async (req: Request, res: Response) => {
 
 videoRouter.post('/like', async (req: Request, res: Response) => {
   console.log(req.body);
+
   try {
     if (req.body.like) {
       await Video.findByIdAndUpdate(

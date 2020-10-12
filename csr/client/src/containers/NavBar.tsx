@@ -29,14 +29,13 @@ export const SigninButton = () => {
 };
 export const NavBar: React.FC = () => {
   const dispatch = useDispatch();
-  const isAuth = useAuthCheck();
   const authentication = useSelector(
     (store: IStoreState) => store.authentication
   );
   return (
     <>
       <UploadButton />
-      {isAuth ? (
+      {authentication ? (
         <LogoutButton
           authentication={authentication}
           requestLogout={() => dispatch(requestLogout())}
