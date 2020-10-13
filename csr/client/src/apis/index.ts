@@ -22,6 +22,14 @@ export const requestLogin = (email: string, password: string) =>
       .catch((error: AxiosError) => reject(error));
   });
 
+export const requestLogout = () =>
+  new Promise((resolve, reject) => {
+    axios
+      .get(endpoint + '/user/logout', { withCredentials: true })
+      .then((response: AxiosResponse) => resolve(response))
+      .catch((error: AxiosError) => reject(error));
+  });
+
 export const requestSignUp = (email: string, password: string, name: string) =>
   new Promise((resolve, reject) => {
     console.log({ email, password, name });

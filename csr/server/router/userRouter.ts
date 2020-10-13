@@ -4,7 +4,6 @@ import { User, UserDocument } from '../models';
 export const userRouter = express.Router();
 userRouter.post('/signup', async (req: Request, res: Response) => {
   const user = new User(req.body);
-  console.log(user);
   try {
     await user.save();
     return res.status(200).json({ register: true, user });
@@ -40,8 +39,10 @@ userRouter.post('/login', async (req: Request, res: Response) => {
 
 userRouter.get('/auth', async (req: Request, res: Response) => {
   const token = req.cookies.token;
+  if (!token)
+    return res.status(200).json({ auth: false, message: '인증 실패' });
   try {
-    User.findByToken(token, async (err: string, user: UserDocument) => {
+    await User.findByToken(token, async (err: string, user: UserDocument) => {
       if (err) throw err;
       if (!user)
         return res.status(400).json({ auth: false, message: '인증 실패' });
@@ -56,7 +57,7 @@ userRouter.get('/auth', async (req: Request, res: Response) => {
 });
 
 userRouter.get('/logout', removeToken, (req: Request, res: Response) => {
-  res.clearCookie('xAuth');
+  res.clearCookie('token');
   res.status(200).json({ cookie: false });
 });
 

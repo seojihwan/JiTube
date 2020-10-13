@@ -48,6 +48,7 @@ function* authenticationWorkflow() {
       }
     }
     yield take(Actions.requestLogout);
+    yield call(Api.requestLogout);
     yield put(Actions.successLogout());
   }
 }

@@ -17,7 +17,7 @@
     "skipLibCheck": true,
     "strict": true,
     "target": "esnext",
-    "isolatedModules": true,
+    "isolatedModules": false,
     "typeRoots": ["node_modules/@types"]
   },
   "ts-node": {
@@ -26,5 +26,5 @@
     }
   },
   "exclude": ["node_modules"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "include": ["**/*.ts", "**/*.tsx","custom.d.ts"]
 }

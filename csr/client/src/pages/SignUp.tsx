@@ -1,16 +1,17 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { requestSignUp } from '../actions';
 import { Redirect } from 'react-router-dom';
-import { useAuthCheck } from '../hook';
+import { IStoreState } from '../store';
+import { AuthDiv } from './styles';
 
 export const SignUp: React.FC = () => {
   const dispatch = useDispatch();
-  const isAuth = useAuthCheck();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [password2, setPassword2] = useState<string>('');
   const [name, setName] = useState<string>('');
+  const auth = useSelector((store: IStoreState) => store.authentication);
 
   const changeEmail = (e: React.FormEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
@@ -32,43 +33,44 @@ export const SignUp: React.FC = () => {
     dispatch(requestSignUp({ email, password, name }));
   };
 
-  return isAuth ? (
+  return auth ? (
     <Redirect to="/" />
   ) : (
-    <div>
-      <form onSubmit={onSubmit}>
-        <label>이메일</label>
+    <form onSubmit={onSubmit}>
+      <AuthDiv>
         <input
           type="email"
           name="email"
+          placeholder="이메일"
+          autoComplete="on"
           value={email}
           onChange={changeEmail}
         ></input>
-        <label>비밀번호</label>
         <input
           type="password"
           name="password"
           autoComplete="on"
+          placeholder="비밀번호"
           value={password}
           onChange={changePassword}
         ></input>
-        <label>비밀번호 확인</label>
         <input
           type="password"
           name="password2"
           autoComplete="on"
+          placeholder="비밀번호 확인"
           value={password2}
           onChange={changePassword2}
         ></input>
-        <label>이름</label>
         <input
           type="text"
           name="name"
+          placeholder="이름"
           value={name}
           onChange={changeName}
         ></input>
         <button>회원가입</button>
-      </form>
-    </div>
+      </AuthDiv>
+    </form>
   );
 };

@@ -35,7 +35,7 @@ export interface IRequestCommentPayload {
 export const successAuth = createAction('@command/user/successAuth')<
   ISuccessLogin
 >();
-export const requestLogin = createAction('@command/user/login')<
+export const requestLogin = createAction('@command/user/requestLogin')<
   IRequsetLoginPayload
 >();
 export const successLogin = createAction('@command/user/successLogin')<

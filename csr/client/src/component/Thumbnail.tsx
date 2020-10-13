@@ -7,7 +7,7 @@ export const Thumbnail: React.FC<IVideoData> = (props) => {
   return (
     <Link to={{ pathname: `video/${props._id}`, state: props }}>
       <div>
-        {JSON.stringify(props)}
+        {/* {JSON.stringify(props)} */}
         <img src={endpoint + props.thumbnailPath} alt="" />
       </div>
     </Link>

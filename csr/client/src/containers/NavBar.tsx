@@ -3,9 +3,44 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { requestLogout } from '../actions';
 import { LogoutButton } from '../component';
-import { useAuthCheck } from '../hook';
 import { IStoreState } from '../store';
+import Logo from './styles/res/youtube.svg';
+import { NavDiv, NavStart, NavEnd } from './styles';
 
+export const NavBar: React.FC = () => {
+  const dispatch = useDispatch();
+  const auth = useSelector((store: IStoreState) => store.authentication);
+  return (
+    <NavDiv>
+      <NavStart>
+        <HomeButton />
+      </NavStart>
+
+      <NavEnd>
+        <UploadButton />
+        {auth ? (
+          <LogoutButton
+            authentication={auth}
+            requestLogout={() => dispatch(requestLogout())}
+          />
+        ) : (
+          <>
+            <LoginButton />
+            <SigninButton />
+          </>
+        )}
+      </NavEnd>
+    </NavDiv>
+  );
+};
+
+export const HomeButton = () => {
+  return (
+    <Link to="/">
+      <img src={Logo} alt="" />
+    </Link>
+  );
+};
 export const UploadButton = () => {
   return (
     <Link to="/video/upload">
@@ -25,27 +60,5 @@ export const SigninButton = () => {
     <Link to="/signup">
       <button>회원가입</button>
     </Link>
-  );
-};
-export const NavBar: React.FC = () => {
-  const dispatch = useDispatch();
-  const authentication = useSelector(
-    (store: IStoreState) => store.authentication
-  );
-  return (
-    <>
-      <UploadButton />
-      {authentication ? (
-        <LogoutButton
-          authentication={authentication}
-          requestLogout={() => dispatch(requestLogout())}
-        />
-      ) : (
-        <>
-          <LoginButton />
-          <SigninButton />
-        </>
-      )}
-    </>
   );
 };

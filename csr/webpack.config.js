@@ -4,7 +4,6 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: './client/src/index.tsx',
-  mode: 'development',
   module: {
     rules: [
       {
@@ -16,16 +15,20 @@ module.exports = {
         test: /\.css$/,
         use: ['style-loader', 'css-loader'],
       },
+      {
+        test: /\.svg$/,
+        use: ['file-loader'],
+      },
     ],
   },
   resolve: { extensions: ['*', '.jsx', '.js', '.ts', '.tsx'] },
   output: {
-    path: path.resolve(__dirname, 'dist/'),
+    path: path.resolve(__dirname, './dist'),
     publicPath: '/',
     filename: 'bundle.js',
   },
   devServer: {
-    contentBase: path.join(__dirname, 'public/'),
+    contentBase: path.join(__dirname, 'client/public/'),
     port: 3000,
     hot: true,
     historyApiFallback: true,
@@ -33,8 +36,5 @@ module.exports = {
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new HtmlWebpackPlugin({ template: './client/public/index.html' }),
-    // new webpack.DefinePlugin({
-    //   'process.env.NODE_ENV': JSON.stringify('production'),
-    // }),
   ],
 };

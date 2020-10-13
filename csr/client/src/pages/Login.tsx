@@ -1,14 +1,16 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { requestLogin } from '../actions';
 import { Redirect } from 'react-router-dom';
-import { useAuthCheck } from '../hook';
+import { IStoreState } from '../store';
+import { AuthDiv } from './styles';
 
 export const Login: React.FC = () => {
   const dispatch = useDispatch();
-  const isAuth = useAuthCheck();
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const auth = useSelector((store: IStoreState) => store.authentication);
+
   const changeEmail = (e: React.FormEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
   };
@@ -20,28 +22,28 @@ export const Login: React.FC = () => {
     dispatch(requestLogin({ email, password }));
   };
 
-  return isAuth ? (
+  return auth ? (
     <Redirect to="/" />
   ) : (
-    <div>
-      <form onSubmit={onSubmit}>
-        <label>이메일</label>
+    <form onSubmit={onSubmit}>
+      <AuthDiv>
         <input
           type="email"
           name="email"
           value={email}
           onChange={changeEmail}
+          placeholder="이메일"
         ></input>
-        <label>비밀번호</label>
         <input
           type="password"
           name="password"
           autoComplete="on"
           value={password}
           onChange={changePassword}
+          placeholder="비밀번호"
         ></input>
         <button>로그인</button>
-      </form>
-    </div>
+      </AuthDiv>
+    </form>
   );
 };

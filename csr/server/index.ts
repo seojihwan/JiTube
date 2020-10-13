@@ -5,9 +5,9 @@ import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
 import cors from 'cors';
 import { userRouter, videoRouter } from './router/';
+dotenv.config();
 const app = express();
 const port = process.env.port || 4000;
-
 //application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 //application/json
@@ -21,7 +21,6 @@ app.use(express.static('server/uploads'));
 
 app.get('/', (req: Request, res: Response) => res.send('hello express'));
 
-dotenv.config();
 mongoose
   .connect(process.env.mongoURI as string, {
     useNewUrlParser: true,
