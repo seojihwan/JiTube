@@ -97,7 +97,7 @@ function* comment() {
       video_id,
       comment_id,
     });
-
+    console.log(username, contents, 'aaa', video_id, 'bbb', comment_id);
     const {
       data: { video },
     } = yield call(Api.requestGetOneVideo, video_id);

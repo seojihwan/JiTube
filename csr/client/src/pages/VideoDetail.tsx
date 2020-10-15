@@ -16,7 +16,7 @@ export const VideoDetail: React.FC<RouteComponentProps<{}, any, IVideoData>> = (
       <video controls src={endpoint + videoData.filePath} />
       {/* <SideVideoList {...props}/> */}
       <LikeButton videoData={videoData} />
-      <CommentList videoData={videoData} />
+      <CommentList video_id={videoData._id} />
     </div>
   );
 };

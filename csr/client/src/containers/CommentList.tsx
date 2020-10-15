@@ -4,10 +4,11 @@ import { requestComment, requestGetOneVideo } from '../actions';
 import { IStoreState, IVideoData } from '../store';
 import { Comment } from '../component';
 interface ICommentListProps {
-  videoData: IVideoData;
+  video_id: string;
 }
 
-export const CommentList: React.FC<ICommentListProps> = ({ videoData }) => {
+export const CommentList: React.FC<ICommentListProps> = ({ video_id }) => {
+  console.log(video_id);
   const dispatch = useDispatch();
   const auth = useSelector((store: IStoreState) => store.authentication);
   const video = useSelector((store: IStoreState) => store.currentPageVideo);
@@ -21,7 +22,7 @@ export const CommentList: React.FC<ICommentListProps> = ({ videoData }) => {
           requestComment({
             username: auth.name,
             contents,
-            video_id: '',
+            video_id,
             comment_id: comment_id,
           })
         );
@@ -30,7 +31,7 @@ export const CommentList: React.FC<ICommentListProps> = ({ videoData }) => {
           requestComment({
             username: auth.name,
             contents,
-            video_id: videoData._id,
+            video_id,
             comment_id: '',
           })
         );
@@ -38,15 +39,12 @@ export const CommentList: React.FC<ICommentListProps> = ({ videoData }) => {
     }
   };
   useEffect(() => {
-    dispatch(requestGetOneVideo(videoData._id));
+    dispatch(requestGetOneVideo(video_id));
   }, []);
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setContents(e.currentTarget.value);
   };
 
-  const onClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.currentTarget.getAttribute('data-idx');
-  };
   return (
     <>
       <form onSubmit={onSubmit}>
@@ -63,7 +61,7 @@ export const CommentList: React.FC<ICommentListProps> = ({ videoData }) => {
         </div>
       </form>
       {video?.comments.reverse().map((comment, idx) => (
-        <Comment key={idx} {...comment} />
+        <Comment key={idx} video_id={video._id} {...comment} />
       ))}
     </>
   );

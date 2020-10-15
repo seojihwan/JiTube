@@ -7,15 +7,11 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
-  token: string;
   likeVideos: Array<string>;
   comparePassword(p: string): Promise<boolean>;
-  generateToken(c: Function): void;
 }
 export interface UserDocument extends IUser, Document {}
-export interface UserModel extends Model<UserDocument> {
-  findByToken(token: string, cb: Function): void;
-}
+export interface UserModel extends Model<UserDocument> {}
 const userSchema = new Schema<UserDocument>({
   name: {
     type: String,
@@ -31,9 +27,7 @@ const userSchema = new Schema<UserDocument>({
     type: String,
     required: true,
   },
-  token: {
-    type: String,
-  },
+
   imageUrl: String,
   likeVideos: [{ type: String }],
 });
@@ -42,31 +36,7 @@ const userSchema = new Schema<UserDocument>({
 userSchema.methods.comparePassword = async function (plainPW: string) {
   return await bcrypt.compare(plainPW, this.password);
 };
-userSchema.methods.generateToken = async function (cb: Function) {
-  const user = this;
-  const token = jwt.sign(
-    user._id.toHexString(),
-    process.env.jwtSecret as string
-  );
-  user.token = token;
-  try {
-    await user.save();
-    cb(null, user);
-  } catch (error) {
-    return cb(error);
-  }
-};
-userSchema.statics.findByToken = async (token: string, cb: Function) => {
-  try {
-    console.log(token, process.env.jwtSecret, '??????');
-    const decoded = await jwt.verify(token, process.env.jwtSecret as string);
-    console.log(decoded);
-    const user = await User.findOne({ _id: decoded });
-    cb(null, user);
-  } catch (error) {
-    cb(error);
-  }
-};
+
 //User.save() 이전에 실행됨
 userSchema.pre<UserDocument>('save', function (next) {
   const user = this;

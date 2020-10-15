@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { requestComment } from '../actions';
 import { IStoreState } from '../store';
 interface ICommentProps {
+  video_id: string;
   _id: string;
   username: string;
   contents: string;
 }
 
 export const Comment: React.FC<ICommentProps> = ({
+  video_id,
   _id,
   username,
   contents,
@@ -23,8 +25,8 @@ export const Comment: React.FC<ICommentProps> = ({
         requestComment({
           username: auth.name,
           contents: replyContents,
-          video_id: '',
           comment_id: _id,
+          video_id,
         })
       );
     }

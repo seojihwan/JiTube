@@ -129,7 +129,6 @@ videoRouter.post('/comment', async (req: Request, res: Response) => {
   const comment = new Comment({ username, contents });
   try {
     await comment.save();
-    console.log(comment, 'comment');
     if (!comment_id) {
       await Video.findByIdAndUpdate(
         video_id,
