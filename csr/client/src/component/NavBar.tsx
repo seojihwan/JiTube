@@ -2,7 +2,7 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { requestLogout } from '../actions';
-import { LogoutButton } from '../component';
+import { LogoutButton } from '.';
 import { IStoreState } from '../store';
 import Logo from './styles/res/youtube.svg';
 import { NavDiv, NavStart, NavEnd } from './styles';

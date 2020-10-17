@@ -27,14 +27,16 @@ userRouter.post('/login', async (req: Request, res: Response) => {
         res.cookie('name', user.name, { httpOnly: true });
         res.cookie('user_id', user._id, { httpOnly: true });
         res.cookie('token', token, { httpOnly: true });
-        res.status(200).json({
+        return res.status(200).json({
           user_id: user._id,
           email: user.email,
           name: user.name,
           token,
         });
       }
+      res.status(400).json({ message: 'password incorrect' });
     }
+    res.status(400).json({ message: 'not registerd' });
   } catch (error) {
     console.log(error);
     res.status(400).json({ message: 'login failed' });

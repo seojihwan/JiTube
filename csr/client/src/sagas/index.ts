@@ -83,6 +83,10 @@ function* likeVideos() {
       payload: { user_id, video_id, like },
     } = yield take(getType(Actions.requestLikeVideo));
     yield call(Api.requestLikeVideo, { user_id, video_id, like });
+    const {
+      data: { video },
+    } = yield call(Api.requestGetOneVideo, video_id);
+    yield put(Actions.successGetOneVideo(video));
   }
 }
 
@@ -97,7 +101,6 @@ function* comment() {
       video_id,
       comment_id,
     });
-    console.log(username, contents, 'aaa', video_id, 'bbb', comment_id);
     const {
       data: { video },
     } = yield call(Api.requestGetOneVideo, video_id);
