@@ -5,3 +5,5 @@ export * from './LikeButton';
 export * from './Comments';
 export * from './AddComment';
 export * from './NavBar';
+export * from './Video';
+export * from './VideoInfo';

@@ -37,7 +37,7 @@ export const Comments: React.FC<ICommentsProps> = ({ video_id, comments }) => {
   return (
     <>
       {[...updatedComments].reverse().map((comment, idx) => (
-        <div>
+        <div key={idx}>
           <h1>{comment.username}</h1>
           <h3>{comment.contents}</h3>
           <button>대댓글 달기</button>

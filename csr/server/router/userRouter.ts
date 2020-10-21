@@ -1,10 +1,13 @@
 import express, { Request, Response } from 'express';
-import { removeToken } from '../auth';
 import { User, UserDocument } from '../models';
 import jwt from 'jsonwebtoken';
 export const userRouter = express.Router();
+
 userRouter.post('/signup', async (req: Request, res: Response) => {
-  const user = new User(req.body);
+  const user = new User({
+    ...req.body,
+    imageUrl: `/${Math.floor(Math.random() * 5 + 1)}.png`,
+  });
   try {
     await user.save();
     res.status(200).json({ register: true, user });
@@ -65,8 +68,11 @@ userRouter.get('/auth', async (req: Request, res: Response) => {
   res.status(400).json({ auth: false, message: '인증 실패' });
 });
 
-userRouter.get('/logout', removeToken, (req: Request, res: Response) => {
+userRouter.get('/logout', (req: Request, res: Response) => {
   res.clearCookie('token');
+  res.clearCookie('email');
+  res.clearCookie('name');
+  res.clearCookie('user_id');
   res.status(200).json({ cookie: false });
 });
 

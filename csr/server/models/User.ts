@@ -7,6 +7,7 @@ export interface IUser {
   name: string;
   email: string;
   password: string;
+  imageUrl: string;
   likeVideos: Array<string>;
   comparePassword(p: string): Promise<boolean>;
 }
@@ -27,8 +28,7 @@ const userSchema = new Schema<UserDocument>({
     type: String,
     required: true,
   },
-
-  imageUrl: String,
+  imageUrl: { type: String, required: true },
   likeVideos: [{ type: String }],
 });
 

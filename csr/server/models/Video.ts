@@ -1,8 +1,9 @@
 import { Model, Schema, model, Document } from 'mongoose';
 import { CommentDocument } from './Comment';
+import { UserDocument } from './User';
 
 export interface IVideo {
-  admin: Schema.Types.ObjectId;
+  admin: UserDocument;
   title: string;
   description: string;
   filePath: string;
