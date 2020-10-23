@@ -37,5 +37,6 @@ export const LikeButton: React.FC<ILikeButtonProps> = ({
       alert('로그인 해주세요');
     }
   };
+
   return <Button like={like} onClick={onClick} />;
 };
