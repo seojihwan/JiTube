@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useCallback, useMemo, useRef, useState } from 'react';
 import {
   Video,
   Controller,
@@ -25,51 +25,71 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
   const progressBar = useRef<HTMLDivElement>(null);
   const volumeProgress = useRef<HTMLInputElement>(null);
 
-  const handleClick = (
-    e: React.MouseEvent<HTMLVideoElement | HTMLButtonElement>
-  ) => {
-    e.preventDefault();
-    if (isPlay) {
-      video?.current?.play();
-    } else {
-      video?.current?.pause();
-    }
-    setIsPlay(!isPlay);
-  };
+  const handleClick = useCallback(
+    (e: React.MouseEvent<HTMLVideoElement | HTMLButtonElement>) => {
+      e.preventDefault();
+      if (isPlay) {
+        video?.current?.play();
+      } else {
+        video?.current?.pause();
+      }
+      setIsPlay(!isPlay);
+    },
+    [isPlay]
+  );
 
-  const handleTimeUpdate = () => {
+  const handleTimeUpdate = useCallback(() => {
     if (video.current) {
       const progressPercent =
         (video.current.currentTime / video.current.duration) * 100;
       setProgressBarPercent(progressPercent);
     }
-  };
+  }, []);
 
-  const handleProgressBarMouseUp = () => {
+  const handleProgressBarMouseUp = useCallback(() => {
     setProgressBarMouseDown(false);
-  };
+  }, []);
 
-  const handleProgressBarMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    setProgressBarMouseDown(true);
-  };
-  const handleProgressBarMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    e.preventDefault();
-    if (progressBarMouseDown && video.current) {
-      const time =
-        (e.nativeEvent.offsetX / (progressBar.current?.offsetWidth || 1)) *
-        video.current.duration;
-      console.log(e.nativeEvent.offsetX, 'time');
-      console.log(progressBar.current?.offsetWidth, 'time');
-      video.current.currentTime = time;
-    }
-  };
+  const handleProgressBarMouseDown = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      setProgressBarMouseDown(true);
+    },
+    []
+  );
+  const handleProgressBarMouseMove = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      if (progressBarMouseDown && video.current) {
+        const time =
+          (e.nativeEvent.offsetX / (progressBar.current?.offsetWidth || 1)) *
+          video.current.duration;
+        video.current.currentTime = time;
+      }
+    },
+    [progressBarMouseDown]
+  );
+  const handleProgressBarClick = useCallback(
+    (e: React.MouseEvent<HTMLDivElement>) => {
+      e.preventDefault();
+      if (video.current) {
+        const time =
+          (e.nativeEvent.offsetX / (progressBar.current?.offsetWidth || 1)) *
+          video.current.duration;
+        video.current.currentTime = time;
+      }
+    },
+    []
+  );
 
-  const handlevolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setVolume(Number(e.target.value));
-  };
+  const handlevolumeChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      setVolume(Number(e.target.value));
+    },
+    []
+  );
 
-  const handleVolumeClick = () => {
+  const handleVolumeClick = useCallback(() => {
     if (isMute) {
       setVolume(beforeVolume);
     } else {
@@ -80,7 +100,8 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
     if (video?.current) {
       video.current.volume = volume;
     }
-  };
+  }, [isMute]);
+
   return (
     <VideoWrapper>
       <Video
@@ -96,6 +117,7 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
         onMouseDown={handleProgressBarMouseDown}
         onMouseMove={handleProgressBarMouseMove}
         onMouseLeave={handleProgressBarMouseUp}
+        onClick={handleProgressBarClick}
       >
         <Progress_filled percent={progressBarPercent}></Progress_filled>
       </ProgressBar>
