@@ -7,10 +7,10 @@ import { IStoreState } from '../store';
 function* authenticationWorkflow() {
   try {
     const {
-      data: { user_id, email, token, name },
+      data: { user_id, email, token, name, imageUrl },
     } = yield call(Api.requestAuth);
     if (token) {
-      yield put(Actions.successAuth({ user_id, email, token, name }));
+      yield put(Actions.successAuth({ user_id, email, token, name, imageUrl }));
     }
   } catch (error) {}
   while (true) {

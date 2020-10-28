@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestGetOneVideo, requestLikeVideo } from '../actions';
 import { IStoreState, IVideoData } from '../store';
@@ -24,7 +24,7 @@ export const LikeButton: React.FC<ILikeButtonProps> = ({
     setLike(!updatedLikePeople.includes(auth?.user_id || 'fffffffff'));
   }, [newLikePeople]);
 
-  const onClick = () => {
+  const onClick = useCallback(() => {
     if (auth) {
       dispatch(
         requestLikeVideo({
@@ -33,10 +33,11 @@ export const LikeButton: React.FC<ILikeButtonProps> = ({
           like,
         })
       );
+      setLike(!like);
     } else {
       alert('로그인 해주세요');
     }
-  };
+  }, [auth, like]);
 
   return <Button like={like} onClick={onClick} />;
 };

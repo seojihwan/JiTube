@@ -32,14 +32,10 @@ export const VideoInfo: React.FC<Iprops> = ({
       <LikeButton video_id={video_id} likePeople={likePeople} />
       <hr />
       <AdminInfo>
-        <AdminIcon>
-          <img
-            src={
-              admin.imageUrl ? endpoint + admin.imageUrl : endpoint + '/1.png'
-            }
-            alt=""
-          />
-        </AdminIcon>
+        <AdminIcon
+          src={admin.imageUrl ? endpoint + admin.imageUrl : endpoint + '/1.png'}
+          alt=""
+        />
         <AdminName>{admin.name}</AdminName>
         <VideoDescription>{description}</VideoDescription>
       </AdminInfo>

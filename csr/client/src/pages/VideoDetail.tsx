@@ -4,13 +4,14 @@ import { RouteComponentProps } from 'react-router-dom';
 import { AddComment, LikeButton, Comments, VideoInfo } from '../component';
 import { IStoreState, IVideoData } from '../store';
 import { VideoPlayer } from '../component';
+import { VideoPageWrapper } from './styles';
 
 export const VideoDetail: React.FC<RouteComponentProps<{}, any, IVideoData>> = (
   props
 ) => {
   const videoData: IVideoData = props.location.state;
   return (
-    <div>
+    <VideoPageWrapper>
       <VideoPlayer src={videoData.filePath} />
       <VideoInfo
         admin={videoData.admin}
@@ -24,6 +25,6 @@ export const VideoDetail: React.FC<RouteComponentProps<{}, any, IVideoData>> = (
         video_id={videoData._id}
         comments={[...videoData.comments] || []}
       />
-    </div>
+    </VideoPageWrapper>
   );
 };

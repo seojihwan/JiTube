@@ -40,10 +40,9 @@ export const Comments: React.FC<ICommentsProps> = ({ video_id, comments }) => {
         <div key={idx}>
           <h1>{comment.username}</h1>
           <h3>{comment.contents}</h3>
-          <button>대댓글 달기</button>
+          <button>답글</button>
           <form onSubmit={onSubmit} data-comments_id={comment._id || ''}>
             <div>
-              <h1>댓글</h1>
               <label htmlFor="contents"></label>
               <input
                 value={replyContents}

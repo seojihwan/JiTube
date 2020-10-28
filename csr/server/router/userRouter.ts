@@ -28,6 +28,7 @@ userRouter.post('/login', async (req: Request, res: Response) => {
         );
         res.cookie('email', user.email, { httpOnly: true });
         res.cookie('name', user.name, { httpOnly: true });
+        res.cookie('imageUrl', user.imageUrl, { httpOnly: true });
         res.cookie('user_id', user._id, { httpOnly: true });
         res.cookie('token', token, { httpOnly: true });
         return res.status(200).json({
@@ -47,9 +48,8 @@ userRouter.post('/login', async (req: Request, res: Response) => {
 });
 
 userRouter.get('/auth', async (req: Request, res: Response) => {
-  const { user_id, email, token, name } = req.cookies;
+  const { user_id, email, token, name, imageUrl } = req.cookies;
   if (token) {
-    console.log(token);
     try {
       if (jwt.verify(token, process.env.jwtSecret || '')) {
         console.log(token);
@@ -57,6 +57,7 @@ userRouter.get('/auth', async (req: Request, res: Response) => {
           user_id: decodeURIComponent(user_id),
           email: decodeURIComponent(email),
           name: decodeURIComponent(name),
+          imageUrl: decodeURIComponent(imageUrl),
           token,
         });
       }

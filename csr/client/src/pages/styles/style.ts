@@ -34,3 +34,7 @@ export const AuthDiv = styled.div`
     outline: none;
   }
 `;
+
+export const VideoPageWrapper = styled.div`
+  width: 66%;
+`;

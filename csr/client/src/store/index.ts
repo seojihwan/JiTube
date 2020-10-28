@@ -6,6 +6,7 @@ export interface IAuthentication {
   user_id: string;
   token: string;
   name: string;
+  imageUrl: string;
 }
 
 export interface IVideoData extends IVideo {

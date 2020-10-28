@@ -18,6 +18,7 @@ export interface ISuccessLogin {
   email: string;
   token: string;
   name: string;
+  imageUrl: string;
 }
 export interface IRequestLikePayload {
   user_id: string;

@@ -23,7 +23,7 @@ export const VideoWrapper = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
-  width: 66%;
+  width: 100%;
 `;
 
 export const Video = styled.video`
@@ -92,7 +92,6 @@ export const VolumeInput = styled.input`
   box-shadow: 1px 1px 1px rgba(0, 0, 0, 0), 0 0 1px rgba(13, 13, 13, 0);
   background: #ffffff;
   border-radius: 1.3px;
-  border: 0.2px solid rgba(1, 1, 1, 0);
   ::-webkit-slider-thumb {
     height: 10px;
     width: 10px;
