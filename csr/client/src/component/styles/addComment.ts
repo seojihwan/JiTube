@@ -14,8 +14,10 @@ export const CommentInputFilledWrapper = styled.div`
 export const CommentInputFilled = styled.div<CommentInputFilledProps>`
   height: 1px;
   background-color: #000;
-  width: ${(props) => (props.isFocus ? '100%' : '0px')};
-  transition: width 1s;
+  width: 100%;
+  transform: ${(props) =>
+    props.isFocus ? 'scale3d(1,1,1);' : 'scale3d(0,1,1);'};
+  transition: ${(props) => (props.isFocus ? 'transform 1s' : 'none')};
 `;
 
 export const CommentInputWrapper = styled.div`
@@ -30,9 +32,6 @@ export const CommentInput = styled.input`
   border-bottom-color: #bebdb8;
   box-sizing: border-box;
   outline: none;
-  :focus + ${CommentInputFilled} {
-    width: 100%;
-  }
 `;
 
 export const CommentEnter = styled.button`
