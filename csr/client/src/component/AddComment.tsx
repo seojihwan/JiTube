@@ -5,6 +5,7 @@ import { requestGetOneVideo } from '../apis';
 import { IStoreState } from '../store';
 import { CommentInput } from './styles';
 import {
+  AddCommentForm,
   UserIcon,
   CommentEnter,
   CommentInputWrapper,
@@ -28,12 +29,13 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
     if (auth) {
       dispatch(
         requestComment({
-          username: auth.name,
+          user_id: auth.user_id,
           contents,
           video_id,
           comment_id: '',
         })
       );
+      setContents('');
     }
   };
 
@@ -49,7 +51,7 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
   }, []);
 
   return (
-    <form onSubmit={onSubmit}>
+    <AddCommentForm onSubmit={onSubmit}>
       <div>
         <UserIcon
           src={auth?.imageUrl ? endpoint + auth.imageUrl : endpoint + '/1.png'}
@@ -65,6 +67,7 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
             placeholder="댓글 내용을 입력해주세요."
             onFocus={onFocus}
             onBlur={onFocusOut}
+            autoComplete="off"
           />
           <CommentInputFilledWrapper>
             <CommentInputFilled isFocus={isFocus} />
@@ -73,6 +76,6 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
 
         <CommentEnter disabled={!contents}>댓글</CommentEnter>
       </div>
-    </form>
+    </AddCommentForm>
   );
 };

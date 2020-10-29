@@ -38,6 +38,11 @@ export default (
         ...state,
         currentPageVideo: action.payload,
       };
+    case getType(Actions.requestClearOneVideo):
+      return {
+        ...state,
+        currentPageVideo: null,
+      };
     default:
       return { ...state };
   }

@@ -3,6 +3,12 @@ import styled from 'styled-components';
 interface CommentInputFilledProps {
   isFocus: boolean;
 }
+
+export const AddCommentForm = styled.form`
+  overflow: hidden;
+  margin-bottom: 20px;
+`;
+
 export const UserIcon = styled.img`
   margin-right: 8px;
 `;

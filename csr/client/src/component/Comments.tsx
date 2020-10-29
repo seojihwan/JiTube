@@ -1,58 +1,32 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommentDocument } from '../../../server/models';
 import { requestComment } from '../actions';
 import { IStoreState } from '../store';
+import { ReplyComment } from '../component';
+
+const endpoint = 'http://localhost:4000';
 interface ICommentsProps {
   video_id: string;
   comments: Array<CommentDocument>;
 }
 
 export const Comments: React.FC<ICommentsProps> = ({ video_id, comments }) => {
-  const auth = useSelector((store: IStoreState) => store.authentication);
   const newComments = useSelector(
     (store: IStoreState) => store.currentPageVideo?.comments
   );
-  const updatedComments = newComments || comments || [];
-  const [replyContents, setReplyContents] = useState<string>('');
-  const dispatch = useDispatch();
-  const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (auth) {
-      dispatch(
-        requestComment({
-          username: auth.name,
-          contents: replyContents,
-          comment_id: e.currentTarget.getAttribute('data-comments_id') || '',
-          video_id,
-        })
-      );
-    }
-  };
-
-  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setReplyContents(e.currentTarget.value);
-  };
+  const updatedComments = useMemo(() => newComments || comments || [], [
+    newComments,
+  ]);
 
   return (
     <>
       {[...updatedComments].reverse().map((comment, idx) => (
         <div key={idx}>
-          <h1>{comment.username}</h1>
-          <h3>{comment.contents}</h3>
-          <button>답글</button>
-          <form onSubmit={onSubmit} data-comments_id={comment._id || ''}>
-            <div>
-              <label htmlFor="contents"></label>
-              <input
-                value={replyContents}
-                onChange={onChange}
-                name="contents"
-                type="textarea"
-              />
-              <button>등록</button>
-            </div>
-          </form>
+          <img src={`${endpoint}${comment.admin.imageUrl}`}></img>
+          <div>{comment.admin.name}</div>
+          <div>{comment.contents}</div>
+          <ReplyComment video_id={video_id} comment={comment}/>
         </div>
       ))}
     </>

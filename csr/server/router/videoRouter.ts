@@ -68,7 +68,10 @@ videoRouter.post(
 
 videoRouter.get('/getall', async (req: Request, res: Response) => {
   try {
-    const videos = await Video.find().populate('admin comments').exec();
+    const videos = await Video.find()
+      .populate('admin')
+      .populate({ path: 'comments', populate: { path: 'admin' } })
+      .exec();
     res.status(200).json({ videos });
   } catch (error) {
     console.log(error);
@@ -80,7 +83,8 @@ videoRouter.post('/getone', async (req: Request, res: Response) => {
   console.log(req.body);
   try {
     const video = await Video.findById(req.body.video_id)
-      .populate('admin comments')
+      .populate('admin')
+      .populate({ path: 'comments', populate: { path: 'admin' } })
       .exec();
     res.status(200).json({ video });
   } catch (error) {
@@ -125,8 +129,8 @@ videoRouter.post('/like', async (req: Request, res: Response) => {
 
 videoRouter.post('/comment', async (req: Request, res: Response) => {
   console.log(req.body);
-  const { username, contents, video_id, comment_id } = req.body;
-  const comment = new Comment({ username, contents });
+  const { user_id, contents, video_id, comment_id } = req.body;
+  const comment = new Comment({ admin: user_id, contents });
   try {
     await comment.save();
     if (!comment_id) {

@@ -41,6 +41,7 @@ export const Upload: React.FC = () => {
     <div>
       <form onSubmit={onSubmit}>
         <div {...getRootProps()}>
+          업로드
           <input {...getInputProps()} />
         </div>
         <input onChange={titleChange} value={title} />

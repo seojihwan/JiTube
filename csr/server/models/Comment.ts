@@ -1,7 +1,8 @@
 import { model, Model, Schema, Document } from 'mongoose';
+import { UserDocument } from './User';
 
 export interface IComment {
-  username: string;
+  admin: UserDocument;
   contents: string;
   replyComments: Array<IComment>;
 }
@@ -9,7 +10,7 @@ export interface IComment {
 export interface CommentDocument extends IComment, Document {}
 export interface CommentModel extends Model<CommentDocument> {}
 const commentSchema = new Schema<CommentDocument>({
-  username: { type: String, required: true },
+  admin: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   contents: { type: String, required: true },
   replyComments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
 });

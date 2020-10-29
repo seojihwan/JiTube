@@ -1,6 +1,10 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { requestGetOneVideo, requestLikeVideo } from '../actions';
+import {
+  requestGetOneVideo,
+  requestLikeVideo,
+  requestClearOneVideo,
+} from '../actions';
 import { IStoreState, IVideoData } from '../store';
 import { Button } from './styles';
 
@@ -16,13 +20,27 @@ export const LikeButton: React.FC<ILikeButtonProps> = ({
     (store: IStoreState) => store.currentPageVideo?.likePeople
   );
   const auth = useSelector((store: IStoreState) => store.authentication);
-  const updatedLikePeople = newLikePeople || likePeople || [];
-  const [like, setLike] = useState(true);
+  const updatedLikePeople = useMemo(() => newLikePeople || likePeople || [], [
+    newLikePeople,
+  ]);
+  const [like, setLike] = useState(
+    useMemo(() => {
+      if (auth) {
+        return updatedLikePeople.includes(auth.user_id);
+      }
+      return false;
+    }, [updatedLikePeople])
+  );
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(requestGetOneVideo(video_id));
-    setLike(!updatedLikePeople.includes(auth?.user_id || 'fffffffff'));
-  }, [newLikePeople]);
+    if (auth) {
+      setLike(updatedLikePeople.includes(auth.user_id));
+    }
+    return () => {
+      dispatch(requestClearOneVideo());
+    };
+  }, []);
 
   const onClick = useCallback(() => {
     if (auth) {
@@ -30,7 +48,7 @@ export const LikeButton: React.FC<ILikeButtonProps> = ({
         requestLikeVideo({
           user_id: auth.user_id,
           video_id,
-          like,
+          like: !like,
         })
       );
       setLike(!like);

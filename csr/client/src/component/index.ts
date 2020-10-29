@@ -7,3 +7,4 @@ export * from './AddComment';
 export * from './NavBar';
 export * from './Video';
 export * from './VideoInfo';
+export * from './ReplyComment';

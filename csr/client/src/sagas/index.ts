@@ -47,7 +47,7 @@ function* authenticationWorkflow() {
         break;
       }
     }
-    yield take(Actions.requestLogout);
+    yield take(getType(Actions.requestLogout));
     yield call(Api.requestLogout);
     yield put(Actions.successLogout());
   }
@@ -63,10 +63,15 @@ function* videoUpload() {
 }
 
 function* getAllVideos() {
-  const {
-    data: { videos },
-  } = yield call(Api.requestGetAllVideos);
-  yield put(Actions.successGetAllVideos(videos));
+  while (true) {
+    console.log('11');
+    yield take(getType(Actions.requestGetAllVideos));
+    console.log('22');
+    const {
+      data: { videos },
+    } = yield call(Api.requestGetAllVideos);
+    yield put(Actions.successGetAllVideos(videos));
+  }
 }
 
 function* getOneVideos() {
@@ -93,10 +98,10 @@ function* likeVideos() {
 function* comment() {
   while (true) {
     const {
-      payload: { username, contents, video_id, comment_id },
+      payload: { user_id, contents, video_id, comment_id },
     } = yield take(getType(Actions.requestComment));
     yield call(Api.requestComment, {
-      username,
+      user_id,
       contents,
       video_id,
       comment_id,
