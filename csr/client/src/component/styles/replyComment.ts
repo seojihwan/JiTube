@@ -1,24 +1,22 @@
 import styled from 'styled-components';
 
-interface CommentInputFilledProps {
+interface ReplyInputFilledProps {
   isFocus: boolean;
 }
-
-export const AddCommentForm = styled.form`
+export const ReplyForm = styled.form`
   overflow: hidden;
-  height: 80px;
-  margin-bottom: 20px;
+`;
+export const ReplyInputWrapper = styled.div`
+  display: inline-block;
+  width: 100%;
+  height: 24px;
 `;
 
-export const UserIcon = styled.img`
-  margin-right: 8px;
-`;
-
-export const CommentInputFilledWrapper = styled.div`
+export const ReplyInputFilledWrapper = styled.div`
   width: 100%;
   font-size: 14px;
 `;
-export const CommentInputFilled = styled.div<CommentInputFilledProps>`
+export const ReplyInputFilled = styled.div<ReplyInputFilledProps>`
   height: 1px;
   background-color: #000;
   width: 100%;
@@ -27,13 +25,7 @@ export const CommentInputFilled = styled.div<CommentInputFilledProps>`
   transition: ${(props) => (props.isFocus ? 'transform 1s' : 'none')};
 `;
 
-export const CommentInputWrapper = styled.div`
-  display: inline-block;
-  width: calc(100% - 40px);
-  height: 24px;
-`;
-
-export const CommentInput = styled.input`
+export const ReplyInput = styled.input`
   width: 100%;
   height: 24px;
   border: none;
@@ -43,7 +35,7 @@ export const CommentInput = styled.input`
   outline: none;
 `;
 
-export const CommentEnter = styled.button`
+export const ReplyEnter = styled.button`
   float: right;
   margin-top: 10px;
   border: none;

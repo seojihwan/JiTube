@@ -52,30 +52,27 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
 
   return (
     <AddCommentForm onSubmit={onSubmit}>
-      <div>
-        <UserIcon
-          src={auth?.imageUrl ? endpoint + auth.imageUrl : endpoint + '/1.png'}
-          alt=""
+      <UserIcon
+        src={auth?.imageUrl ? endpoint + auth.imageUrl : endpoint + '/1.png'}
+        alt=""
+      />
+      <CommentInputWrapper>
+        <CommentInput
+          value={contents}
+          onChange={onChange}
+          name="contents"
+          type="textarea"
+          placeholder="댓글 내용을 입력해주세요."
+          onFocus={onFocus}
+          onBlur={onFocusOut}
+          autoComplete="off"
         />
-        <label htmlFor="contents"></label>
-        <CommentInputWrapper>
-          <CommentInput
-            value={contents}
-            onChange={onChange}
-            name="contents"
-            type="textarea"
-            placeholder="댓글 내용을 입력해주세요."
-            onFocus={onFocus}
-            onBlur={onFocusOut}
-            autoComplete="off"
-          />
-          <CommentInputFilledWrapper>
-            <CommentInputFilled isFocus={isFocus} />
-          </CommentInputFilledWrapper>
-        </CommentInputWrapper>
+        <CommentInputFilledWrapper>
+          <CommentInputFilled isFocus={isFocus} />
+        </CommentInputFilledWrapper>
+      </CommentInputWrapper>
 
-        <CommentEnter disabled={!contents}>댓글</CommentEnter>
-      </div>
+      <CommentEnter disabled={!contents}>댓글</CommentEnter>
     </AddCommentForm>
   );
 };

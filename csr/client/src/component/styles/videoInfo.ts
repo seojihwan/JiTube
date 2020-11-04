@@ -11,15 +11,19 @@ export const VideoTitle = styled.h1`
   font-size: 20px;
   font-weight: 400;
 `;
-export const AdminInfo = styled.div``;
+export const AdminInfo = styled.div`
+  display: flex;
+  flex-direction: row;
+`;
 export const AdminIcon = styled.img`
   margin-right: 8px;
 `;
 export const AdminName = styled.div`
-  height: 40px;
   display: inline-block;
+  vertical-align: top;
 `;
 
 export const VideoDescription = styled.div`
   margin-left: 40px;
+  vertical-align: top;
 `;

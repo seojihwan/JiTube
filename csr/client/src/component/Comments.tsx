@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CommentDocument } from '../../../server/models';
 import { requestComment } from '../actions';
 import { IStoreState } from '../store';
-import { ReplyComment } from '../component';
+import { ReplyComment, Comment } from '../component';
 
 const endpoint = 'http://localhost:4000';
 interface ICommentsProps {
@@ -15,19 +15,16 @@ export const Comments: React.FC<ICommentsProps> = ({ video_id, comments }) => {
   const newComments = useSelector(
     (store: IStoreState) => store.currentPageVideo?.comments
   );
-  const updatedComments = useMemo(() => newComments || comments || [], [
-    newComments,
-  ]);
+
+  const updatedComments = useMemo(
+    () => (newComments || comments || []).reverse(),
+    [newComments]
+  );
 
   return (
     <>
-      {[...updatedComments].reverse().map((comment, idx) => (
-        <div key={idx}>
-          <img src={`${endpoint}${comment.admin.imageUrl}`}></img>
-          <div>{comment.admin.name}</div>
-          <div>{comment.contents}</div>
-          <ReplyComment video_id={video_id} comment={comment}/>
-        </div>
+      {updatedComments.map((comment, idx) => (
+        <Comment key={idx} video_id={video_id} comment={comment}></Comment>
       ))}
     </>
   );

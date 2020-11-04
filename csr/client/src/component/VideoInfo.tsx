@@ -37,8 +37,8 @@ export const VideoInfo: React.FC<Iprops> = ({
           alt=""
         />
         <AdminName>{admin.name}</AdminName>
-        <VideoDescription>{description}</VideoDescription>
       </AdminInfo>
+      <VideoDescription>{description}</VideoDescription>
     </VideoInfoWrapper>
   );
 };

@@ -71,6 +71,10 @@ videoRouter.get('/getall', async (req: Request, res: Response) => {
     const videos = await Video.find()
       .populate('admin')
       .populate({ path: 'comments', populate: { path: 'admin' } })
+      .populate({
+        path: 'comments',
+        populate: { path: 'replyComments', populate: { path: 'admin' } },
+      })
       .exec();
     res.status(200).json({ videos });
   } catch (error) {
@@ -85,6 +89,10 @@ videoRouter.post('/getone', async (req: Request, res: Response) => {
     const video = await Video.findById(req.body.video_id)
       .populate('admin')
       .populate({ path: 'comments', populate: { path: 'admin' } })
+      .populate({
+        path: 'comments',
+        populate: { path: 'replyComments', populate: { path: 'admin' } },
+      })
       .exec();
     res.status(200).json({ video });
   } catch (error) {

@@ -38,6 +38,10 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
     [isPlay]
   );
 
+  const handleEnded = useCallback(() => {
+    setIsPlay(true);
+  }, [isPlay]);
+
   const handleTimeUpdate = useCallback(() => {
     if (video.current) {
       const progressPercent =
@@ -57,6 +61,7 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
     },
     []
   );
+
   const handleProgressBarMouseMove = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault();
@@ -69,6 +74,7 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
     },
     [progressBarMouseDown]
   );
+
   const handleProgressBarClick = useCallback(
     (e: React.MouseEvent<HTMLDivElement>) => {
       e.preventDefault();
@@ -110,6 +116,7 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
         src={endpoint + src}
         onTimeUpdate={handleTimeUpdate}
         onClick={handleClick}
+        onEnded={handleEnded}
       />
       <ProgressBar
         ref={progressBar}
