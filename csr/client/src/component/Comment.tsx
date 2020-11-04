@@ -5,7 +5,9 @@ import { IStoreState } from '../store';
 import { ReplyComment } from '../component';
 import {
   CommentWrapper,
+  CommentAdminName,
   CommentContents,
+  CommentContentsWrapper,
   UpTriangleArrow,
   DownTriangleArrow,
   ShowButton,
@@ -27,10 +29,10 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
   return (
     <>
       <CommentWrapper>
-        <img src={`${endpoint}${comment.admin.imageUrl}`}></img>
-        <CommentContents>
-          <div>{comment.admin.name}</div>
-          <div>{comment.contents}</div>
+        <img src={endpoint + comment.admin.imageUrl}></img>
+        <CommentContentsWrapper>
+          <CommentAdminName>{comment.admin.name}</CommentAdminName>
+          <CommentContents>{comment.contents}</CommentContents>
           <ReplyComment video_id={video_id} comment={comment} />
           {comment.replyComments.length ? (
             <div>
@@ -48,7 +50,7 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
                     답글
                     {comment.replyComments.length !== 1
                       ? ` ${comment.replyComments.length}개 `
-                      : ''}
+                      : ' '}
                     보기
                   </ShowButton>
                 </>
@@ -60,13 +62,22 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
 
           <div>
             {isShowReply &&
-              comment.replyComments
-                .reverse()
-                .map((replyComment, idx) => (
-                  <div key={idx}>{replyComment.admin.name}</div>
-                ))}
+              comment.replyComments.reverse().map((replyComment, idx) => (
+                <div key={idx}>
+                  <CommentWrapper>
+                    <img
+                      style={{ width: '24px', height: '24px' }}
+                      src={endpoint + comment.admin.imageUrl}
+                    ></img>
+                    <CommentContents>
+                      <CommentAdminName>{comment.admin.name}</CommentAdminName>
+                      <CommentContents>{comment.contents}</CommentContents>
+                    </CommentContents>
+                  </CommentWrapper>
+                </div>
+              ))}
           </div>
-        </CommentContents>
+        </CommentContentsWrapper>
       </CommentWrapper>
     </>
   );

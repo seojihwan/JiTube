@@ -2,6 +2,38 @@ import styled from 'styled-components';
 import down_triangle from './res/down-triangle.svg';
 import up_triangle from './res/up-triangle.svg';
 
+export const CommentWrapper = styled.div`
+  display: flex;
+  flex-direction: row;
+  font-size: 14px;
+  color: #030303;
+  img {
+    height: 32px;
+    margin-right: 8px;
+  }
+  > div:last-child {
+    margin-top: 6px;
+  }
+  margin-bottom: 10px;
+`;
+
+export const CommentContentsWrapper = styled.div`
+  flex: 1;
+`;
+export const CommentAdminName = styled.div`
+  font-size: 13px;
+  padding-bottom: 5px;
+`;
+export const CommentContents = styled.div``;
+
+export const ReplyButton = styled.button`
+  outline: none;
+  border: none;
+  color: #606060;
+  cursor: pointer;
+  background-color: #fff;
+`;
+
 export const UpTriangleArrow = styled.button`
   border: none;
   outline: none;
@@ -10,7 +42,6 @@ export const UpTriangleArrow = styled.button`
   background: url(${up_triangle});
   background-repeat: no-repeat;
   background-size: 10px;
-  cursor: pointer;
 `;
 
 export const DownTriangleArrow = styled.button`
@@ -21,7 +52,6 @@ export const DownTriangleArrow = styled.button`
   background: url(${down_triangle});
   background-repeat: no-repeat;
   background-size: 10px;
-  cursor: pointer;
 `;
 
 export const ShowButton = styled.button`

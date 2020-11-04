@@ -4,6 +4,7 @@ export * from './SideVideoList';
 export * from './LikeButton';
 export * from './Comment';
 export * from './Comments';
+export * from './CommentLength';
 export * from './AddComment';
 export * from './NavBar';
 export * from './Video';

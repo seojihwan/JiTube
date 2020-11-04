@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux';
 import { RouteComponentProps } from 'react-router-dom';
 import { AddComment, LikeButton, Comments, VideoInfo } from '../component';
 import { IStoreState, IVideoData } from '../store';
-import { VideoPlayer } from '../component';
+import { VideoPlayer, CommentLength } from '../component';
 import { VideoPageWrapper } from './styles';
 
 export const VideoDetail: React.FC<RouteComponentProps<{}, any, IVideoData>> = (
@@ -20,11 +20,10 @@ export const VideoDetail: React.FC<RouteComponentProps<{}, any, IVideoData>> = (
         video_id={videoData._id}
         likePeople={videoData.likePeople}
       />
+      <hr />
+      <CommentLength length={videoData.comments.length} />
       <AddComment video_id={videoData._id} />
-      <Comments
-        video_id={videoData._id}
-        comments={[...videoData.comments] || []}
-      />
+      <Comments video_id={videoData._id} comments={videoData.comments || []} />
     </VideoPageWrapper>
   );
 };

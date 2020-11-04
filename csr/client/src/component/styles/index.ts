@@ -4,5 +4,4 @@ export * from './video';
 export * from './videoInfo';
 export * from './addComment';
 export * from './comment';
-export * from './comments';
 export * from './replyComment';
