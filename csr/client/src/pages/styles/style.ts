@@ -1,5 +1,4 @@
 import styled from 'styled-components';
-import { Col } from 'antd';
 
 export const AuthDiv = styled.div`
   display: flex;
@@ -8,6 +7,7 @@ export const AuthDiv = styled.div`
   width: 350px;
   margin: auto;
   margin-top: 50px;
+
   input {
     display: block;
     outline: none;
