@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { CommentDocument } from '../../../server/models';
 import { IStoreState } from '../store';
@@ -25,7 +25,10 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
   const handleShowButton = () => {
     setIsShowReply(!isShowReply);
   };
-  console.log(comment);
+  const replyComments = useMemo(() => comment.replyComments.reverse(), [
+    comment,
+  ]);
+
   return (
     <>
       <CommentWrapper>
@@ -34,7 +37,7 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
           <CommentAdminName>{comment.admin.name}</CommentAdminName>
           <CommentContents>{comment.contents}</CommentContents>
           <ReplyComment video_id={video_id} comment={comment} />
-          {comment.replyComments.length ? (
+          {replyComments.length ? (
             <div>
               {isShowReply ? (
                 <>
@@ -48,8 +51,8 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
                   <ShowButton onClick={handleShowButton}>
                     <DownTriangleArrow />
                     답글
-                    {comment.replyComments.length !== 1
-                      ? ` ${comment.replyComments.length}개 `
+                    {replyComments.length !== 1
+                      ? ` ${replyComments.length}개 `
                       : ' '}
                     보기
                   </ShowButton>
@@ -62,19 +65,19 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
 
           <div>
             {isShowReply &&
-              comment.replyComments.reverse().map((replyComment, idx) => (
-                <div key={idx}>
-                  <CommentWrapper>
-                    <img
-                      style={{ width: '24px', height: '24px' }}
-                      src={endpoint + comment.admin.imageUrl}
-                    ></img>
-                    <CommentContents>
-                      <CommentAdminName>{comment.admin.name}</CommentAdminName>
-                      <CommentContents>{comment.contents}</CommentContents>
-                    </CommentContents>
-                  </CommentWrapper>
-                </div>
+              replyComments.map((replyComment, idx) => (
+                <CommentWrapper key={idx}>
+                  <img
+                    style={{ width: '24px', height: '24px' }}
+                    src={endpoint + comment.admin.imageUrl}
+                  />
+                  <CommentContentsWrapper>
+                    <CommentAdminName>
+                      {replyComment.admin.name}
+                    </CommentAdminName>
+                    <CommentContents>{replyComment.contents}</CommentContents>
+                  </CommentContentsWrapper>
+                </CommentWrapper>
               ))}
           </div>
         </CommentContentsWrapper>

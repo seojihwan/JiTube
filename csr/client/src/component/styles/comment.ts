@@ -24,7 +24,10 @@ export const CommentAdminName = styled.div`
   font-size: 13px;
   padding-bottom: 5px;
 `;
-export const CommentContents = styled.div``;
+export const CommentContents = styled.div`
+  white-space: pre-wrap;
+  word-break: break-all;
+`;
 
 export const ReplyButton = styled.button`
   outline: none;
