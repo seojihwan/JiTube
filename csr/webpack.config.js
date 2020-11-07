@@ -1,6 +1,5 @@
 const path = require('path');
-const webpack = require('webpack');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 
 module.exports = {
   entry: './client/src/index.tsx',
@@ -9,7 +8,26 @@ module.exports = {
       {
         test: /\.tsx?$/,
         exclude: /node_modules/,
-        loader: ['babel-loader', 'ts-loader'],
+        use: [
+          {
+            loader: 'babel-loader',
+            options: {
+              presets: [
+                [
+                  '@babel/preset-env',
+                  {
+                    targets: {
+                      esmodules: true,
+                    },
+                  },
+                ],
+                '@babel/preset-react',
+                '@babel/preset-typescript',
+              ],
+              plugins: ['react-refresh/babel'],
+            },
+          },
+        ],
       },
       {
         test: /\.css$/,
@@ -33,8 +51,5 @@ module.exports = {
     hot: true,
     historyApiFallback: true,
   },
-  plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebpackPlugin({ template: './client/public/index.html' }),
-  ],
+  plugins: [new RefreshWebpackPlugin()],
 };
