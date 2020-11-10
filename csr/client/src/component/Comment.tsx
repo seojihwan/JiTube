@@ -41,15 +41,15 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
             <div>
               {isShowReply ? (
                 <>
+                  <UpTriangleArrow />
                   <ShowButton onClick={handleShowButton}>
-                    <UpTriangleArrow />
                     답글 숨기기
                   </ShowButton>
                 </>
               ) : (
                 <>
+                  <DownTriangleArrow />
                   <ShowButton onClick={handleShowButton}>
-                    <DownTriangleArrow />
                     답글
                     {replyComments.length !== 1
                       ? ` ${replyComments.length}개 `
@@ -69,7 +69,7 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
                 <CommentWrapper key={idx}>
                   <img
                     style={{ width: '24px', height: '24px' }}
-                    src={endpoint + comment.admin.imageUrl}
+                    src={endpoint + replyComment.admin.imageUrl}
                   />
                   <CommentContentsWrapper>
                     <CommentAdminName>

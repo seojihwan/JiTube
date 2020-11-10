@@ -6,13 +6,7 @@ export const ThumbnailWrapper = styled.div`
     flex-wrap: wrap;
     text-decoration: none;
   }
-  > a > img {
-    width: 100%;
-    margin-bottom: 10px;
-  }
-  width: 80%;
-  margin: 10%;
-
+  width: 100%;
   @media (min-width: 480px) {
     width: 48%;
     margin: 4px;
@@ -25,6 +19,18 @@ export const ThumbnailWrapper = styled.div`
     width: 23%;
     margin: 10px;
   }
+`;
+export const ThumbnailImageWrapper = styled.div`
+  position: relative;
+  width: 100%;
+  padding-bottom: 56.2%;
+  img {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    object-fit: cover;
+  }
+  margin: 10px 0;
 `;
 export const ThumbnailAdminAvatar = styled.div`
   padding-right: 10px;

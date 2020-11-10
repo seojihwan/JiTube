@@ -5,6 +5,7 @@ import {
   ThumbnailWrapper,
   ThumbnailAdminAvatar,
   ThumbnailContents,
+  ThumbnailImageWrapper,
 } from './styles';
 const endpoint = 'http://localhost:4000';
 
@@ -12,7 +13,9 @@ export const Thumbnail: React.FC<IVideoData> = (props) => {
   return (
     <ThumbnailWrapper>
       <Link to={{ pathname: `video/${props._id}`, state: props }}>
-        <img src={endpoint + props.thumbnailPath} alt="" />
+        <ThumbnailImageWrapper>
+          <img src={endpoint + props.thumbnailPath} alt="" />
+        </ThumbnailImageWrapper>
         <ThumbnailAdminAvatar>
           <img src={endpoint + props.admin.imageUrl} />
         </ThumbnailAdminAvatar>

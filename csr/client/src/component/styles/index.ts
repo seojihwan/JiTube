@@ -6,3 +6,4 @@ export * from './addComment';
 export * from './comment';
 export * from './replyComment';
 export * from './thumbnail';
+export * from './uploadModal';

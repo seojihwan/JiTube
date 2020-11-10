@@ -24,7 +24,6 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
   const video = useRef<HTMLVideoElement>(null);
   const progressBar = useRef<HTMLDivElement>(null);
   const volumeProgress = useRef<HTMLInputElement>(null);
-
   const handleClick = useCallback(
     (e: React.MouseEvent<HTMLVideoElement | HTMLButtonElement>) => {
       e.preventDefault();
