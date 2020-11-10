@@ -44,7 +44,6 @@ function* authenticationWorkflow() {
         auth = true;
       } catch (error) {
         console.log(error);
-        break;
       }
     }
     yield take(getType(Actions.requestLogout));
