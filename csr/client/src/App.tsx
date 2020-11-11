@@ -3,6 +3,7 @@ import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import { NavBar } from './component';
 import { Home, Login, SignUp, Upload, VideoDetail } from './pages';
 import { v4 } from 'uuid';
+import { Results } from './pages/Results';
 const App = () => {
   return (
     <>
@@ -18,6 +19,7 @@ const App = () => {
             render={() => <Upload key={v4()} />}
           />
           <Route exact path="/video/:id" component={VideoDetail} />
+          <Route exact path="/results" component={Results} />
         </Switch>
       </BrowserRouter>
     </>

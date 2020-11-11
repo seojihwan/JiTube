@@ -2,12 +2,14 @@ import styled from 'styled-components';
 
 export const AuthDiv = styled.div`
   display: flex;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   flex-direction: column;
   justify-content: center;
   width: 350px;
   margin: auto;
-  margin-top: 50px;
-
   input {
     display: block;
     outline: none;

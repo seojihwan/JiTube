@@ -19,7 +19,7 @@ import {
   ModalVideoUploadButton,
 } from './styles';
 
-export const UplaodModal = () => {
+export const UploadModal = () => {
   const auth = useSelector((store: IStoreState) => store.authentication);
   const dispatch = useDispatch();
   const [file, setFile] = useState<File>();
