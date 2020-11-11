@@ -7,7 +7,6 @@ import { IStoreState } from '../store';
 import Logo from './styles/res/youtube.svg';
 import { NavDiv, NavStart, NavEnd } from './styles';
 import { Search } from '../component';
-
 export const NavBar: React.FC = () => {
   const dispatch = useDispatch();
   const auth = useSelector((store: IStoreState) => store.authentication);

@@ -4,6 +4,8 @@ import { NavBar } from './component';
 import { Home, Login, SignUp, Upload, VideoDetail } from './pages';
 import { v4 } from 'uuid';
 import { Results } from './pages/Results';
+import './App.css';
+
 const App = () => {
   return (
     <>

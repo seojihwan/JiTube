@@ -14,16 +14,23 @@ export const NavDiv = styled.div`
 export const NavStart = styled.div`
   display: flex;
   align-items: center;
+  padding-left: 10px;
 `;
 export const NavEnd = styled.div`
   display: flex;
   flex: 0 1 200px;
+  a {
+    display: inline-block;
+
+    box-sizing: border-box;
+  }
   button {
     border: none;
     outline: none;
     font-size: 12px;
     color: #bbb;
     background-color: #fff;
+    cursor: pointer;
     :hover {
       transform: scale(1.1);
     }
