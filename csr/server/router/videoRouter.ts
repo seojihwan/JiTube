@@ -162,6 +162,17 @@ videoRouter.post('/comment', async (req: Request, res: Response) => {
   }
 });
 
+videoRouter.post('/delete', async (req: Request, res: Response) => {
+  const { video_id } = req.body;
+  console.log(video_id);
+  try {
+    await Video.findByIdAndDelete(video_id).exec();
+    res.status(200).json({ delete: true });
+  } catch (error) {
+    res.status(400).json({ message: '비디오 삭제 실패' });
+  }
+});
+
 videoRouter.post('/deletecomment', async (req: Request, res: Response) => {
   const { comment_id } = req.body;
   try {

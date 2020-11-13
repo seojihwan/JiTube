@@ -16,4 +16,5 @@ export interface IStoreState {
   authentication: IAuthentication | null;
   videos: Array<IVideoData> | null;
   currentPageVideo: IVideoData | null;
+  currentPageUserVideos: Array<IVideoData> | null;
 }

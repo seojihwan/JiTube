@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { IVideoData } from '../store';
-const endpoint = 'http://localhost:4000';
+import { endpoint } from '../apis';
+
 export const SideVideoList: React.FC<IVideoData> = (props) => {
   console.log(props);
   return (

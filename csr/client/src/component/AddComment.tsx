@@ -12,8 +12,8 @@ import {
   CommentInputFilled,
   CommentInputFilledWrapper,
 } from './styles';
+import { endpoint } from '../apis';
 
-const endpoint = 'http://localhost:4000';
 interface IAddCommentprops {
   video_id: string;
 }

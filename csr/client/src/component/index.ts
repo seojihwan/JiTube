@@ -12,3 +12,5 @@ export * from './VideoInfo';
 export * from './ReplyComment';
 export * from './Search';
 export * from './UploadModal';
+export * from './UserHome';
+export * from './UserVideos';

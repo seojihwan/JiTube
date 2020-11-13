@@ -4,8 +4,8 @@ import { CommentDocument } from '../../../server/models';
 import { requestComment } from '../actions';
 import { IStoreState } from '../store';
 import { ReplyComment, Comment } from '../component';
+import { endpoint } from '../apis';
 
-const endpoint = 'http://localhost:4000';
 interface ICommentsProps {
   video_id: string;
   comments: Array<CommentDocument>;

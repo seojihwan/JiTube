@@ -33,6 +33,11 @@ export interface IRequestCommentPayload {
   comment_id: string;
 }
 
+export interface requestDeleteVideo {
+  user_id: string;
+  video_id: string;
+}
+
 export const successAuth = createAction('@command/user/successAuth')<
   ISuccessLogin
 >();
@@ -72,6 +77,14 @@ export const successGetOneVideo = createAction(
   '@command/video/successGetOneVideo'
 )<IVideoData>();
 
+export const requestGetUserAllVideos = createAction(
+  '@command/user/requestGetUserAllVideos'
+)<string>();
+
+export const successGetUserAllVideos = createAction(
+  '@command/user/successGetUserAllVideos'
+)<Array<IVideoData>>();
+
 export const requestClearOneVideo = createAction(
   '@command/video/requestClearOneVideo'
 )();
@@ -83,6 +96,11 @@ export const requestLikeVideo = createAction('@command/video/requestlike')<
 export const requestComment = createAction('@command/video/requestcomment')<
   IRequestCommentPayload
 >();
-export const requestDeleteComment = createAction('@command/video/requestlike')<
-  string
->();
+
+export const requestDeleteVideo = createAction(
+  '@command/video/requestDeleteVideo'
+)<requestDeleteVideo>();
+
+export const requestDeleteComment = createAction(
+  '@command/video/requestDeleteComment'
+)<string>();

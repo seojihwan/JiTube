@@ -81,6 +81,14 @@ function* getOneVideos() {
   yield put(Actions.successGetOneVideo(video));
 }
 
+function* getUserAllVideos() {
+  const { payload } = yield take(getType(Actions.requestGetUserAllVideos));
+  const {
+    data: { video },
+  } = yield call(Api.requestGetUserAllVideos, payload);
+  yield put(Actions.successGetUserAllVideos(video));
+}
+
 function* likeVideos() {
   while (true) {
     const {
@@ -114,10 +122,25 @@ function* comment() {
 
 function* deletecomment() {
   while (true) {
+    const { payload } = yield take(getType(Actions.requestDeleteComment));
+    yield call(Api.requestDeleteComment, payload);
     const {
-      payload: { comment_id },
-    } = yield take(getType(Actions.requestDeleteComment));
-    yield call(Api.requestDeleteComment, comment_id);
+      data: { video },
+    } = yield call(Api.requestGetOneVideo, payload);
+    yield put(Actions.successGetOneVideo(video));
+  }
+}
+function* deletevideo() {
+  while (true) {
+    const {
+      payload: { user_id, video_id },
+    } = yield take(getType(Actions.requestDeleteVideo));
+    console.log(user_id, video_id);
+    yield call(Api.requestDeleteVideo, video_id);
+    const {
+      data: { video },
+    } = yield call(Api.requestGetUserAllVideos, user_id);
+    yield put(Actions.successGetUserAllVideos(video));
   }
 }
 export default function* () {
@@ -127,6 +150,7 @@ export default function* () {
   yield fork(likeVideos);
   yield fork(comment);
   yield fork(getOneVideos);
-
-  // yield fork(deletecomment);
+  yield fork(getUserAllVideos);
+  yield fork(deletecomment);
+  yield fork(deletevideo);
 }

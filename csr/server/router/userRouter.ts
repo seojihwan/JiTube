@@ -1,5 +1,5 @@
 import express, { Request, Response } from 'express';
-import { User, UserDocument } from '../models';
+import { User, UserDocument, Video } from '../models';
 import jwt from 'jsonwebtoken';
 export const userRouter = express.Router();
 
@@ -35,6 +35,7 @@ userRouter.post('/login', async (req: Request, res: Response) => {
           user_id: user._id,
           email: user.email,
           name: user.name,
+          imageUrl: user.imageUrl,
           token,
         });
       }
@@ -75,6 +76,20 @@ userRouter.get('/logout', (req: Request, res: Response) => {
   res.clearCookie('name');
   res.clearCookie('user_id');
   res.status(200).json({ cookie: false });
+});
+
+userRouter.post('/getallvideos', async (req: Request, res: Response) => {
+  console.log(req.body);
+  try {
+    const video = await Video.find({ admin: req.body.user_id })
+      .populate('admin')
+      .populate({ path: 'comments', populate: { path: 'admin' } })
+      .exec();
+    res.status(200).json({ video });
+  } catch (error) {
+    console.log(error);
+    res.status(400).json({ getUserVideo: false });
+  }
 });
 
 userRouter.get('/hello', (req: Request, res: Response) => {

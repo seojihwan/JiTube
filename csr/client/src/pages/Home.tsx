@@ -17,7 +17,7 @@ export const Home: React.FC = () => {
   return (
     <ThumbnailsWrapper>
       {videos.map((video, idx) => (
-        <Thumbnail key={idx} {...video} />
+        <Thumbnail key={idx} {...video} isChannel={false} />
       ))}
     </ThumbnailsWrapper>
   );

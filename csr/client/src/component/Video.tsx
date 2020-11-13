@@ -14,8 +14,8 @@ import {
   VideoCurrentTime,
   VideoDuration,
 } from './styles';
+import { endpoint } from '../apis';
 
-const endpoint = 'http://localhost:4000';
 interface Iprops {
   src: string;
 }

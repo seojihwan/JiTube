@@ -7,6 +7,8 @@ import { IStoreState } from '../store';
 import Logo from './styles/res/youtube.svg';
 import { NavDiv, NavStart, NavEnd } from './styles';
 import { Search } from '../component';
+import { endpoint } from '../apis';
+
 export const NavBar: React.FC = () => {
   const dispatch = useDispatch();
   const auth = useSelector((store: IStoreState) => store.authentication);
@@ -17,6 +19,7 @@ export const NavBar: React.FC = () => {
       </NavStart>
       <Search />
       <NavEnd>
+        {auth && <UserButton url={auth.imageUrl} id={auth.user_id} />}
         <UploadButton />
         {auth ? (
           <LogoutButton
@@ -45,6 +48,13 @@ export const UploadButton = () => {
   return (
     <Link to="/video/upload">
       <button>업로드</button>
+    </Link>
+  );
+};
+export const UserButton = ({ url, id }: { url: string; id: string }) => {
+  return (
+    <Link to={`/user/${id}`}>
+      <img src={endpoint + url} />
     </Link>
   );
 };

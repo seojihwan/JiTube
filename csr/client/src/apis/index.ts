@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IRequestCommentPayload, IRequestLikePayload } from '../actions';
-const endpoint = 'http://localhost:4000';
+export const endpoint = 'http://localhost:4000';
 
 export const requestAuth = () =>
   new Promise((resolve, reject) => {
@@ -9,6 +9,7 @@ export const requestAuth = () =>
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
+
 export const requestLogin = (email: string, password: string) =>
   new Promise((resolve, reject) => {
     console.log({ email, password });
@@ -56,10 +57,19 @@ export const requestGetAllVideos = () =>
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
+
 export const requestGetOneVideo = (video_id: string) =>
   new Promise((resolve, reject) => {
     axios
       .post(endpoint + '/video/getone', { video_id })
+      .then((response: AxiosResponse) => resolve(response))
+      .catch((error: AxiosError) => reject(error));
+  });
+
+export const requestGetUserAllVideos = (user_id: string) =>
+  new Promise((resolve, reject) => {
+    axios
+      .post(endpoint + '/user/getallvideos', { user_id })
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
@@ -79,10 +89,19 @@ export const requestComment = (data: IRequestCommentPayload) =>
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });
+
 export const requestDeleteComment = (comment_id: string) =>
   new Promise((resolve, reject) => {
     axios
-      .post(endpoint + '/video/deletecomment', comment_id)
+      .post(endpoint + '/video/deletecomment', { comment_id })
+      .then((response: AxiosResponse) => resolve(response))
+      .catch((error: AxiosError) => reject(error));
+  });
+
+export const requestDeleteVideo = (video_id: string) =>
+  new Promise((resolve, reject) => {
+    axios
+      .post(endpoint + '/video/delete', { video_id })
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });

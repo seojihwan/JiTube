@@ -10,6 +10,7 @@ export const VideoDetail: React.FC<RouteComponentProps<{}, any, IVideoData>> = (
   props
 ) => {
   const videoData: IVideoData = props.location.state;
+  console.log(videoData, props);
   return (
     <VideoPageWrapper>
       <VideoPlayer src={videoData.filePath} />

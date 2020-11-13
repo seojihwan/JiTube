@@ -8,3 +8,4 @@ export * from './replyComment';
 export * from './thumbnail';
 export * from './uploadModal';
 export * from './search';
+export * from './user';

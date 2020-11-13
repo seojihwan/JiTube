@@ -12,8 +12,8 @@ import {
   DownTriangleArrow,
   ShowButton,
 } from './styles';
+import { endpoint } from '../apis';
 
-const endpoint = 'http://localhost:4000';
 interface ICommentProps {
   video_id: string;
   comment: CommentDocument;

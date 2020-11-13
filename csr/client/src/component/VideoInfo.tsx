@@ -10,7 +10,7 @@ import {
 } from './styles';
 import { LikeButton } from './LikeButton';
 import { UserDocument } from '../../../server/models/User';
-const endpoint = 'http://localhost:4000';
+import { endpoint } from '../apis';
 
 interface Iprops {
   admin: UserDocument;

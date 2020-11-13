@@ -6,24 +6,62 @@ import {
   ThumbnailAdminAvatar,
   ThumbnailContents,
   ThumbnailImageWrapper,
+  DeleteButton,
 } from './styles';
-const endpoint = 'http://localhost:4000';
+import { endpoint } from '../apis';
+import { useDispatch } from 'react-redux';
+import { requestDeleteVideo } from '../actions';
 
-export const Thumbnail: React.FC<IVideoData> = (props) => {
+interface ThumbnailProps extends IVideoData {
+  isChannel: boolean;
+  isAdmin: boolean;
+}
+
+export const Thumbnail: React.FC<ThumbnailProps> = ({
+  _id,
+  thumbnailPath,
+  admin,
+  title,
+  filePath,
+  description,
+  comments,
+  isChannel,
+  isAdmin,
+}) => {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(requestDeleteVideo({ video_id: _id, user_id: admin._id }));
+  };
   return (
     <ThumbnailWrapper>
-      <Link to={{ pathname: `video/${props._id}`, state: props }}>
+      <Link
+        to={{
+          pathname: `/video/${_id}`,
+          state: {
+            _id,
+            thumbnailPath,
+            admin,
+            title,
+            description,
+            comments,
+            filePath,
+          },
+        }}
+      >
         <ThumbnailImageWrapper>
-          <img src={endpoint + props.thumbnailPath} alt="" />
+          <img src={endpoint + thumbnailPath} alt="" />
         </ThumbnailImageWrapper>
-        <ThumbnailAdminAvatar>
-          <img src={endpoint + props.admin.imageUrl} />
-        </ThumbnailAdminAvatar>
+        {!isChannel && (
+          <ThumbnailAdminAvatar>
+            <img src={endpoint + admin.imageUrl} />
+          </ThumbnailAdminAvatar>
+        )}
         <ThumbnailContents>
-          <div>{props.title}</div>
-          <span>{props.admin.name}</span>
+          <div>{title}</div>
+          <span>{admin.name}</span>
         </ThumbnailContents>
       </Link>
+      {isChannel && isAdmin && <DeleteButton onClick={handleDelete} />}
     </ThumbnailWrapper>
   );
 };

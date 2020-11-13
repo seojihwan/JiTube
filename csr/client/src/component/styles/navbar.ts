@@ -19,10 +19,15 @@ export const NavStart = styled.div`
 export const NavEnd = styled.div`
   display: flex;
   flex: 0 1 200px;
+  align-items: center;
+  img {
+  }
   a {
-    display: inline-block;
-
+    display: flex;
+    align-items: center;
     box-sizing: border-box;
+    text-decoration: none;
+    margin: 0 10px;
   }
   button {
     border: none;
