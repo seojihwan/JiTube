@@ -29,14 +29,6 @@ export const CommentContents = styled.div`
   word-break: break-all;
 `;
 
-export const ReplyButton = styled.button`
-  outline: none;
-  border: none;
-  color: #606060;
-  cursor: pointer;
-  background-color: #fff;
-`;
-
 export const UpTriangleArrow = styled.button`
   border: none;
   outline: none;

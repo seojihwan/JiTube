@@ -28,6 +28,7 @@ export const NavEnd = styled.div`
     box-sizing: border-box;
     text-decoration: none;
     margin: 0 10px;
+    min-width: 60px;
   }
   button {
     border: none;

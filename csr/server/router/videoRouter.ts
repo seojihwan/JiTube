@@ -174,10 +174,25 @@ videoRouter.post('/delete', async (req: Request, res: Response) => {
 });
 
 videoRouter.post('/deletecomment', async (req: Request, res: Response) => {
-  const { comment_id } = req.body;
+  const { video_id, comment_id, parrentComment_id } = req.body;
   try {
     await Comment.findByIdAndDelete(comment_id).exec();
     res.status(200).json({ deletecomment: true });
+    if (!parrentComment_id) {
+      await Video.findByIdAndUpdate(
+        video_id,
+        { $pull: { comments: comment_id } },
+        { new: true }
+      );
+    } else {
+      await Comment.findByIdAndUpdate(
+        comment_id,
+        {
+          $pull: { replyComments: comment_id },
+        },
+        { new: true }
+      );
+    }
   } catch (error) {
     res.status(400).json({ message: '코멘트 삭제 실패' });
   }

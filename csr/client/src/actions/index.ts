@@ -33,9 +33,15 @@ export interface IRequestCommentPayload {
   comment_id: string;
 }
 
-export interface requestDeleteVideo {
+export interface IrequestDeleteVideo {
   user_id: string;
   video_id: string;
+}
+
+export interface IrequestDeleteComment {
+  video_id: string;
+  parrentComment_id: string;
+  comment_id: string;
 }
 
 export const successAuth = createAction('@command/user/successAuth')<
@@ -99,8 +105,8 @@ export const requestComment = createAction('@command/video/requestcomment')<
 
 export const requestDeleteVideo = createAction(
   '@command/video/requestDeleteVideo'
-)<requestDeleteVideo>();
+)<IrequestDeleteVideo>();
 
 export const requestDeleteComment = createAction(
   '@command/video/requestDeleteComment'
-)<string>();
+)<IrequestDeleteComment>();

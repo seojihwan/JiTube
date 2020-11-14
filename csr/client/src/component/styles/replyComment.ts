@@ -5,7 +5,13 @@ interface ReplyInputFilledProps {
 }
 export const ReplyForm = styled.form`
   overflow: hidden;
+  button {
+    :enabled {
+      cursor: pointer;
+    }
+  }
 `;
+
 export const ReplyInputWrapper = styled.div`
   display: inline-block;
   width: 100%;
@@ -35,10 +41,41 @@ export const ReplyInput = styled.input`
   outline: none;
 `;
 
+export const ReplyButton = styled.button`
+  outline: none;
+  border: none;
+  color: #606060;
+  cursor: pointer;
+  background-color: #fff;
+  padding: 8px 0;
+  margin-right: 8px;
+`;
+
+export const ReplyDeleteButton = styled.button`
+  border: none;
+  outline: none;
+  background-color: #fff;
+  cursor: pointer;
+  color: #606060;
+  padding: 8px 0;
+  margin-right: 8px;
+`;
+
+export const ReplyCancel = styled.button`
+  float: right;
+  margin-top: 10px;
+  border: none;
+  outline: none;
+  border-radius: 1px;
+  width: 60px;
+  height: 30px;
+  background-color: #fff;
+`;
 export const ReplyEnter = styled.button`
   float: right;
   margin-top: 10px;
   border: none;
+  outline: none;
   border-radius: 1px;
   width: 60px;
   height: 30px;

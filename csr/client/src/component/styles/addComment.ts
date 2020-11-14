@@ -47,6 +47,7 @@ export const CommentEnter = styled.button`
   float: right;
   margin-top: 10px;
   border: none;
+  outline: none;
   border-radius: 1px;
   width: 60px;
   height: 30px;
@@ -58,5 +59,6 @@ export const CommentEnter = styled.button`
   :enabled {
     color: #fff;
     background-color: #0f52ba;
+    cursor: pointer;
   }
 `;

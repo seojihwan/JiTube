@@ -90,10 +90,22 @@ export const requestComment = (data: IRequestCommentPayload) =>
       .catch((error: AxiosError) => reject(error));
   });
 
-export const requestDeleteComment = (comment_id: string) =>
+export const requestDeleteComment = ({
+  video_id,
+  comment_id,
+  parrentComment_id,
+}: {
+  video_id: string;
+  comment_id: string;
+  parrentComment_id: string;
+}) =>
   new Promise((resolve, reject) => {
     axios
-      .post(endpoint + '/video/deletecomment', { comment_id })
+      .post(endpoint + '/video/deletecomment', {
+        video_id,
+        comment_id,
+        parrentComment_id,
+      })
       .then((response: AxiosResponse) => resolve(response))
       .catch((error: AxiosError) => reject(error));
   });

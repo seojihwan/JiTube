@@ -4,7 +4,7 @@ import { UserDocument } from './User';
 export interface IComment {
   admin: UserDocument;
   contents: string;
-  replyComments: Array<IComment>;
+  replyComments: Array<CommentDocument>;
 }
 
 export interface CommentDocument extends IComment, Document {}

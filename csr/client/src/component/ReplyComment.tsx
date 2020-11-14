@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommentDocument } from '../../../server/models';
-import { requestComment } from '../actions';
+import { requestComment, requestDeleteComment } from '../actions';
 import { IStoreState } from '../store';
 import { ReplyButton } from './styles';
 import {
@@ -11,6 +11,8 @@ import {
   ReplyInputFilled,
   ReplyInputFilledWrapper,
   ReplyEnter,
+  ReplyDeleteButton,
+  ReplyCancel,
 } from './styles';
 interface ReplyCommentProps {
   video_id: string;
@@ -25,6 +27,7 @@ export const ReplyComment: React.FC<ReplyCommentProps> = ({
   const dispatch = useDispatch();
   const [onReply, setOnReply] = useState(false);
   const handleClickReplyButton = useCallback(() => setOnReply(true), []);
+  const handleClickReplyCancel = useCallback(() => setOnReply(false), []);
   const onChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setReplyContents(e.currentTarget.value);
   }, []);
@@ -37,9 +40,21 @@ export const ReplyComment: React.FC<ReplyCommentProps> = ({
     setIsFocus(false);
   }, []);
 
+  const handleRemoveComment = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    if (auth) {
+      dispatch(
+        requestDeleteComment({
+          video_id,
+          comment_id: comment._id,
+          parrentComment_id: '',
+        })
+      );
+    }
+  };
+
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-
     if (auth) {
       dispatch(
         requestComment({
@@ -52,9 +67,15 @@ export const ReplyComment: React.FC<ReplyCommentProps> = ({
       setReplyContents('');
     }
   };
+
   return (
     <>
       <ReplyButton onClick={handleClickReplyButton}>답글</ReplyButton>
+      {auth?.user_id === comment.admin._id && (
+        <ReplyDeleteButton onClick={handleRemoveComment}>
+          삭제
+        </ReplyDeleteButton>
+      )}
       {onReply ? (
         <div>
           <ReplyForm onSubmit={onSubmit} data-comments_id={comment._id || ''}>
@@ -74,6 +95,7 @@ export const ReplyComment: React.FC<ReplyCommentProps> = ({
               </ReplyInputFilledWrapper>
             </ReplyInputWrapper>
             <ReplyEnter disabled={!replyContents}>답글</ReplyEnter>
+            <ReplyCancel onClick={handleClickReplyCancel}>취소</ReplyCancel>
           </ReplyForm>
         </div>
       ) : (

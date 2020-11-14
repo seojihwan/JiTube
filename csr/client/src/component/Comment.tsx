@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { CommentDocument } from '../../../server/models';
 import { IStoreState } from '../store';
 import { ReplyComment } from '../component';
@@ -11,8 +11,10 @@ import {
   UpTriangleArrow,
   DownTriangleArrow,
   ShowButton,
+  ReplyDeleteButton,
 } from './styles';
 import { endpoint } from '../apis';
+import { requestDeleteComment } from '../actions';
 
 interface ICommentProps {
   video_id: string;
@@ -21,14 +23,29 @@ interface ICommentProps {
 
 export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
   const [isShowReply, setIsShowReply] = useState(false);
+  const auth = useSelector((store: IStoreState) => store.authentication);
+  const dispatch = useDispatch();
 
   const handleShowButton = () => {
     setIsShowReply(!isShowReply);
   };
+
+  const handleRemoveComment = (e: React.MouseEvent<HTMLButtonElement>) => {
+    if (auth) {
+      dispatch(
+        requestDeleteComment({
+          video_id,
+          parrentComment_id: comment._id,
+          comment_id:
+            e.currentTarget.getAttribute('data-replycomment_id') || '',
+        })
+      );
+    }
+  };
+
   const replyComments = useMemo(() => comment.replyComments.reverse(), [
     comment,
   ]);
-
   return (
     <>
       <CommentWrapper>
@@ -77,6 +94,12 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
                     </CommentAdminName>
                     <CommentContents>{replyComment.contents}</CommentContents>
                   </CommentContentsWrapper>
+                  <ReplyDeleteButton
+                    onClick={handleRemoveComment}
+                    data-replycomment_id={replyComment._id}
+                  >
+                    삭제
+                  </ReplyDeleteButton>
                 </CommentWrapper>
               ))}
           </div>

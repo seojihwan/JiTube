@@ -122,14 +122,21 @@ function* comment() {
 
 function* deletecomment() {
   while (true) {
-    const { payload } = yield take(getType(Actions.requestDeleteComment));
-    yield call(Api.requestDeleteComment, payload);
+    const {
+      payload: { video_id, comment_id, parrentComment_id },
+    } = yield take(getType(Actions.requestDeleteComment));
+    yield call(Api.requestDeleteComment, {
+      video_id,
+      comment_id,
+      parrentComment_id,
+    });
     const {
       data: { video },
-    } = yield call(Api.requestGetOneVideo, payload);
+    } = yield call(Api.requestGetOneVideo, video_id);
     yield put(Actions.successGetOneVideo(video));
   }
 }
+
 function* deletevideo() {
   while (true) {
     const {
