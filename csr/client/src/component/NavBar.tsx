@@ -5,7 +5,7 @@ import { requestLogout } from '../actions';
 import { LogoutButton } from '.';
 import { IStoreState } from '../store';
 import Logo from './styles/res/youtube.svg';
-import { NavDiv, NavStart, NavEnd } from './styles';
+import { Avatar, NavDiv, NavStart, NavEnd } from './styles';
 import { Search } from '../component';
 import { endpoint } from '../apis';
 
@@ -54,7 +54,7 @@ export const UploadButton = () => {
 export const UserButton = ({ url, id }: { url: string; id: string }) => {
   return (
     <Link to={`/user/${id}`}>
-      <img src={endpoint + url} />
+      <Avatar src={endpoint + url} />
     </Link>
   );
 };

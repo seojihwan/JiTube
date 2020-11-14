@@ -12,9 +12,11 @@ import {
   DownTriangleArrow,
   ShowButton,
   ReplyDeleteButton,
+  Avatar,
 } from './styles';
 import { endpoint } from '../apis';
 import { requestDeleteComment } from '../actions';
+import { Link } from 'react-router-dom';
 
 interface ICommentProps {
   video_id: string;
@@ -49,7 +51,9 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
   return (
     <>
       <CommentWrapper>
-        <img src={endpoint + comment.admin.imageUrl}></img>
+        <Link to={`/user/${comment.admin._id}`}>
+          <Avatar src={endpoint + comment.admin.imageUrl} />
+        </Link>
         <CommentContentsWrapper>
           <CommentAdminName>{comment.admin.name}</CommentAdminName>
           <CommentContents>{comment.contents}</CommentContents>
@@ -84,10 +88,16 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
             {isShowReply &&
               replyComments.map((replyComment, idx) => (
                 <CommentWrapper key={idx}>
-                  <img
-                    style={{ width: '24px', height: '24px' }}
-                    src={endpoint + replyComment.admin.imageUrl}
-                  />
+                  <Link to={`/user/${replyComment.admin._id}`}>
+                    <Avatar
+                      style={{
+                        width: '24px',
+                        height: '24px',
+                      }}
+                      src={endpoint + replyComment.admin.imageUrl}
+                    />
+                  </Link>
+
                   <CommentContentsWrapper>
                     <CommentAdminName>
                       {replyComment.admin.name}

@@ -1,3 +1,4 @@
+export * from './avatar';
 export * from './navbar';
 export * from './likebutton';
 export * from './video';

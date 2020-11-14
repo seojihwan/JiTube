@@ -16,7 +16,7 @@ import {
 } from './styles';
 import { endpoint } from '../apis';
 import { RouteComponentProps } from 'react-router-dom';
-import { requestGetUserAllVideos } from '../actions';
+import { requestClearUserAllVideos, requestGetUserAllVideos } from '../actions';
 
 const contentsTab = [
   { width: 33.4, name: '홈', prevWidth: 0 },
@@ -41,8 +41,11 @@ export const User: React.FC<RouteComponentProps<RouterProps>> = ({
 
   useEffect(() => {
     if (auth) {
-      dispatch(requestGetUserAllVideos(auth.user_id));
+      dispatch(requestGetUserAllVideos(params.id));
     }
+    return () => {
+      dispatch(requestClearUserAllVideos());
+    };
   }, []);
   const UserContentsTabs = () => {
     return (
@@ -52,6 +55,7 @@ export const User: React.FC<RouteComponentProps<RouterProps>> = ({
             data-idx={idx}
             onClick={handelItemClick}
             width={tab.width}
+            key={idx}
           >
             {tab.name}
           </UserContentsTab>

@@ -24,12 +24,13 @@ export const UserInfoWrapper = styled.div`
 export const UserContentsTabWrapper = styled.div`
   display: flex;
   align-items: center;
-  background-color: #777;
+  margin-bottom: -2px;
   button {
     color: #606060;
     border: none;
     outline: none;
     padding: 10px 20px;
+    background-color: hsl(0, 0%, 98%);
     cursor: pointer;
     :hover {
       color: #030303;
@@ -64,6 +65,8 @@ export const UserInfo = styled.div`
 export const UserImage = styled.img`
   width: 64px;
   height: 64px;
+  border-radius: 50%;
+  margin-right: 20px;
 `;
 export const UserName = styled.span`
   font-size: 24px;

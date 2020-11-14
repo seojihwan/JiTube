@@ -82,11 +82,13 @@ function* getOneVideos() {
 }
 
 function* getUserAllVideos() {
-  const { payload } = yield take(getType(Actions.requestGetUserAllVideos));
-  const {
-    data: { video },
-  } = yield call(Api.requestGetUserAllVideos, payload);
-  yield put(Actions.successGetUserAllVideos(video));
+  while (true) {
+    const { payload } = yield take(getType(Actions.requestGetUserAllVideos));
+    const {
+      data: { video },
+    } = yield call(Api.requestGetUserAllVideos, payload);
+    yield put(Actions.successGetUserAllVideos(video));
+  }
 }
 
 function* likeVideos() {

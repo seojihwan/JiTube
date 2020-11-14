@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { requestComment } from '../actions';
 import { requestGetOneVideo } from '../apis';
 import { IStoreState } from '../store';
-import { CommentInput } from './styles';
+import { Avatar, CommentInput } from './styles';
 import {
   AddCommentForm,
   UserIcon,
@@ -13,6 +13,7 @@ import {
   CommentInputFilledWrapper,
 } from './styles';
 import { endpoint } from '../apis';
+import { Link } from 'react-router-dom';
 
 interface IAddCommentprops {
   video_id: string;
@@ -52,10 +53,13 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
 
   return (
     <AddCommentForm onSubmit={onSubmit}>
-      <UserIcon
-        src={auth?.imageUrl ? endpoint + auth.imageUrl : endpoint + '/1.png'}
-        alt=""
-      />
+      <Link to={`/user/${auth?.user_id}`}>
+        <Avatar
+          src={auth?.imageUrl ? endpoint + auth.imageUrl : endpoint + '/1.png'}
+          alt=""
+        />
+      </Link>
+
       <CommentInputWrapper>
         <CommentInput
           value={contents}

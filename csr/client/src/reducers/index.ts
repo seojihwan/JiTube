@@ -5,7 +5,7 @@ export const initializeState: IStoreState = {
   authentication: null,
   videos: null,
   currentPageVideo: null,
-  currentPageUserVideo: null,
+  currentPageUserVideos: null,
 };
 
 export default (
@@ -43,6 +43,11 @@ export default (
       return {
         ...state,
         currentPageUserVideos: action.payload,
+      };
+    case getType(Actions.requestClearUserAllVideos):
+      return {
+        ...state,
+        currentPageUserVideos: null,
       };
     case getType(Actions.requestClearOneVideo):
       return {

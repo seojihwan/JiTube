@@ -8,6 +8,7 @@ export const ThumbnailWrapper = styled.div`
     flex-wrap: wrap;
     text-decoration: none;
   }
+
   width: 100%;
   @media (min-width: 480px) {
     width: 48%;
@@ -37,11 +38,14 @@ export const ThumbnailImageWrapper = styled.div`
   }
   margin: 10px 0;
 `;
+export const ThumbnailAvatarContentsWrapper = styled.div`
+  display: flex;
+`;
 export const ThumbnailAdminAvatar = styled.div`
+  display: inline-block;
   padding-right: 10px;
 `;
 export const ThumbnailContents = styled.div`
-  flex: 1;
   display: flex;
   flex-direction: column;
   div {

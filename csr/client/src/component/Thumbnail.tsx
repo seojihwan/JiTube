@@ -2,10 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { IVideoData } from '../store';
 import {
+  Avatar,
   ThumbnailWrapper,
   ThumbnailAdminAvatar,
   ThumbnailContents,
   ThumbnailImageWrapper,
+  ThumbnailAvatarContentsWrapper,
   DeleteButton,
 } from './styles';
 import { endpoint } from '../apis';
@@ -51,17 +53,23 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({
         <ThumbnailImageWrapper>
           <img src={endpoint + thumbnailPath} alt="" />
         </ThumbnailImageWrapper>
+      </Link>
+      <ThumbnailAvatarContentsWrapper>
         {!isChannel && (
           <ThumbnailAdminAvatar>
-            <img src={endpoint + admin.imageUrl} />
+            <Link to={`/user/${admin._id}`}>
+              <Avatar src={endpoint + admin.imageUrl} />
+            </Link>
           </ThumbnailAdminAvatar>
         )}
         <ThumbnailContents>
           <div>{title}</div>
-          <span>{admin.name}</span>
+          <Link to={`/user/${admin._id}`}>
+            <span>{admin.name}</span>
+          </Link>
         </ThumbnailContents>
-      </Link>
-      {isChannel && isAdmin && <DeleteButton onClick={handleDelete} />}
+        {isChannel && isAdmin && <DeleteButton onClick={handleDelete} />}
+      </ThumbnailAvatarContentsWrapper>
     </ThumbnailWrapper>
   );
 };

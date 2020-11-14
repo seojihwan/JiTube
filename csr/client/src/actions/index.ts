@@ -87,6 +87,10 @@ export const requestGetUserAllVideos = createAction(
   '@command/user/requestGetUserAllVideos'
 )<string>();
 
+export const requestClearUserAllVideos = createAction(
+  '@command/user/requestClearUserAllVideos'
+)();
+
 export const successGetUserAllVideos = createAction(
   '@command/user/successGetUserAllVideos'
 )<Array<IVideoData>>();
