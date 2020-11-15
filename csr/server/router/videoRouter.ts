@@ -6,6 +6,14 @@ import ffmpeg from 'fluent-ffmpeg';
 import { Types } from 'mongoose';
 export const videoRouter = express.Router();
 
+const currentDate = () => {
+  const today = new Date();
+  const day = String(today.getDate()).padStart(2, '0');
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const year = today.getFullYear();
+  return year + '-' + month + '-' + day;
+};
+
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
     cb(null, 'server/uploads/');
@@ -49,18 +57,20 @@ videoRouter.post(
       folder: 'server/uploads/thumbnails',
       filename: thumbnailPath,
     });
+
     const video = new Video({
       ...req.body,
       admin: req.body.user_id,
       filePath: '/' + req.file.filename,
       thumbnailPath: '/thumbnails/' + thumbnailPath + '.png',
+      viewcount: 0,
+      date: currentDate(),
     });
 
     try {
       await video.save();
       res.status(200).json({ requestUpload: true });
     } catch (error) {
-      console.log(error);
       res.status(400).json({ requestUpload: false });
     }
   }
@@ -78,13 +88,11 @@ videoRouter.get('/getall', async (req: Request, res: Response) => {
       .exec();
     res.status(200).json({ videos });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ requestGetAll: false });
   }
 });
 
 videoRouter.post('/getone', async (req: Request, res: Response) => {
-  console.log(req.body);
   try {
     const video = await Video.findById(req.body.video_id)
       .populate('admin')
@@ -96,14 +104,27 @@ videoRouter.post('/getone', async (req: Request, res: Response) => {
       .exec();
     res.status(200).json({ video });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ requestGetOne: false });
   }
 });
 
-videoRouter.post('/like', async (req: Request, res: Response) => {
+videoRouter.post('/view', async (req: Request, res: Response) => {
   console.log(req.body);
+  const { video_id } = req.body;
+  try {
+    await Video.updateOne(
+      { _id: video_id },
+      {
+        $inc: { viewcount: 1 },
+      }
+    );
+    res.status(200).json();
+  } catch (error) {
+    res.status(400).json();
+  }
+});
 
+videoRouter.post('/like', async (req: Request, res: Response) => {
   try {
     if (req.body.like) {
       await Video.findByIdAndUpdate(
@@ -130,13 +151,11 @@ videoRouter.post('/like', async (req: Request, res: Response) => {
     }
     res.status(200).json({ requestLike: true });
   } catch (error) {
-    console.log(error);
     res.status(400).json({ requestLike: false });
   }
 });
 
 videoRouter.post('/comment', async (req: Request, res: Response) => {
-  console.log(req.body);
   const { user_id, contents, video_id, comment_id } = req.body;
   const comment = new Comment({ admin: user_id, contents });
   try {
@@ -164,7 +183,6 @@ videoRouter.post('/comment', async (req: Request, res: Response) => {
 
 videoRouter.post('/delete', async (req: Request, res: Response) => {
   const { video_id } = req.body;
-  console.log(video_id);
   try {
     await Video.findByIdAndDelete(video_id).exec();
     res.status(200).json({ delete: true });

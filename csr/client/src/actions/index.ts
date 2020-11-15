@@ -76,9 +76,14 @@ export const successGetAllVideos = createAction(
   '@command/video/successgetallVideos'
 )<Array<IVideoData>>();
 
+export const requestUpVideoViewCount = createAction(
+  '@command/video/requestUpVideoViewCount'
+)<string>();
+
 export const requestGetOneVideo = createAction(
   '@command/video/requestGetOneVideo'
 )<string>();
+
 export const successGetOneVideo = createAction(
   '@command/video/successGetOneVideo'
 )<IVideoData>();

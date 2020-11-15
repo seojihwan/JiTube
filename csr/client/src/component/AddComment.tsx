@@ -50,16 +50,14 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
   const onFocusOut = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setIsFocus(false);
   }, []);
-
   return (
     <AddCommentForm onSubmit={onSubmit}>
-      <Link to={`/user/${auth?.user_id}`}>
+      <Link to={{ pathname: `/user/${auth?.user_id}`, state: { admin: auth } }}>
         <Avatar
           src={auth?.imageUrl ? endpoint + auth.imageUrl : endpoint + '/1.png'}
           alt=""
         />
       </Link>
-
       <CommentInputWrapper>
         <CommentInput
           value={contents}

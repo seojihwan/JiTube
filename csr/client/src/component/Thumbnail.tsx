@@ -27,6 +27,8 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({
   filePath,
   description,
   comments,
+  viewcount,
+  date,
   isChannel,
   isAdmin,
 }) => {
@@ -46,6 +48,8 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({
             title,
             description,
             comments,
+            viewcount,
+            date,
             filePath,
           },
         }}
@@ -57,14 +61,24 @@ export const Thumbnail: React.FC<ThumbnailProps> = ({
       <ThumbnailAvatarContentsWrapper>
         {!isChannel && (
           <ThumbnailAdminAvatar>
-            <Link to={`/user/${admin._id}`}>
+            <Link
+              to={{
+                pathname: `/user/${admin._id}`,
+                state: { admin },
+              }}
+            >
               <Avatar src={endpoint + admin.imageUrl} />
             </Link>
           </ThumbnailAdminAvatar>
         )}
         <ThumbnailContents>
           <div>{title}</div>
-          <Link to={`/user/${admin._id}`}>
+          <Link
+            to={{
+              pathname: `/user/${admin._id}`,
+              state: { admin },
+            }}
+          >
             <span>{admin.name}</span>
           </Link>
         </ThumbnailContents>

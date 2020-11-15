@@ -73,12 +73,25 @@ function* getAllVideos() {
   }
 }
 
-function* getOneVideos() {
-  const { payload } = yield take(getType(Actions.requestGetOneVideo));
-  const {
-    data: { video },
-  } = yield call(Api.requestGetOneVideo, payload);
-  yield put(Actions.successGetOneVideo(video));
+function* upVideoViewCount() {
+  while (true) {
+    const { payload } = yield take(getType(Actions.requestUpVideoViewCount));
+    console.log('????????????');
+    yield call(Api.requestUpVideoViewCount, payload);
+    console.log('????????????');
+  }
+}
+
+function* getOneVideo() {
+  while (true) {
+    const { payload } = yield take(getType(Actions.requestGetOneVideo));
+    console.log('111111111111111111');
+    const {
+      data: { video },
+    } = yield call(Api.requestGetOneVideo, payload);
+    console.log('1222222222222');
+    yield put(Actions.successGetOneVideo(video));
+  }
 }
 
 function* getUserAllVideos() {
@@ -152,14 +165,16 @@ function* deletevideo() {
     yield put(Actions.successGetUserAllVideos(video));
   }
 }
+
 export default function* () {
   yield fork(authenticationWorkflow);
   yield fork(videoUpload);
   yield fork(getAllVideos);
   yield fork(likeVideos);
   yield fork(comment);
-  yield fork(getOneVideos);
+  yield fork(getOneVideo);
   yield fork(getUserAllVideos);
   yield fork(deletecomment);
   yield fork(deletevideo);
+  yield fork(upVideoViewCount);
 }

@@ -58,6 +58,14 @@ export const requestGetAllVideos = () =>
       .catch((error: AxiosError) => reject(error));
   });
 
+export const requestUpVideoViewCount = (video_id: string) =>
+  new Promise((resolve, reject) => {
+    axios
+      .post(endpoint + '/video/view', { video_id })
+      .then((response: AxiosResponse) => resolve(response))
+      .catch((error: AxiosError) => reject(error));
+  });
+
 export const requestGetOneVideo = (video_id: string) =>
   new Promise((resolve, reject) => {
     axios

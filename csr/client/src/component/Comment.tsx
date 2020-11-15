@@ -51,7 +51,12 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
   return (
     <>
       <CommentWrapper>
-        <Link to={`/user/${comment.admin._id}`}>
+        <Link
+          to={{
+            pathname: `/user/${comment.admin._id}`,
+            state: { admin: comment.admin },
+          }}
+        >
           <Avatar src={endpoint + comment.admin.imageUrl} />
         </Link>
         <CommentContentsWrapper>
@@ -88,7 +93,12 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
             {isShowReply &&
               replyComments.map((replyComment, idx) => (
                 <CommentWrapper key={idx}>
-                  <Link to={`/user/${replyComment.admin._id}`}>
+                  <Link
+                    to={{
+                      pathname: `/user/${replyComment.admin._id}`,
+                      state: { admin: replyComment.admin },
+                    }}
+                  >
                     <Avatar
                       style={{
                         width: '24px',

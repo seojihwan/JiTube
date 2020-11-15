@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   VideoInfoWrapper,
   AdminInfo,
@@ -10,31 +10,32 @@ import {
   Avatar,
 } from './styles';
 import { LikeButton } from './LikeButton';
+import { IVideoData } from '../store';
 import { UserDocument } from '../../../server/models/User';
 import { endpoint } from '../apis';
 import { Link } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { requestUpVideoViewCount } from '../actions';
 
 interface Iprops {
-  admin: UserDocument;
-  title: string;
-  description: string;
-  video_id: string;
-  likePeople: Array<string>;
+  videoData: IVideoData;
 }
 export const VideoInfo: React.FC<Iprops> = ({
-  admin,
-  title,
-  description,
-  video_id,
-  likePeople,
+  videoData: { title, _id, likePeople, admin, viewcount, description, date },
 }) => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(requestUpVideoViewCount(_id));
+  }, [viewcount]);
   return (
     <VideoInfoWrapper>
       <VideoTitle>{title}</VideoTitle>
-      <LikeButton video_id={video_id} likePeople={likePeople} />
+      <LikeButton video_id={_id} likePeople={likePeople} />
+      <span>{viewcount}</span>
+      <span>{date}</span>
       <hr />
       <AdminInfo>
-        <Link to={`/user/${admin._id}`}>
+        <Link to={{ pathname: `/user/${admin._id}`, state: { admin } }}>
           <Avatar
             src={
               admin.imageUrl ? endpoint + admin.imageUrl : endpoint + '/1.png'
@@ -42,7 +43,6 @@ export const VideoInfo: React.FC<Iprops> = ({
             alt=""
           />
         </Link>
-
         <AdminName>{admin.name}</AdminName>
       </AdminInfo>
       <VideoDescription>{description}</VideoDescription>

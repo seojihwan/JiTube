@@ -26,9 +26,19 @@ const contentsTab = [
 interface RouterProps {
   id: string;
 }
+interface locationStateProps {
+  admin: { imageUrl: string; name: string };
+}
 
-export const User: React.FC<RouteComponentProps<RouterProps>> = ({
+export const User: React.FC<RouteComponentProps<
+  RouterProps,
+  any,
+  locationStateProps
+>> = ({
   match: { params },
+  location: {
+    state: { admin },
+  },
 }) => {
   const auth = useSelector((store: IStoreState) => store.authentication);
   const [activeItem, setActiveItem] = useState(0);
@@ -80,8 +90,8 @@ export const User: React.FC<RouteComponentProps<RouterProps>> = ({
       <UserWrapper>
         <UserInfoWrapper>
           <UserInfo>
-            <UserImage src={endpoint + auth?.imageUrl} />
-            <UserName>{auth?.name}</UserName>
+            <UserImage src={endpoint + admin.imageUrl} />
+            <UserName>{admin.name}</UserName>
           </UserInfo>
           <UserTabWrapper>
             <UserContentsTabs />
