@@ -109,7 +109,6 @@ videoRouter.post('/getone', async (req: Request, res: Response) => {
 });
 
 videoRouter.post('/view', async (req: Request, res: Response) => {
-  console.log(req.body);
   const { video_id } = req.body;
   try {
     await Video.updateOne(

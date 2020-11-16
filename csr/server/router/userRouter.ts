@@ -81,11 +81,11 @@ userRouter.get('/logout', (req: Request, res: Response) => {
 userRouter.post('/getallvideos', async (req: Request, res: Response) => {
   console.log(req.body);
   try {
-    const video = await Video.find({ admin: req.body.user_id })
+    const videos = await Video.find({ admin: req.body.user_id })
       .populate('admin')
       .populate({ path: 'comments', populate: { path: 'admin' } })
       .exec();
-    res.status(200).json({ video });
+    res.status(200).json({ videos });
   } catch (error) {
     console.log(error);
     res.status(400).json({ getUserVideo: false });
