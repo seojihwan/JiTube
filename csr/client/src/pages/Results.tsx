@@ -25,7 +25,7 @@ export const Results: React.FC<RouteComponentProps> = (props) => {
   return (
     <ThumbnailsWrapper>
       {filteredVideos.map((video, idx) => (
-        <Thumbnail key={idx} {...video} />
+        <Thumbnail key={idx} {...video} isChannel={false} isAdmin={false} />
       ))}
     </ThumbnailsWrapper>
   );
