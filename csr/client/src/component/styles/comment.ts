@@ -9,7 +9,6 @@ export const CommentWrapper = styled.div`
   color: #030303;
   img {
     height: 32px;
-    margin-right: 8px;
   }
   > div:last-child {
     margin-top: 6px;

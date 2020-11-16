@@ -6,7 +6,6 @@ interface CommentInputFilledProps {
 
 export const AddCommentForm = styled.form`
   overflow: hidden;
-  height: 80px;
   margin-bottom: 20px;
 `;
 
@@ -29,7 +28,7 @@ export const CommentInputFilled = styled.div<CommentInputFilledProps>`
 
 export const CommentInputWrapper = styled.div`
   display: inline-block;
-  width: calc(100% - 40px);
+  width: calc(100% - 52px);
   height: 24px;
 `;
 

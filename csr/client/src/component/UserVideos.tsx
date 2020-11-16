@@ -15,7 +15,9 @@ export const UserVideos: React.FC<UserVideoProps> = ({ isAdmin }) => {
 
   return (
     <UserWrapper>
-      <UserTitle>업로드한 동영상</UserTitle>
+      <UserTitle>
+        업로드한 동영상{userAllVideos ? '' : '이 없습니다.'}
+      </UserTitle>
       <UserThumbnailWrapper>
         {userAllVideos?.map((video, idx) => (
           <Thumbnail key={idx} {...video} isChannel={true} isAdmin={isAdmin} />

@@ -17,4 +17,5 @@ export interface IStoreState {
   videos: Array<IVideoData> | null;
   currentPageVideo: IVideoData | null;
   currentPageUserVideos: Array<IVideoData> | null;
+  currentPageUserPopularTopTenVideos: Array<IVideoData> | null;
 }

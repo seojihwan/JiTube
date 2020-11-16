@@ -14,6 +14,7 @@ export const Button = styled.button<ButtonProps>`
   background: ${(props) =>
     props.like ? `url(${skyblue_like})` : `url(${gray_like})`};
   background-repeat: no-repeat;
+  cursor: pointer;
 `;
 
 export const CommentLikeButton = styled.button<ButtonProps>`

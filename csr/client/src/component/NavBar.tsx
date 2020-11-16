@@ -19,7 +19,7 @@ export const NavBar: React.FC = () => {
       </NavStart>
       <Search />
       <NavEnd>
-        {auth && <UserButton url={auth.imageUrl} id={auth.user_id} />}
+        {auth && <UserButton admin={auth} />}
         <UploadButton />
         {auth ? (
           <LogoutButton
@@ -51,10 +51,19 @@ export const UploadButton = () => {
     </Link>
   );
 };
-export const UserButton = ({ url, id }: { url: string; id: string }) => {
+export const UserButton = ({
+  admin,
+}: {
+  admin: { imageUrl: string; name: string; user_id: string };
+}) => {
   return (
-    <Link to={`/user/${id}`}>
-      <Avatar src={endpoint + url} />
+    <Link
+      to={{
+        pathname: `/user/${admin.user_id}`,
+        state: { admin: admin },
+      }}
+    >
+      <Avatar src={endpoint + admin.imageUrl} />
     </Link>
   );
 };

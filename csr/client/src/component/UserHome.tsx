@@ -17,22 +17,26 @@ export const UserHome: React.FC<UserHomeProps> = ({ isAdmin }) => {
   const userAllVideos = useSelector(
     (store: IStoreState) => store.currentPageUserVideos
   );
-  console.log(userAllVideos);
+  const UserPopularTopTenVideos = useSelector(
+    (store: IStoreState) => store.currentPageUserPopularTopTenVideos
+  );
   return (
     <UserWrapper>
-      <UserTitle>업로드한 동영상</UserTitle>
+      <UserTitle>
+        업로드한 동영상{userAllVideos ? '' : '이 없습니다.'}
+      </UserTitle>
       <UserThumbnailWrapper>
         {userAllVideos?.map((video, idx) => (
           <Thumbnail key={idx} {...video} isChannel={true} isAdmin={isAdmin} />
         ))}
       </UserThumbnailWrapper>
-      <UserTitle>인기 동영상</UserTitle>
+      {userAllVideos && <UserTitle>인기 동영상</UserTitle>}
       <UserThumbnailWrapper>
-        {userAllVideos?.map((video, idx) => (
+        {UserPopularTopTenVideos?.map((video, idx) => (
           <Thumbnail key={idx} {...video} isChannel={true} isAdmin={isAdmin} />
         ))}
       </UserThumbnailWrapper>
-      {isAdmin && !userAllVideos && <UserUploadVideo />}
+      {isAdmin && !userAllVideos?.length && <UserUploadVideo />}
     </UserWrapper>
   );
 };

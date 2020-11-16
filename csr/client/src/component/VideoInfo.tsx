@@ -1,11 +1,15 @@
 import React, { useEffect } from 'react';
 import {
   VideoInfoWrapper,
+  VideoDetailInfo,
   AdminInfo,
   AdminIcon,
   AdminName,
   VideoDescription,
   VideoTitle,
+  VideoViewCount,
+  VideoDate,
+  VideoHr,
   VideoWrapper,
   Avatar,
 } from './styles';
@@ -26,14 +30,16 @@ export const VideoInfo: React.FC<Iprops> = ({
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(requestUpVideoViewCount(_id));
-  }, [viewcount]);
+  }, []);
   return (
     <VideoInfoWrapper>
       <VideoTitle>{title}</VideoTitle>
-      <LikeButton video_id={_id} likePeople={likePeople} />
-      <span>{viewcount}</span>
-      <span>{date}</span>
-      <hr />
+      <VideoDetailInfo>
+        <VideoViewCount>{`조회수 ${viewcount}회`}</VideoViewCount>
+        <VideoDate>{date}</VideoDate>
+        <LikeButton video_id={_id} likePeople={likePeople} />
+      </VideoDetailInfo>
+      <VideoHr />
       <AdminInfo>
         <Link to={{ pathname: `/user/${admin._id}`, state: { admin } }}>
           <Avatar

@@ -114,12 +114,14 @@ export const Comment: React.FC<ICommentProps> = ({ video_id, comment }) => {
                     </CommentAdminName>
                     <CommentContents>{replyComment.contents}</CommentContents>
                   </CommentContentsWrapper>
-                  <ReplyDeleteButton
-                    onClick={handleRemoveComment}
-                    data-replycomment_id={replyComment._id}
-                  >
-                    삭제
-                  </ReplyDeleteButton>
+                  {replyComment.admin._id === auth?.user_id && (
+                    <ReplyDeleteButton
+                      onClick={handleRemoveComment}
+                      data-replycomment_id={replyComment._id}
+                    >
+                      삭제
+                    </ReplyDeleteButton>
+                  )}
                 </CommentWrapper>
               ))}
           </div>

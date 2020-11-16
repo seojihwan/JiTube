@@ -16,7 +16,11 @@ import {
 } from './styles';
 import { endpoint } from '../apis';
 import { RouteComponentProps } from 'react-router-dom';
-import { requestClearUserAllVideos, requestGetUserAllVideos } from '../actions';
+import {
+  requestCelarGetUserPopularTopTenVideos,
+  requestClearUserAllVideos,
+  requestGetUserAllVideos,
+} from '../actions';
 
 const contentsTab = [
   { width: 33.4, name: '홈', prevWidth: 0 },
@@ -55,6 +59,7 @@ export const User: React.FC<RouteComponentProps<
     }
     return () => {
       dispatch(requestClearUserAllVideos());
+      dispatch(requestCelarGetUserPopularTopTenVideos());
     };
   }, []);
   const UserContentsTabs = () => {

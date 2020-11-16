@@ -39,4 +39,5 @@ export const AuthDiv = styled.div`
 
 export const VideoPageWrapper = styled.div`
   width: 66%;
+  padding-left: 10px;
 `;

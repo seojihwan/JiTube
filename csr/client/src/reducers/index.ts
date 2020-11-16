@@ -6,6 +6,7 @@ export const initializeState: IStoreState = {
   videos: null,
   currentPageVideo: null,
   currentPageUserVideos: null,
+  currentPageUserPopularTopTenVideos: null,
 };
 
 export default (
@@ -48,6 +49,16 @@ export default (
       return {
         ...state,
         currentPageUserVideos: null,
+      };
+    case getType(Actions.successGetUserPopularTopTenVideos):
+      return {
+        ...state,
+        currentPageUserPopularTopTenVideos: action.payload,
+      };
+    case getType(Actions.requestCelarGetUserPopularTopTenVideos):
+      return {
+        ...state,
+        currentPageUserPopularTopTenVideos: null,
       };
     case getType(Actions.requestClearOneVideo):
       return {

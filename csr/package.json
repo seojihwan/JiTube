@@ -6,7 +6,8 @@
   "scripts": {
     "client": "webpack serve --mode=development",
     "server": "nodemon --watch server/**/* --exec ts-node server/index.ts ",
-    "start": "concurrently \"npm run client\" \"npm run server\"",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "start": "ts-node server/index.ts",
     "build": "webpack --mode production"
   },
   "keywords": [],

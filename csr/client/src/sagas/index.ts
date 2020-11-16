@@ -1,5 +1,6 @@
 import { call, fork, put, take, race, select } from 'redux-saga/effects';
 import { action, getType } from 'typesafe-actions';
+import { VideoDocument } from '../../../server/models';
 import * as Actions from '../actions';
 import * as Api from '../apis';
 import { IStoreState } from '../store';
@@ -76,20 +77,16 @@ function* getAllVideos() {
 function* upVideoViewCount() {
   while (true) {
     const { payload } = yield take(getType(Actions.requestUpVideoViewCount));
-    console.log('????????????');
     yield call(Api.requestUpVideoViewCount, payload);
-    console.log('????????????');
   }
 }
 
 function* getOneVideo() {
   while (true) {
     const { payload } = yield take(getType(Actions.requestGetOneVideo));
-    console.log('111111111111111111');
     const {
       data: { video },
     } = yield call(Api.requestGetOneVideo, payload);
-    console.log('1222222222222');
     yield put(Actions.successGetOneVideo(video));
   }
 }
@@ -98,9 +95,16 @@ function* getUserAllVideos() {
   while (true) {
     const { payload } = yield take(getType(Actions.requestGetUserAllVideos));
     const {
-      data: { video },
-    } = yield call(Api.requestGetUserAllVideos, payload);
-    yield put(Actions.successGetUserAllVideos(video));
+      data: { videos },
+    }: { data: { videos: VideoDocument[] } } = yield call(
+      Api.requestGetUserAllVideos,
+      payload
+    );
+    yield put(Actions.successGetUserAllVideos(videos));
+    const popularTopTenVideos = [...videos]
+      .sort((a, b) => b.viewcount - a.viewcount)
+      .slice(0, 10);
+    yield put(Actions.successGetUserPopularTopTenVideos(popularTopTenVideos));
   }
 }
 
@@ -160,9 +164,9 @@ function* deletevideo() {
     console.log(user_id, video_id);
     yield call(Api.requestDeleteVideo, video_id);
     const {
-      data: { video },
+      data: { videos },
     } = yield call(Api.requestGetUserAllVideos, user_id);
-    yield put(Actions.successGetUserAllVideos(video));
+    yield put(Actions.successGetUserAllVideos(videos));
   }
 }
 

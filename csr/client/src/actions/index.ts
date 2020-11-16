@@ -100,6 +100,13 @@ export const successGetUserAllVideos = createAction(
   '@command/user/successGetUserAllVideos'
 )<Array<IVideoData>>();
 
+export const successGetUserPopularTopTenVideos = createAction(
+  '@command/user/successGetUserPopularTopTenVideos'
+)<Array<IVideoData>>();
+export const requestCelarGetUserPopularTopTenVideos = createAction(
+  '@command/user/requestCelarGetUserPopularTopTenVideos'
+)();
+
 export const requestClearOneVideo = createAction(
   '@command/video/requestClearOneVideo'
 )();
