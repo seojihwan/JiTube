@@ -1,53 +1,19 @@
-import path from 'path';
-import RefreshWebpackPlugin from '@pmmmwh/react-refresh-webpack-plugin';
+import commonConfig from './webpack.common';
+import devConfig from './webpack.dev';
+import prodConfig from './webpack.prod';
+import { merge } from 'webpack-merge';
 import { Configuration } from 'webpack';
 
-const config: Configuration = {
-  mode: 'development',
-  entry: './client/src/index.tsx',
-  module: {
-    rules: [
-      {
-        loader: 'babel-loader',
-        options: {
-          presets: [
-            [
-              '@babel/preset-env',
-              {
-                targets: {
-                  esmodules: true,
-                },
-              },
-            ],
-            '@babel/preset-react',
-            '@babel/preset-typescript',
-          ],
-          plugins: ['react-refresh/babel'],
-        },
-      },
-      {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
-        test: /\.svg$/,
-        use: ['file-loader'],
-      },
-    ],
-  },
-  resolve: { extensions: ['.jsx', '.js', '.ts', '.tsx'] },
-  output: {
-    path: path.resolve(__dirname, './dist'),
-    publicPath: '/',
-    filename: 'bundle.js',
-  },
-  devServer: {
-    contentBase: path.join(__dirname, 'client/public/'),
-    publicPath: '/',
-    port: 3000,
-    hot: true,
-    historyApiFallback: true,
-  },
-  plugins: [new RefreshWebpackPlugin()],
+const config = (env: any) => {
+  const mode = env.development ? 'development' : 'production';
+  switch (mode) {
+    case 'development':
+      return merge<Configuration>(commonConfig, devConfig);
+    case 'production':
+      return merge<Configuration>(commonConfig, prodConfig);
+    default:
+      throw new Error('No matching configuration was found!');
+  }
 };
+
 export default config;

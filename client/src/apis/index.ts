@@ -1,6 +1,7 @@
 import axios, { AxiosError, AxiosResponse } from 'axios';
 import { IRequestCommentPayload, IRequestLikePayload } from '../actions';
-export const endpoint = 'http://localhost:4000';
+export const endpoint = 'https://stalwart-bliss-295812.du.r.appspot.com';
+// export const endpoint = 'http://localhost:8080';
 
 export const requestAuth = () =>
   new Promise((resolve, reject) => {

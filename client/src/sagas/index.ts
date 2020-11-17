@@ -58,15 +58,17 @@ function* videoUpload() {
     const { payload: formData } = yield take(
       getType(Actions.requestVideoUpload)
     );
-    yield call(Api.requestVideoUpload, formData);
+    try {
+      yield call(Api.requestVideoUpload, formData);
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
 
 function* getAllVideos() {
   while (true) {
-    console.log('11');
     yield take(getType(Actions.requestGetAllVideos));
-    console.log('22');
     const {
       data: { videos },
     } = yield call(Api.requestGetAllVideos);
