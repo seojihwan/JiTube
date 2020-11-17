@@ -15,4 +15,5 @@ const config: Configuration = {
     }),
   ],
 };
+console.log(config);
 export default config;
