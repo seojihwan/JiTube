@@ -39,7 +39,6 @@ videoRouter.post(
   '/upload',
   upload.single('video'),
   async (req: Request, res: Response) => {
-    const token = req.cookies.xAuth;
     console.log(req.body);
     console.log(req.file);
     if (!req.file) {
