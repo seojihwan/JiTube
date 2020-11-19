@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { requestSignUp } from '../actions';
 import { Redirect } from 'react-router-dom';
 import { IStoreState } from '../store';
-import { AuthDiv } from './styles';
+import { Form } from '../component';
 
 export const SignUp: React.FC = () => {
   const dispatch = useDispatch();
@@ -36,41 +36,39 @@ export const SignUp: React.FC = () => {
   return auth ? (
     <Redirect to="/" />
   ) : (
-    <form onSubmit={onSubmit}>
-      <AuthDiv>
-        <input
-          type="email"
-          name="email"
-          placeholder="이메일"
-          autoComplete="on"
-          value={email}
-          onChange={changeEmail}
-        ></input>
-        <input
-          type="password"
-          name="password"
-          autoComplete="on"
-          placeholder="비밀번호"
-          value={password}
-          onChange={changePassword}
-        ></input>
-        <input
-          type="password"
-          name="password2"
-          autoComplete="on"
-          placeholder="비밀번호 확인"
-          value={password2}
-          onChange={changePassword2}
-        ></input>
-        <input
-          type="text"
-          name="name"
-          placeholder="이름"
-          value={name}
-          onChange={changeName}
-        ></input>
-        <button>회원가입</button>
-      </AuthDiv>
-    </form>
+    <Form onSubmit={onSubmit}>
+      <Form.Input
+        type="email"
+        name="email"
+        placeholder="이메일"
+        autoComplete="on"
+        value={email}
+        onChange={changeEmail}
+      ></Form.Input>
+      <Form.Input
+        type="password"
+        name="password"
+        autoComplete="on"
+        placeholder="비밀번호"
+        value={password}
+        onChange={changePassword}
+      ></Form.Input>
+      <Form.Input
+        type="password"
+        name="password2"
+        autoComplete="on"
+        placeholder="비밀번호 확인"
+        value={password2}
+        onChange={changePassword2}
+      ></Form.Input>
+      <Form.Input
+        type="text"
+        name="name"
+        placeholder="이름"
+        value={name}
+        onChange={changeName}
+      ></Form.Input>
+      <Form.Button>회원가입</Form.Button>
+    </Form>
   );
 };

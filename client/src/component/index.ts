@@ -14,3 +14,4 @@ export * from './Search';
 export * from './UploadModal';
 export * from './UserHome';
 export * from './UserVideos';
+export * from './Form';
