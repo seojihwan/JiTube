@@ -1,22 +1,9 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react';
-import {
-  Video,
-  Controller,
-  VideoWrapper,
-  PlayButton,
-  VolumeInputWrapper,
-  VolumeButton,
-  VolumeInput,
-  VolumeInputCover,
-  ProgressBar,
-  Progress_filled,
-  VideoTime,
-  VideoCurrentTime,
-  VideoDuration,
-} from './styles';
+import React, { useCallback, useRef, useState } from 'react';
+
+import { VideoPlayer } from '../components/videoPlayer';
 import { endpoint } from '../apis';
 
-interface Iprops {
+interface VideoPlayerContainerProps {
   src: string;
 }
 
@@ -31,7 +18,9 @@ const secondsToTime = (sec: number) => {
   );
 };
 
-export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
+export const VideoPlayerContainer: React.FC<VideoPlayerContainerProps> = ({
+  src,
+}) => {
   const [isPlay, setIsPlay] = useState(false);
   const [isMute, setIsMute] = useState(false);
   const [volume, setVolume] = useState(0.5);
@@ -178,8 +167,8 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
   }, []);
 
   return (
-    <VideoWrapper onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
-      <Video
+    <VideoPlayer onMouseMove={handleMouseMove} onMouseUp={handleMouseUp}>
+      <VideoPlayer.video
         autoPlay={true}
         ref={video}
         src={endpoint + src}
@@ -187,7 +176,7 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
         onClick={handleClick}
         onEnded={handleEnded}
       />
-      <ProgressBar
+      <VideoPlayer.progressBar
         ref={progressBar}
         onMouseDown={handleProgressBarMouseDown}
         onMouseLeave={handleProgressBarMouseLeave}
@@ -196,21 +185,21 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
         isProgressBarMouseDown={isProgressBarMouseDown}
         isProgressBarMouseEnter={isProgressBarMouseEnter}
       >
-        <Progress_filled percent={progressBarPercent}></Progress_filled>
-      </ProgressBar>
-      <Controller
+        <VideoPlayer.progress_filled percent={progressBarPercent} />
+      </VideoPlayer.progressBar>
+      <VideoPlayer.controller
         onMouseOver={handleVolumeOnMouseOver}
         onMouseLeave={handleVolumeOnMouseLeave}
       >
-        <PlayButton isPlay={isPlay} onClick={handleClick} />
-        <VolumeButton
+        <VideoPlayer.playButton isPlay={isPlay} onClick={handleClick} />
+        <VideoPlayer.volumeButton
           ref={volumeButton}
           isMute={isMute}
           onClick={handleVolumeClick}
         />
-        <VolumeInputWrapper isVolumeMouseOver={isVolumeMouseOver}>
-          <VolumeInputCover percent={volume * 100} />
-          <VolumeInput
+        <VideoPlayer.volumeInputWrapper isVolumeMouseOver={isVolumeMouseOver}>
+          <VideoPlayer.volumeInputCover percent={volume * 100} />
+          <VideoPlayer.volumeInput
             type="range"
             ref={volumeInput}
             min="0"
@@ -219,19 +208,19 @@ export const VideoPlayer: React.FC<Iprops> = ({ src }) => {
             value={volume}
             onChange={handleVolumeChange}
             onMouseDown={handleVolumeBarDown}
-          ></VolumeInput>
-        </VolumeInputWrapper>
-        <VideoTime isVolumeMouseOver={isVolumeMouseOver}>
-          <VideoCurrentTime>
+          ></VideoPlayer.volumeInput>
+        </VideoPlayer.volumeInputWrapper>
+        <VideoPlayer.videoTime isVolumeMouseOver={isVolumeMouseOver}>
+          <VideoPlayer.videoCurrentTime>
             {video ? secondsToTime(Number(video.current?.currentTime)) : ''}
-          </VideoCurrentTime>
-          <VideoDuration>
+          </VideoPlayer.videoCurrentTime>
+          <VideoPlayer.videoDuration>
             {video
               ? ` / ` + secondsToTime(Number(video.current?.duration))
               : ''}
-          </VideoDuration>
-        </VideoTime>
-      </Controller>
-    </VideoWrapper>
+          </VideoPlayer.videoDuration>
+        </VideoPlayer.videoTime>
+      </VideoPlayer.controller>
+    </VideoPlayer>
   );
 };

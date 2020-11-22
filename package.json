@@ -42,6 +42,7 @@
     "@types/webpack-dev-server": "^3.11.1",
     "antd": "^4.6.6",
     "babel-loader": "^8.1.0",
+    "babel-plugin-styled-components": "^1.11.1",
     "bcrypt": "^5.0.0",
     "concurrently": "^5.3.0",
     "css-loader": "^4.3.0",

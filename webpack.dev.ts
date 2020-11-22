@@ -22,7 +22,15 @@ const config: Configuration = {
             '@babel/preset-react',
             '@babel/preset-typescript',
           ],
-          plugins: ['react-refresh/babel'],
+          plugins: [
+            'react-refresh/babel',
+            [
+              'babel-plugin-styled-components',
+              {
+                displayName: true,
+              },
+            ],
+          ],
         },
       },
       {

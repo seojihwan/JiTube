@@ -4,36 +4,37 @@ import pause from './res/pause.svg';
 import mute from './res/mute.svg';
 import volume_up from './res/volume-up.svg';
 
-interface PlayButtonProps {
+export interface PlayButtonProps {
   isPlay: boolean;
 }
 
-interface ProgresBarProps {
+export interface ProgressBarProps {
   isProgressBarMouseDown: boolean;
   isProgressBarMouseEnter: boolean;
 }
 
-interface ProgresBarFilledProps {
+export interface ProgressBarFilledProps {
   percent: number;
 }
 
-interface ProgresBarFilledProps {
-  percent: number;
-}
-
-interface VolumeMouseOverProps {
+export interface VolumeMouseOverProps {
   isVolumeMouseOver: boolean;
 }
 
-interface VolumeButtonProps {
+export interface VolumeButtonProps {
   isMute: boolean;
 }
 
-interface VolumeInputCoverProps {
+export interface VolumeInputCoverProps {
   percent: number;
 }
 
-export const VideoWrapper = styled.div`
+export const VideoPageWrapper = styled.div`
+  width: 66%;
+  padding-left: 10px;
+`;
+
+export const Container = styled.div`
   display: flex;
   justify-content: center;
   position: relative;
@@ -44,7 +45,7 @@ export const Video = styled.video`
   width: 100%;
 `;
 
-export const ProgressBar = styled.div<ProgresBarProps>`
+export const ProgressBar = styled.div<ProgressBarProps>`
   position: absolute;
   width: 98%;
   bottom: 30px;
@@ -60,7 +61,7 @@ export const ProgressBar = styled.div<ProgresBarProps>`
   cursor: pointer;
 `;
 
-export const Progress_filled = styled.div<ProgresBarFilledProps>`
+export const Progress_filled = styled.div<ProgressBarFilledProps>`
   background-color: red;
   flex-basis: ${({ percent }) => `${percent}%`};
 `;

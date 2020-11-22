@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { requestLogin } from '../actions';
 import { Redirect } from 'react-router-dom';
 import { IStoreState } from '../store';
-import { Form } from '../component/';
+import { Form } from '../components';
 
 export const Login: React.FC = () => {
   const dispatch = useDispatch();
