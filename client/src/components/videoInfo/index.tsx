@@ -29,24 +29,31 @@ export const VideoInfo: React.FC<HTMLAttributes<HTMLDivElement>> &
 VideoInfo.title = ({ children, ...restProps }) => {
   return <Title {...restProps}>{children}</Title>;
 };
+
 VideoInfo.detailInfo = ({ children, ...restProps }) => {
   return <DetailInfo {...restProps}>{children}</DetailInfo>;
 };
+
 VideoInfo.viewCount = ({ children, ...restProps }) => {
   return <ViewCount {...restProps}>{children}</ViewCount>;
 };
+
 VideoInfo.date = ({ children, ...restProps }) => {
   return <Date {...restProps}>{children}</Date>;
 };
+
 VideoInfo.adminInfo = ({ children, ...restProps }) => {
   return <AdminInfo {...restProps}>{children}</AdminInfo>;
 };
+
 VideoInfo.adminIcon = ({ children, ...restProps }) => {
   return <AdminIcon {...restProps}>{children}</AdminIcon>;
 };
+
 VideoInfo.adminName = ({ children, ...restProps }) => {
   return <AdminName {...restProps}>{children}</AdminName>;
 };
+
 VideoInfo.description = ({ children, ...restProps }) => {
   return <Description {...restProps}>{children}</Description>;
 };

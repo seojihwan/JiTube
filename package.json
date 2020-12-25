@@ -7,7 +7,6 @@
     "client": "webpack serve --env development",
     "server": "nodemon --watch server/**/* --exec ts-node server/index.ts ",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
-    "start": "tsc && node/dist/server/index.js",
     "build": "webpack --env production"
   },
   "keywords": [],

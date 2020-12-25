@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Thumbnail } from '../component';
+import { Thumbnail } from '../components';
 import { IStoreState } from '../store';
 import { requestGetAllVideos } from '../actions';
 import { ThumbnailsWrapper } from './styles';

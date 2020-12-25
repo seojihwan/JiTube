@@ -2,7 +2,7 @@ import React, { useMemo, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { CommentDocument } from '../../../server/models';
 import { IStoreState } from '../store';
-import { ReplyComment } from '../component';
+import { ReplyComment } from '../components';
 import {
   CommentWrapper,
   CommentAdminName,

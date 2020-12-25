@@ -1,7 +1,7 @@
 import React, { useMemo, useEffect } from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Thumbnail } from '../component';
+import { Thumbnail } from '../components';
 import { IStoreState } from '../store';
 import { requestGetAllVideos } from '../actions';
 import { ThumbnailsWrapper } from './styles';

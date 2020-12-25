@@ -1,7 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { IStoreState } from '../store';
-import { Thumbnail } from '../component';
+import { Thumbnail } from '../components';
 import { UserWrapper, UserTitle, UserThumbnailWrapper } from './styles';
 
 interface UserVideoProps {
@@ -29,9 +29,5 @@ export const UserVideos: React.FC<UserVideoProps> = ({ isAdmin }) => {
 };
 
 const UserEmptyVideo = () => {
-  return (
-    <>
-      <h2>등록된 동영상이 없습니다.</h2>
-    </>
-  );
+  return <h2>등록된 동영상이 없습니다.</h2>;
 };

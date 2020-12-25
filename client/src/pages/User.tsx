@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { IStoreState } from '../store';
-import { UserHome, UserVideos } from '../component';
+import { UserHome, UserVideos } from '../components';
 import {
   UserWrapper,
   UserInfoWrapper,

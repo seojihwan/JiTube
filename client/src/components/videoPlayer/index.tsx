@@ -67,36 +67,47 @@ export const VideoPlayer: React.FC<HTMLAttributes<HTMLDivElement>> &
 VideoPlayer.video = ({ children, ...restProps }) => {
   return <Video {...restProps}>{children}</Video>;
 };
+
 VideoPlayer.progressBar = ({ children, ...restProps }) => {
   return <ProgressBar {...restProps}>{children}</ProgressBar>;
 };
+
 VideoPlayer.progress_filled = ({ children, ...restProps }) => {
   return <Progress_filled {...restProps}>{children}</Progress_filled>;
 };
+
 VideoPlayer.controller = ({ children, ...restProps }) => {
   return <Controller {...restProps}>{children}</Controller>;
 };
+
 VideoPlayer.playButton = ({ children, ...restProps }) => {
   return <PlayButton {...restProps}>{children}</PlayButton>;
 };
+
 VideoPlayer.volumeButton = ({ children, ...restProps }) => {
   return <VolumeButton {...restProps}>{children}</VolumeButton>;
 };
+
 VideoPlayer.volumeInputWrapper = ({ children, ...restProps }) => {
   return <VolumeInputWrapper {...restProps}>{children}</VolumeInputWrapper>;
 };
+
 VideoPlayer.volumeInput = ({ children, ...restProps }) => {
   return <VolumeInput {...restProps}>{children}</VolumeInput>;
 };
+
 VideoPlayer.volumeInputCover = ({ children, ...restProps }) => {
   return <VolumeInputCover {...restProps}>{children}</VolumeInputCover>;
 };
+
 VideoPlayer.videoTime = ({ children, ...restProps }) => {
   return <VideoTime {...restProps}>{children}</VideoTime>;
 };
+
 VideoPlayer.videoCurrentTime = ({ children, ...restProps }) => {
   return <VideoCurrentTime {...restProps}>{children}</VideoCurrentTime>;
 };
+
 VideoPlayer.videoDuration = ({ children, ...restProps }) => {
   return <VideoDuration {...restProps}>{children}</VideoDuration>;
 };

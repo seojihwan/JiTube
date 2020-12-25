@@ -6,7 +6,7 @@ import { LogoutButton } from '.';
 import { IStoreState } from '../store';
 import Logo from './styles/res/youtube.svg';
 import { Avatar, NavDiv, NavStart, NavEnd } from './styles';
-import { Search } from '../component';
+import { Search } from '../components';
 import { endpoint } from '../apis';
 
 export const NavBar: React.FC = () => {

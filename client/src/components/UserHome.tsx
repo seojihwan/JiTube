@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { IStoreState } from '../store';
-import { Thumbnail } from '../component';
+import { Thumbnail } from '../components';
 import {
   UserWrapper,
   UserTitle,

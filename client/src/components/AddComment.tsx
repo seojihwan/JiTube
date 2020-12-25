@@ -1,12 +1,10 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { requestComment } from '../actions';
-import { requestGetOneVideo } from '../apis';
 import { IStoreState } from '../store';
 import { Avatar, CommentInput } from './styles';
 import {
   AddCommentForm,
-  UserIcon,
   CommentEnter,
   CommentInputWrapper,
   CommentInputFilled,
@@ -47,9 +45,11 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
   const onFocus = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setIsFocus(true);
   }, []);
+
   const onFocusOut = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     setIsFocus(false);
   }, []);
+
   return (
     <AddCommentForm onSubmit={onSubmit}>
       <Link to={{ pathname: `/user/${auth?.user_id}`, state: { admin: auth } }}>
@@ -73,7 +73,6 @@ export const AddComment: React.FC<IAddCommentprops> = ({ video_id }) => {
           <CommentInputFilled isFocus={isFocus} />
         </CommentInputFilledWrapper>
       </CommentInputWrapper>
-
       <CommentEnter disabled={!contents}>댓글</CommentEnter>
     </AddCommentForm>
   );

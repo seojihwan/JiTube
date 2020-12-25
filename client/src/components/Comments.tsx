@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { CommentDocument } from '../../../server/models';
 import { requestComment } from '../actions';
 import { IStoreState } from '../store';
-import { ReplyComment, Comment } from '../component';
+import { ReplyComment, Comment } from '../components';
 import { endpoint } from '../apis';
 
 interface ICommentsProps {
