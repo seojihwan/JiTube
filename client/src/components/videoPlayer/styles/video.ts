@@ -29,11 +29,6 @@ export interface VolumeInputCoverProps {
   percent: number;
 }
 
-export const VideoPageWrapper = styled.div`
-  width: 66%;
-  padding-left: 10px;
-`;
-
 export const Container = styled.div`
   display: flex;
   justify-content: center;
@@ -82,7 +77,7 @@ export const PlayButton = styled.button<PlayButtonProps>`
   border: none;
   outline: none;
   background-color: transparent;
-  background-image: ${(props) =>
+  background-image: ${props =>
     props.isPlay ? `url(${play_button})` : `url(${pause})`};
   background-size: cover;
   transition: background 0.5s;
@@ -96,7 +91,7 @@ export const VolumeButton = styled.button<VolumeButtonProps>`
   border: none;
   outline: none;
   background-color: transparent;
-  background-image: ${(props) =>
+  background-image: ${props =>
     props.isMute ? `url(${mute})` : `url(${volume_up})`};
   background-size: cover;
   transition: background 0.5s;
