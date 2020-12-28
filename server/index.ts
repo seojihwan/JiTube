@@ -7,7 +7,8 @@ import cors from 'cors';
 import { userRouter, videoRouter } from './router/';
 dotenv.config();
 const app = express();
-const port = process.env.port || 4000;
+// const port = process.env.port || 4000;
+const port = 4000;
 //application/x-www-form-urlencoded
 app.use(express.urlencoded({ extended: true }));
 //application/json
@@ -30,7 +31,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => console.log('connected to mongoDB'))
-  .catch((error) => console.log(error));
+  .catch(error => console.log(error));
 
 app.use('/user', userRouter);
 app.use('/video', videoRouter);

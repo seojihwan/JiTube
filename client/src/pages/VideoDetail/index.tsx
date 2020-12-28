@@ -1,9 +1,10 @@
 import React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { IVideoData } from '../../store';
-import { VideoPlayerContainer, VideoInfoContainer } from '../../containers';
-import { CommentContainer } from '../../containers';
-import { VideoDetailWrapper } from './style';
+import { VideoPlayer } from './Video';
+import { VideoInfo } from './VideoInfo';
+import { Comment } from './Comment';
+import { VideoDetailWrapper } from './styles';
 
 export const VideoDetail: React.FC<
   RouteComponentProps<{}, any, IVideoData>
@@ -12,9 +13,9 @@ export const VideoDetail: React.FC<
 
   return (
     <VideoDetailWrapper>
-      <VideoPlayerContainer src={videoData.filePath} />
-      <VideoInfoContainer videoData={videoData} />
-      <CommentContainer videoData={videoData} />
+      <VideoPlayer src={videoData.filePath} />
+      <VideoInfo videoData={videoData} />
+      <Comment videoData={videoData} />
     </VideoDetailWrapper>
   );
 };
